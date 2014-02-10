@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>Calendar</web>
+<name>UpdateService</name>
+<language></language>
+<defaultLanguage />
+<translation>0</translation>
+<parent>Calendar.WebHome</parent>
+<creator>xwiki:XWiki.Admin</creator>
+<author>xwiki:XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+<creationDate>1379668201000</creationDate>
+<date>1379668600000</date>
+<contentUpdateDate>1379668600000</contentUpdateDate>
+<version>1.1</version>
+<title>Update Service</title>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+<syntaxId>xwiki/2.0</syntaxId>
+<hidden>false</hidden>
+<content>{{velocity}}
+#set($page = $request.page)
+#if($request.durationfield)
+#set($durationfield = $request.durationfield)
+#else
+#set($durationfield = "duration")
+#end
+#if($request.startfield)
+#set($startfield = $request.startfield)
+#else
+#set($startfield = "datetime")
+#end
+#if($request.classname)
+#set($classname = $request.classname)
+#else
+#set($classname = "")
+#end
+#set($success = false)
+#if($page&amp;&amp;$page!="")
+ #set($pagedoc = $xwiki.getDocument($page))
+ #if(!$pagedoc.isNew())
+#set($ok = $pagedoc.use($classname))
+#if("$!{request.isResize}"=="1")
+ #set($cduration = $pagedoc.getValue($durationfield))
+ #if(!$cduration)
+  #set($cduration = "30")
+ #end
+ #set($nduration = $util.parseInt($cduration))
+ #set($dayDelta = $util.parseInt($request.dayDelta))
+ #set($minuteDelta = $util.parseInt($request.minuteDelta))
+ #set($nduration = $nduration + $dayDelta * 24 + $minuteDelta)
+ #set($ok = $pagedoc.set($durationfield, "$!{nduration}"))
+ #set($success = true)
+#else
+ #set($datetime = $pagedoc.getValue($startfield))
+ #if(!$datetime)
+  #set($datetime = $xwiki.jodatime.getDateTime(2012, 7, 22, 8, 0, 0, 0).toDate())
+ #end
+ #set($jdatetime = $xwiki.jodatime.getDateTime($datetime.getTime()))
+ #set($jdatetime = $jdatetime.plusDays($util.parseInt($request.dayDelta)))
+ #set($jdatetime = $jdatetime.plusMinutes($util.parseInt($request.minuteDelta)))
+ #set($ok = $pagedoc.set($startfield, $jdatetime.toDate()))
+ #set($success = true)
+#end
+#if($success)
+#set($ok = $pagedoc.save("Update session time"))
+OK $pagedoc.getValue($durationfield) $pagedoc.getValue($startfield)
+#else
+FAIL $message ($pagedoc.fullName $pagedoc.getValue($durationfield) $pagedoc.getValue($startfield))
+#end
+ #else
+FAIL No Document
+ #end
+#else
+FAIL No Document
+#end
+{{/velocity}}</content></xwikidoc>

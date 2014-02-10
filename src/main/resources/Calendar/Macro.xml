@@ -1,0 +1,1280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>Calendar</web>
+<name>Macro</name>
+<language></language>
+<defaultLanguage />
+<translation>0</translation>
+<parent>Calendar.WebHome</parent>
+<creator>xwiki:XWiki.Admin</creator>
+<author>xwiki:XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+<creationDate>1379668201000</creationDate>
+<date>1379668201000</date>
+<contentUpdateDate>1379668201000</contentUpdateDate>
+<version>1.1</version>
+<title>Calendar Macro</title>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+<syntaxId>xwiki/2.1</syntaxId>
+<hidden>false</hidden>
+<object>
+<class>
+<name>XWiki.WikiMacroClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<code>
+<disabled>0</disabled>
+<name>code</name>
+<number>9</number>
+<prettyName>Macro code</prettyName>
+<rows>20</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</code>
+<contentDescription>
+<disabled>0</disabled>
+<name>contentDescription</name>
+<number>8</number>
+<prettyName>Content description (Not applicable for "No content" type)</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</contentDescription>
+<contentType>
+<cache>0</cache>
+<disabled>0</disabled>
+<displayType>select</displayType>
+<multiSelect>0</multiSelect>
+<name>contentType</name>
+<number>7</number>
+<prettyName>Macro content type</prettyName>
+<relationalStorage>0</relationalStorage>
+<separator>|</separator>
+<separators>|</separators>
+<size>1</size>
+<unmodifiable>0</unmodifiable>
+<values>Optional|Mandatory|No content</values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</contentType>
+<defaultCategory>
+<disabled>0</disabled>
+<name>defaultCategory</name>
+<number>4</number>
+<prettyName>Default category</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultCategory>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>3</number>
+<prettyName>Macro description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<id>
+<disabled>0</disabled>
+<name>id</name>
+<number>1</number>
+<prettyName>Macro id</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</id>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>2</number>
+<prettyName>Macro name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+<supportsInlineMode>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>supportsInlineMode</name>
+<number>5</number>
+<prettyName>Supports inline mode</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</supportsInlineMode>
+<visibility>
+<cache>0</cache>
+<disabled>0</disabled>
+<displayType>select</displayType>
+<multiSelect>0</multiSelect>
+<name>visibility</name>
+<number>6</number>
+<prettyName>Macro visibility</prettyName>
+<relationalStorage>0</relationalStorage>
+<separator>|</separator>
+<separators>|</separators>
+<size>1</size>
+<unmodifiable>0</unmodifiable>
+<values>Current User|Current Wiki|Global</values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</visibility>
+</class>
+<name>Calendar.Macro</name>
+<number>0</number>
+<className>XWiki.WikiMacroClass</className>
+<guid>9f4db11e-04c3-486d-914f-c1d7992f4886</guid>
+<property>
+<code>{{velocity}}
+$xwiki.jsx.use("Calendar.JQuery", {'defer': false})
+$xwiki.jsx.use("Calendar.JQueryUI", {'defer': false})
+$xwiki.jsx.use("Calendar.FullCalendar", {'defer': false})
+$xwiki.ssx.use("Calendar.FullCalendar")
+
+#if($calcounter)
+ #set($calcounter = $calcounter + 1)
+#else
+ #set($calcounter = 1)
+#end
+
+(% id="calendar${calcounter}" %)
+(((
+)))
+
+#set($left = $xcontext.macro.params.left)
+#if(!$left)
+ #set($left = "prev,next today")
+#end
+#set($center = $xcontext.macro.params.center)
+#if(!$center)
+ #set($center = "title")
+#end
+#set($right = $xcontext.macro.params.right)
+#if(!$right)
+ #set($right = "month,agendaWeek,agendaDay")
+#end
+#set($timeFormat = $xcontext.macro.params.timeFormat)
+#if(!$timeFormat)
+ #set($timeFormat = "H(:mm)")
+#end
+#set($defaultView = $xcontext.macro.params.defaultView)
+#if(!$defaultView)
+ #set($defaultView = "")
+#end
+#set($defaultView = $xcontext.macro.params.defaultView)
+#if(!$defaultView)
+ #set($defaultView = "")
+#end
+#set($year = $xcontext.macro.params.year)
+#if(!$year)
+ #set($year = "")
+#end
+#set($month = $xcontext.macro.params.month)
+#if(!$month)
+ #set($month = "")
+#end
+#set($date = $xcontext.macro.params.date)
+#if(!$date)
+ #set($date = "")
+#end
+#set($firstDay = $xcontext.macro.params.firstDay)
+#if(!$firstDay)
+ #set($firstDay = "")
+#end
+#set($firstHour = $xcontext.macro.params.firstHour)
+#if(!$firstHour)
+ #set($firstHour = "")
+#end
+#set($minTime = $xcontext.macro.params.minTime)
+#if(!$minTime)
+ #set($minTime = "")
+#end
+#set($maxTime = $xcontext.macro.params.maxTime)
+#if(!$maxTime)
+ #set($maxTime = "")
+#end
+#set($editable = $xcontext.macro.params.editable)
+#if(!$editable)
+ #set($editable = "false")
+#end
+#set($json = $xcontext.macro.params.json)
+#if(!$json)
+ #set($json = $xwiki.getDocument("Calendar.JSONService").getURL("get"))
+#end
+#set($updateurl = $xcontext.macro.params.updateurl)
+#if(!$updateurl)
+ #set($updateurl = $xwiki.getDocument("Calendar.UpdateService").getURL("get"))
+#end
+{{html clean="false"}}
+&lt;script&gt;
+function updateEvent(page,isResize, dayDelta,minuteDelta,allDay,revertFunc) {
+        var savingBox = new XWiki.widgets.Notification("Saving...", "inprogress", {inactive: true});
+        var savedBox = new XWiki.widgets.Notification("Saved", "done", {inactive: true});
+        var failedBox = new XWiki.widgets.Notification("Failed to save the document. Reason: &lt;span id=\"ajaxRequestFailureReason\"&gt;&lt;/span&gt;", "error", {inactive: true});
+        savingBox.show();
+        savedBox.hide();
+        failedBox.hide();
+
+           // let's call the calendar update
+           var url = '$updateurl';
+           url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
+           // alert(url);
+           jQuery.ajax({ url: url}).fail(function ( data ) {
+              savingBox.hide();
+              failedBox.show();
+              $('ajaxRequestFailureReason').update("update failed");
+              revertFunc();
+           }).success(function ( data ) {
+              if (data.indexOf("OK ")==0) {
+                savingBox.hide();
+                savedBox.show();
+                // alert("Update success");
+              } else {
+               savingBox.hide();
+               failedBox.show();
+               $('ajaxRequestFailureReason').update("update failed");
+               // alert("Update failed: " + data);
+               revertFunc();
+              }
+           });
+    }
+
+
+jQuery(document).ready(function() {
+
+    // page is now ready, initialize the calendar...
+    jQuery('#calendar${calcounter}').fullCalendar({
+        events: "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}",
+        header: {
+		  left: '$left',
+		  center: '$center',
+		  right: '$right'
+	}
+        #if($timeFormat!=""), timeFormat: '$timeFormat' #end 
+        #if($defaultView!=""), defaultView: '$defaultView' #end
+        #if($year!=""), year: $year#end
+        #if($month!=""), month: $month #end
+        #if($date!=""), date: $date #end
+        #if($firstDay!=""), firstDay: $firstDay #end
+        #if($firstHour!=""), firstHour: $firstHour #end
+        #if($minTime!=""), minTime: $minTime #end
+        #if($maxTime!=""), maxTime: $maxTime #end
+        ,editable: $editable
+        ,eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
+           updateEvent(event.id, false, dayDelta, minuteDelta, allDay, revertFunc);
+        }
+        ,eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
+           updateEvent(event.id, true, dayDelta, minuteDelta, false, revertFunc);
+       }  
+    })
+
+});
+&lt;/script&gt;
+{{/html}}
+{{velocity}}</code>
+</property>
+<property>
+<contentDescription></contentDescription>
+</property>
+<property>
+<contentType>No content</contentType>
+</property>
+<property>
+<defaultCategory>Content</defaultCategory>
+</property>
+<property>
+<description>Displays a Calendar</description>
+</property>
+<property>
+<id>calendar</id>
+</property>
+<property>
+<name>Calendar</name>
+</property>
+<property>
+<supportsInlineMode>0</supportsInlineMode>
+</property>
+<property>
+<visibility>Current Wiki</visibility>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>0</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>14bca36a-63b2-4c11-b673-690c54e5b654</guid>
+<property>
+<defaultValue></defaultValue>
+</property>
+<property>
+<description>URL to a page generating JSON. Example format:
+
+[
+    {
+        "id": 111,
+        "title": "Event1",
+        "start": "2012-06-10",
+        "url": "http://yahoo.com/"
+    },
+    {
+        "id": 222,
+        "title": "Event2",
+        "start": "2012-06-20",
+        "end": "2012-06-22",
+        "url": "http://yahoo.com/"
+    }
+]
+
+This is only needed if the JSON generated by the Calendar.JSONService does not fit your needs. The Calendar.JSONService can query events from any class with a date and a duration field (string)</description>
+</property>
+<property>
+<mandatory>0</mandatory>
+</property>
+<property>
+<name>json</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>1</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>94564c02-c38a-4bab-bbf9-d48b83c48911</guid>
+<property>
+<defaultValue></defaultValue>
+</property>
+<property>
+<description>URL page to update events when they are moved or resized in the Calendar. The following parameters are passed:
+
+* classname: the classname holding the object (from the classname parameter of the macro)
+* startfield: the startdate field where the event start date is stored (from the startfield parameter of the macro)
+* durationfield: the duration field where the event duration is stored as a string (from the durationfield parameter of the macro)
+* isResize: if the event is resized, otherwise the event start date is moved
+* deltaDays: the delta in days of the move or resize
+* deltaMinutes: the delta in minutes of the move or resize
+* allDay: if the event is moved to be an allDay event
+
+The default update service handles updating a document holding a specific classname with a start date and a duration field as specified in the macro parameters.
+
+The editable parameter needs to be set to true for this field to be used.</description>
+</property>
+<property>
+<mandatory>0</mandatory>
+</property>
+<property>
+<name>updateurl</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>2</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>bcff42ad-ace1-4e81-800b-6010d45ba6e2</guid>
+<property>
+<defaultValue></defaultValue>
+</property>
+<property>
+<description>Classname where the event objects are stored. The parameter is necessary unless a JSON service and and Update URL are provided</description>
+</property>
+<property>
+<mandatory>0</mandatory>
+</property>
+<property>
+<name>classname</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>3</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>74a64df1-e064-4506-b91e-2204fb8892ee</guid>
+<property>
+<defaultValue>datetime</defaultValue>
+</property>
+<property>
+<description>Field in the object where the start date of the events are stored. The field needs to be a date field. The parameter is necessary unless a JSON service and and Update URL are provided</description>
+</property>
+<property>
+<mandatory></mandatory>
+</property>
+<property>
+<name>startfield</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>4</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>dd60beeb-5501-436c-9af6-c2bee5fbf7c2</guid>
+<property>
+<defaultValue>duration</defaultValue>
+</property>
+<property>
+<description>Field in the object where the duration of the events are stored. The field needs to be a date field. The parameter is necessary unless a JSON service and and Update URL are provided</description>
+</property>
+<property>
+<mandatory>0</mandatory>
+</property>
+<property>
+<name>durationfield</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>5</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>c924ac8e-5c4d-4d01-865f-65bf71b02c0f</guid>
+<property>
+<defaultValue>true</defaultValue>
+</property>
+<property>
+<description></description>
+</property>
+<property>
+<mandatory>0</mandatory>
+</property>
+<property>
+<name>editable</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>6</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>869f3edd-fb74-4361-83d2-6b0f4b8925ee</guid>
+<property>
+<defaultValue>month</defaultValue>
+</property>
+<property>
+<description>default agenda to show on load of the agenda. Possible values are:
+
+month
+agendaWeek
+agendaDay
+basicWeek
+basicDay</description>
+</property>
+<property>
+<mandatory>0</mandatory>
+</property>
+<property>
+<name>defaultView</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>7</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>53805ce0-1312-4cc5-8c49-3655170e4ec2</guid>
+<property>
+<defaultValue></defaultValue>
+</property>
+<property>
+<description>Year of the date to show when loading the calendar. Leave empty for today
+</description></property><property><mandatory>0</mandatory>
+</property>
+<property>
+<name>year</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>8</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>748662bf-6778-48fb-a117-5ad522035743</guid>
+<property>
+<defaultValue></defaultValue>
+</property>
+<property>
+<description>Month (from 0 to 11) of the date to show when loading the calendar. Leave empty for today
+</description></property><property><mandatory>0</mandatory>
+</property>
+<property>
+<name>month</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>9</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>3d8e78cc-2302-4ae8-add0-9fa88ae1eafe</guid>
+<property>
+<defaultValue></defaultValue>
+</property>
+<property>
+<description>Day (from 1 to 31) of the date to show when loading the calendar. Leave empty for today
+</description></property><property><mandatory>0</mandatory>
+</property>
+<property>
+<name>date</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>10</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>976b49bb-1843-48b0-96ff-cf6c8812ea9d</guid>
+<property>
+<defaultValue>1</defaultValue>
+</property>
+<property>
+<description>First day (from 0 being Sunday to 6 being Monday) of the week to show in the calendar. Leave empty for Monday</description>
+</property>
+<property>
+<mandatory>0</mandatory>
+</property>
+<property>
+<name>firstDay</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>11</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>fd3a0654-8602-424f-87f2-bcda7d435397</guid>
+<property>
+<defaultValue></defaultValue>
+</property>
+<property>
+<description>First hour to show in the calendar. Leave empty for default
+</description></property><property><mandatory>0</mandatory>
+</property>
+<property>
+<name>firstHour</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>12</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>6fb67465-9a86-428f-bc23-cd54491be84a</guid>
+<property>
+<defaultValue>8</defaultValue>
+</property>
+<property>
+<description>First time to show in the calendar. Users won't see hours before this time. Leave empty for default (8.00)
+</description></property><property><mandatory>0</mandatory>
+</property>
+<property>
+<name>minTime</name>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.WikiMacroParameterClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultValue>
+<disabled>0</disabled>
+<name>defaultValue</name>
+<number>4</number>
+<prettyName>Parameter default value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultValue>
+<description>
+<disabled>0</disabled>
+<name>description</name>
+<number>2</number>
+<prettyName>Parameter description</prettyName>
+<rows>5</rows>
+<size>40</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</description>
+<mandatory>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>mandatory</name>
+<number>3</number>
+<prettyName>Parameter mandatory</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</mandatory>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Parameter name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+</class>
+<name>Calendar.Macro</name>
+<number>13</number>
+<className>XWiki.WikiMacroParameterClass</className>
+<guid>e3d67031-5c35-4556-89f2-9543c7e0c455</guid>
+<property>
+<defaultValue>23</defaultValue>
+</property>
+<property>
+<description>Last time to show in the calendar. Users won't see hours before this time. Leave empty for default (23.00)
+</description></property><property><mandatory>0</mandatory>
+</property>
+<property>
+<name>maxTime</name>
+</property>
+</object>
+<content>Example usage:
+
+{{code}}
+ {{calendar classname="Blog.BlogPostClass" startfield="publishDate" editable="false"  year="2009" month="5" date="1"  /}}
+
+or 
+
+ {{velocity}}
+  {{calendar json="${xwiki.getDocument("Calendar.ExampleJSON").getURL("get")}" editable="false"  year="2012" month="5" date="18" /}}
+ {{/velocity}}
+{{/code}}
+
+
+{{velocity}}
+
+  {{calendar json="${xwiki.getDocument("Calendar.ExampleJSON").getURL("get")}" editable="false"  year="2012" month="5" date="18" /}}
+
+  {{calendar classname="Blog.BlogPostClass" startfield="publishDate" editable="false"  year="2009" month="5" date="1"  /}}
+
+{{/velocity}}
+</content></xwikidoc>

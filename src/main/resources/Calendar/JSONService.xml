@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>Calendar</web>
+<name>JSONService</name>
+<language></language>
+<defaultLanguage />
+<translation>0</translation>
+<parent>Calendar.WebHome</parent>
+<creator>xwiki:XWiki.Admin</creator>
+<author>xwiki:XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+<creationDate>1379668201000</creationDate>
+<date>1379668589000</date>
+<contentUpdateDate>1379668589000</contentUpdateDate>
+<version>1.1</version>
+<title>JSON Service</title>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+<syntaxId>xwiki/2.0</syntaxId>
+<hidden>false</hidden>
+<content>{{velocity filter="html"}}
+#if($xcontext.action == 'get' &amp;&amp; "$!{request.outputSyntax}" == 'plain')
+  $response.setContentType('application/json')
+#end
+#if("$!{request.sql}"!="")
+ #set($hql = $request.sql)
+#else
+ #set($hql =", BaseObject as obj $!{request.fromsql} where doc.fullName=obj.name and obj.className='${request.classname}' $!{request.wheresql}")
+#end
+[
+#set($started = false)
+#foreach($item in $xwiki.searchDocuments($hql))
+#set($itemdoc = $xwiki.getDocument($item))
+#set($startdate = $itemdoc.getValue($request.startfield))
+#set($duration = $itemdoc.getValue($request.durationfield))
+#if(!$duration)
+ #set($duration = "30")
+#end
+#if($startdate)
+#set($enddate = $xwiki.jodatime.getDateTime($startdate.getTime()))
+#set($enddate = $enddate.plusMinutes($util.parseInt($duration)))
+#if($started)
+,
+#else
+#set($started = true)
+#end
+{ "id" : "${itemdoc.fullName}", "title" : "${escapetool.xml($itemdoc.displayTitle)}", "url" : "${escapetool.javascript($itemdoc.getExternalURL())}", "start" : "$!{xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm')}", "end" : "$!{xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm')}", "allDay" : false }
+#end
+#end
+]
+{{/velocity}}</content></xwikidoc>
