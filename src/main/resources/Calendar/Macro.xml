@@ -12,7 +12,7 @@
   <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1392113959000</creationDate>
-  <date>1392114308000</date>
+  <date>1392128261000</date>
   <contentUpdateDate>1379668201000</contentUpdateDate>
   <version>1.1</version>
   <title>Calendar Macro</title>
@@ -220,7 +220,7 @@ $xwiki.ssx.use("Calendar.FullCalendar")
 #end
 {{html clean="false"}}
 &lt;script&gt;
-var calendar${calcounter};
+
 function updateEvent(page,isResize, dayDelta,minuteDelta,allDay,revertFunc) {
         var savingBox = new XWiki.widgets.Notification("Saving...", "inprogress", {inactive: true});
         var savedBox = new XWiki.widgets.Notification("Saved", "done", {inactive: true});
@@ -252,58 +252,39 @@ function updateEvent(page,isResize, dayDelta,minuteDelta,allDay,revertFunc) {
            });
     }
 
-    var monthNames = $!services.localization.render('xwiki.calendar.monthNames')
-    var monthNamesShort = $!services.localization.render('xwiki.calendar.monthNamesShort');
-    var dayNames = $!services.localization.render('xwiki.calendar.dayNames');
-    var dayNamesShort = $!services.localization.render('xwiki.calendar.dayNamesShort');
+var monthNames = $!services.localization.render('xwiki.calendar.monthNames')
+var monthNamesShort = $!services.localization.render('xwiki.calendar.monthNamesShort');
+var dayNames = $!services.localization.render('xwiki.calendar.dayNames');
+var dayNamesShort = $!services.localization.render('xwiki.calendar.dayNamesShort');
 
 jQuery(document).ready(function() {
   // page is now ready, initialize the calendar...
-  calendar${calcounter} = jQuery('#calendar${calcounter}').fullCalendar({
-       columnFormat: 
-         {
-            month: "$!services.localization.render('xwiki.calendar.columnFormat.month')",
-            week: "$!services.localization.render('xwiki.calendar.columnFormat.week')",
-            day: "$!services.localization.render('xwiki.calendar.columnFormat.day')"
-         },
-       titleFormat:
-        {
-         month: "$!services.localization.render('xwiki.calendar.titleFormat.month')", 
-         week: "$!services.localization.render('xwiki.calendar.titleFormat.week')",
-         day: "$!services.localization.render('xwiki.calendar.titleFormat.day')"
+  jQuery('#calendar${calcounter}').fullCalendar({
+       columnFormat: {
+         month: "$!services.localization.render('xwiki.calendar.columnFormat.month')",
+         week: "$!services.localization.render('xwiki.calendar.columnFormat.week')",
+         day: "$!services.localization.render('xwiki.calendar.columnFormat.day')"
         },
-          buttonText: {
+        titleFormat: {
+          month: "$!services.localization.render('xwiki.calendar.titleFormat.month')", 
+          week: "$!services.localization.render('xwiki.calendar.titleFormat.week')",
+          day: "$!services.localization.render('xwiki.calendar.titleFormat.day')"
+        },
+        buttonText: {
           today: "$!services.localization.render('xwiki.calendar.button.today')", 
           day: "$!services.localization.render('xwiki.calendar.button.day')", 
           week: "$!services.localization.render('xwiki.calendar.button.week')", 
           month: "$!services.localization.render('xwiki.calendar.button.month')"
         }, 
-       timeFormat : "$!services.localization.render('xwiki.calendar.timeFormat')",
-       axisFormat : "$!services.localization.render('xwiki.calendar.axisFormat')",
-       allDayText : "$!services.localization.render('xwiki.calendar.allDayText')",
-       monthNames : monthNames,
-       monthNamesShort :monthNamesShort, 
-       dayNames : dayNames,
-       dayNamesShort : dayNamesShort, 
-       eventMouseover: function(calEvent, jsEvent, view) {
-         var tooltip = '&lt;div class="tooltipevent" style="width:150px;height:60px;background:#ccc;position:absolute;z-index:10001;"&gt;' + calEvent.tip + '&lt;/div&gt;';
-         jQuery("body").append(tooltip);
-         jQuery(this).mouseover(function(e) {
-           jQuery(this).css('z-index', 10000);
-           jQuery('.tooltipevent').fadeIn('500');
-           jQuery('.tooltipevent').fadeTo('10', 1.9);
-           }).mousemove(function(e) {
-           jQuery('.tooltipevent').css('top', e.pageY + 10);
-           jQuery('.tooltipevent').css('left', e.pageX + 20);
-      });
-},
-eventMouseout: function(calEvent, jsEvent) {
-   jQuery(this).css('z-index', 8);
-    jQuery('.tooltipevent').remove();
-}, 
-#if($json!="")
-        events: "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}",
-#end
+        timeFormat : "$!services.localization.render('xwiki.calendar.timeFormat')",
+        axisFormat : "$!services.localization.render('xwiki.calendar.axisFormat')",
+        allDayText : "$!services.localization.render('xwiki.calendar.allDayText')",
+        monthNames : monthNames,
+        monthNamesShort :monthNamesShort, 
+        dayNames : dayNames,
+        dayNamesShort : dayNamesShort, 
+
+        events: "${json}#if($stringtool.contains($json, "?"))&amp;amp;#{else}?#{end}xpage=plain&amp;amp;outputSyntax=plain&amp;amp;classname=$!{xcontext.macro.params.classname}&amp;amp;startfield=$!{xcontext.macro.params.startfield}&amp;amp;durationfield=$!{xcontext.macro.params.durationfield}",
         header: {
 		  left: '$left',
 		  center: '$center',
