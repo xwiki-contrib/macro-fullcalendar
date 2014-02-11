@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>Calendar</web>
-<name>WebHome</name>
-<language></language>
-<defaultLanguage />
-<translation>0</translation>
-<parent>Main.WebHome</parent>
-<creator>xwiki:XWiki.Admin</creator>
-<author>xwiki:XWiki.Admin</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-<creationDate>1379668201000</creationDate>
-<date>1379668319000</date>
-<contentUpdateDate>1379668201000</contentUpdateDate>
-<version>1.1</version>
-<title>Calendar Application</title>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.1</syntaxId>
-<hidden>false</hidden>
-<content>{{spaceindex/}}</content></xwikidoc>
+  <web>Calendar</web>
+  <name>WebHome</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Main.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1379668201000</creationDate>
+  <date>1379668319000</date>
+  <contentUpdateDate>1379668201000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Calendar Application</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>{{spaceindex/}}</content>
+</xwikidoc>

@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>Calendar</web>
-<name>JQuery</name>
-<language></language>
-<defaultLanguage></defaultLanguage>
-<translation>0</translation>
-<parent>Calendar.WebHome</parent>
-<creator>xwiki:XWiki.Admin</creator>
-<author>xwiki:XWiki.Admin</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-<creationDate>1379668200000</creationDate>
-<date>1379668522000</date>
-<contentUpdateDate>1379668522000</contentUpdateDate>
-<version>1.1</version>
-<title>JQuery</title>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.1</syntaxId>
-<hidden>false</hidden><attachment>
-<filename>jquery-1.7.2.min.js</filename>
-<filesize>191093</filesize>
-<author>xwiki:XWiki.Admin</author>
-<date>1379510933000</date>
-<version>1.1</version>
-<comment></comment><content>LyohIGpRdWVyeSB2MS43LjIganF1ZXJ5LmNvbSB8IGpxdWVyeS5vcmcvbGljZW5zZSAqLwooZnVu
+  <web>Calendar</web>
+  <name>JQuery</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Calendar.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1379668200000</creationDate>
+  <date>1379668522000</date>
+  <contentUpdateDate>1379668522000</contentUpdateDate>
+  <version>1.1</version>
+  <title>JQuery</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <attachment>
+    <filename>jquery-1.7.2.min.js</filename>
+    <filesize>191093</filesize>
+    <author>xwiki:XWiki.Admin</author>
+    <date>1379510933000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>LyohIGpRdWVyeSB2MS43LjIganF1ZXJ5LmNvbSB8IGpxdWVyeS5vcmcvbGljZW5zZSAqLwooZnVu
 Y3Rpb24oYSxiKXtmdW5jdGlvbiBjeShhKXtyZXR1cm4gZi5pc1dpbmRvdyhhKT9hOmEubm9kZVR5
 cGU9PT05P2EuZGVmYXVsdFZpZXd8fGEucGFyZW50V2luZG93OiExfWZ1bmN0aW9uIGN1KGEpe2lm
 KCFjalthXSl7dmFyIGI9Yy5ib2R5LGQ9ZigiPCIrYSsiPiIpLmFwcGVuZFRvKGIpLGU9ZC5jc3Mo
@@ -3379,99 +3382,101 @@ dChrKTtyZXR1cm4gZi5pc051bWVyaWMobCk/bDprfWYoYSkuY3NzKGMsaCl9LGMsYSxhcmd1bWVu
 dHMubGVuZ3RoLG51bGwpfX0pLGEualF1ZXJ5PWEuJD1mLHR5cGVvZiBkZWZpbmU9PSJmdW5jdGlv
 biImJmRlZmluZS5hbWQmJmRlZmluZS5hbWQualF1ZXJ5JiZkZWZpbmUoImpxdWVyeSIsW10sZnVu
 Y3Rpb24oKXtyZXR1cm4gZn0pfSkod2luZG93KTs=
-</content></attachment>
-<object>
-<class>
-<name>XWiki.JavaScriptExtension</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<cache>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<multiSelect>0</multiSelect>
-<name>cache</name>
-<number>5</number>
-<prettyName>Caching policy</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>1</size>
-<unmodifiable>0</unmodifiable>
-<values>long|short|default|forbid</values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</cache>
-<code>
-<disabled>0</disabled>
-<name>code</name>
-<number>2</number>
-<prettyName>Code</prettyName>
-<rows>20</rows>
-<size>50</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-</code>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-<parse>
-<disabled>0</disabled>
-<displayFormType>select</displayFormType>
-<displayType>yesno</displayType>
-<name>parse</name>
-<number>4</number>
-<prettyName>Parse content</prettyName>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-</parse>
-<use>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<multiSelect>0</multiSelect>
-<name>use</name>
-<number>3</number>
-<prettyName>Use this extension</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>1</size>
-<unmodifiable>0</unmodifiable>
-<values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</use>
-</class>
-<name>Calendar.JQuery</name>
-<number>0</number>
-<className>XWiki.JavaScriptExtension</className>
-<guid>c60d22dc-0454-4d3a-8d6f-b0a56b3d89a2</guid>
-<property>
-<cache>long</cache>
-</property>
-<property>
-<code>#set($jqueryDoc = $xwiki.getDocument('Calendar.JQuery'))
+</content>
+  </attachment>
+  <object>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <name>Calendar.JQuery</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>c60d22dc-0454-4d3a-8d6f-b0a56b3d89a2</guid>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>#set($jqueryDoc = $xwiki.getDocument('Calendar.JQuery'))
 $jqueryDoc.getAttachment('jquery-1.7.2.min.js').getContentAsString()
 jQuery.noConflict();</code>
-</property>
-<property>
-<name>jquery-1.7.2.min.js</name>
-</property>
-<property>
-<parse>1</parse>
-</property>
-<property>
-<use>onDemand</use>
-</property>
-</object>
-<content>Contains Script Extensions for the Calendar Application</content></xwikidoc>
+    </property>
+    <property>
+      <name>jquery-1.7.2.min.js</name>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <content>Contains Script Extensions for the Calendar Application</content>
+</xwikidoc>
