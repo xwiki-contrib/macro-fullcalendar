@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+  <web>Calendar</web>
+  <name>Translations</name>
+  <language>es</language>
+  <defaultLanguage/>
+  <translation>1</translation>
+  <parent>Calendar.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1392158805000</creationDate>
+  <date>1392158805000</date>
+  <contentUpdateDate>1392158805000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>xwiki.calendar.monthNames=['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+xwiki.calendar.monthNamesShort=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
+xwiki.calendar.dayNames=['Lunes','Martes','Miércoles','Jueves','Viernes','Sabado','Domingo']
+xwiki.calendar.dayNamesShort=['Lun','Mar','Mié','Jue','Vie','Sab','Dom']
+
+xwiki.calendar.columnFormat.month=ddd
+xwiki.calendar.columnFormat.week=ddd d/M
+xwiki.calendar.columnFormat.day=dddd d/M
+xwiki.calendar.titleFormat.month=MMMM yyyy
+xwiki.calendar.titleFormat.week=d [ yyyy]{ '&amp;#8212;'[ MMM] d MMM yyyy}
+xwiki.calendar.titleFormat.day=dddd, d MMM, yyyy
+
+xwiki.calendar.timeFormat=H:mm
+xwiki.calendar.axisFormat=H:mm
+
+xwiki.calendar.allDayText=dia todo
+xwiki.calendar.button.today=hoy
+xwiki.calendar.button.day=dia
+xwiki.calendar.button.week=semana
+xwiki.calendar.button.month=mes</content>
+</xwikidoc>
