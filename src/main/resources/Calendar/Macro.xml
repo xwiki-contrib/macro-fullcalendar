@@ -284,7 +284,7 @@ jQuery(document).ready(function() {
         dayNames : dayNames,
         dayNamesShort : dayNamesShort, 
 
-        events: "${json}#if($stringtool.contains($json, "?"))&amp;amp;#{else}?#{end}xpage=plain&amp;amp;outputSyntax=plain&amp;amp;classname=$!{xcontext.macro.params.classname}&amp;amp;startfield=$!{xcontext.macro.params.startfield}&amp;amp;durationfield=$!{xcontext.macro.params.durationfield}",
+        events: "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}",
         header: {
 		  left: '$left',
 		  center: '$center',
