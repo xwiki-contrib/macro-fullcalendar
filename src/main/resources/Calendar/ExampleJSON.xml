@@ -21,7 +21,7 @@
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
-  <hidden>false</hidden>
+  <hidden>true</hidden>
   <content>{{velocity filter="html"}}
 #if($xcontext.action == 'get' &amp;&amp; "$!{request.outputSyntax}" == 'plain')
   $response.setContentType('application/json')

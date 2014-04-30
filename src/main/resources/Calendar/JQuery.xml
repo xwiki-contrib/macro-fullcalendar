@@ -21,7 +21,7 @@
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
-  <hidden>false</hidden>
+  <hidden>true</hidden>
   <attachment>
     <filename>jquery-1.7.2.min.js</filename>
     <filesize>191093</filesize>

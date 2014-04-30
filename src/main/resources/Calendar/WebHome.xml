@@ -22,5 +22,5 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
-  <content>{{spaceindex/}}</content>
+  <content>{{include document="Calendar.Macro"/}}</content>
 </xwikidoc>
