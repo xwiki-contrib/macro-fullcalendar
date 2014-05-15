@@ -139,17 +139,15 @@
     <property>
       <code>{{velocity}}
 #set($ok = $services.localization.use('document', 'Calendar.Translations'))
-$xwiki.jsx.use("Calendar.JQuery", {'defer': false})
-$xwiki.jsx.use("Calendar.JQueryUI", {'defer': false})
-$xwiki.jsx.use("Calendar.FullCalendar", {'defer': false})
-$xwiki.ssx.use("Calendar.FullCalendar")
-
+#set($discard = $xwiki.jsx.use("Calendar.JQuery", {'defer': false}))
+#set($discard = $xwiki.jsx.use("Calendar.JQueryUI", {'defer': false}))
+#set($discard = $xwiki.jsx.use("Calendar.FullCalendar", {'defer': false}))
+#set($discard = $xwiki.ssx.use("Calendar.FullCalendar"))
 #if($calcounter)
  #set($calcounter = $calcounter + 1)
 #else
  #set($calcounter = 1)
 #end
-
 (% id="calendar${calcounter}" %)
 (((
 )))
