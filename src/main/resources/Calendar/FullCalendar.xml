@@ -1232,6 +1232,14 @@ table.fc-border-separate {
 
 table.fc-border-separate {
   border-right: 1px solid #ccc;
+}
+/* scale the header in gadget mode */
+.gadget-content .fc-header td { 
+  display: table-row;
+}
+/* align the header in gadget mode */
+.gadget-content .fc-header-right {
+  text-align: left;
 }</code>
     </property>
     <property>
