@@ -1237,8 +1237,9 @@ table.fc-border-separate {
 .gadget-content .fc-header td { 
   display: table-row;
 }
-/* align the header in gadget mode */
-.gadget-content .fc-header-right {
+/* align the header elements in gadget mode */
+.gadget-content .fc-header-right, 
+.gadget-content .fc-header-center {
   text-align: left;
 }</code>
     </property>
