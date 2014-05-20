@@ -166,7 +166,7 @@
 #end
 #set($timeFormat = $xcontext.macro.params.timeFormat)
 #if(!$timeFormat)
- #set($timeFormat = "H(:mm)")
+ #set($timeFormat = "H:mm")
 #end
 #set($defaultView = $xcontext.macro.params.defaultView)
 #if(!$defaultView)
