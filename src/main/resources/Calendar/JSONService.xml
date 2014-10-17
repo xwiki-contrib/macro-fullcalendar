@@ -48,7 +48,7 @@
 #else
 #set($started = true)
 #end
-{ "id" : "${escapetool.javascript($itemdoc.fullName)}", "title" : "${escapetool.javascript($escapetool.xml($itemdoc.plainTitle))}", "url" : "${escapetool.javascript($itemdoc.getExternalURL())}", "start" : "$!{xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm')}", "end" : "$!{xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm')}", "allDay" : false }
+{ "id" : "${escapetool.javascript($itemdoc.fullName)}", "title" : "${escapetool.javascript($itemdoc.plainTitle)}", "url" : "${escapetool.javascript($itemdoc.getExternalURL())}", "start" : "$!{xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm')}", "end" : "$!{xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm')}", "allDay" : false }
 #end
 #end
 ]
