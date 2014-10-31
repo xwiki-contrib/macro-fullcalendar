@@ -566,6 +566,7 @@ html .fc,
 .fc-header-right {
 	width: 25%;
 	text-align: right;
+       text-transform: capitalize;
 	}
 	
 .fc-header-title {
@@ -671,6 +672,7 @@ html .fc,
 	position: relative;
 	float: left;
 	overflow: hidden;
+       text-transform: capitalize;
 	}
 	
 .fc-state-default .fc-button-inner { /* non-theme */
