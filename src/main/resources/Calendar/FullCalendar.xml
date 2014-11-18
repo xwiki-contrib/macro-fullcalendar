@@ -1230,8 +1230,29 @@ table.fc-border-separate {
   width: 99%;
 }
 
-table.fc-border-separate {
-  border-right: 1px solid #ccc;
+.skin-flamingo table.fc-border-separate {
+  border-right: 1px solid #ddd;
+}
+
+.fc-agenda-allday th.fc-agenda-gutter {
+  background-color: transparent;
+}
+
+.skin-flamingo .fc-agenda-allday .fc-day-content {
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #F5F5F5;
+}
+
+th[class="fc-widget-header fc-agenda-axis"] {
+  max-width: 50px;
+}
+
+table[class="fc-agenda-allday"] {
+  margin-top: 14px;
+  margin-bottom: 14px;
 }
 
 /* Scale the table header in gadget mode */
@@ -1240,13 +1261,13 @@ table.fc-border-separate {
 }
 
 /* Align the table header in gadget mode */
-.gadget-content .fc-header table { 
+.gadget-content .fc-header table {
  margin-left:auto !important;
  text-align: left;
 }</code>
     </property>
     <property>
-      <name>Fix for the Colibri Skin</name>
+      <name>Fix for the Colibri/Flamingo Skin</name>
     </property>
     <property>
       <parse>0</parse>
