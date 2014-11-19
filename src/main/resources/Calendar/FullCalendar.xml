@@ -671,6 +671,7 @@ html .fc,
 	position: relative;
 	float: left;
 	overflow: hidden;
+       text-transform: capitalize;
 	}
 	
 .fc-state-default .fc-button-inner { /* non-theme */

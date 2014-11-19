@@ -162,7 +162,7 @@
 #end
 #set($right = $xcontext.macro.params.right)
 #if(!$right)
- #set($right = "month,agendaWeek,agendaDay")
+ #set($right = "agendaDay,agendaWeek,month")
 #end
 #set($timeFormat = $xcontext.macro.params.timeFormat)
 #if(!$timeFormat)
