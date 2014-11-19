@@ -1230,13 +1230,13 @@ table.fc-border-separate {
   width: 99%;
 }
 
-.skin-flamingo table.fc-border-separate {
-  border-right: 1px solid #ddd;
-}
-
 .fc-agenda-allday th.fc-agenda-gutter {
   background-color: transparent;
 }
+
+.skin-flamingo .fc-border-separate thead tr.fc-first th {
+  border-top: 1px solid #ddd;
+ }
 
 .skin-flamingo .fc-agenda-allday .fc-day-content {
   border-bottom: 1px solid #ddd;
@@ -1262,7 +1262,7 @@ table[class="fc-agenda-allday"] {
 
 /* Align the table header in gadget mode */
 .gadget-content .fc-header table {
- margin-left:auto !important;
+ margin-left: auto;
  text-align: left;
 }</code>
     </property>
