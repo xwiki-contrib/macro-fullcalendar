@@ -21,7 +21,7 @@
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
-  <hidden>false</hidden>
+  <hidden>true</hidden>
   <object>
     <class>
       <name>XWiki.TranslationDocumentClass</name>
@@ -63,15 +63,15 @@ xwiki.calendar.dayNames=['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
 xwiki.calendar.dayNamesShort=['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 xwiki.calendar.columnFormat.month=ddd
-xwiki.calendar.columnFormat.week=ddd M/d
-xwiki.calendar.columnFormat.day=dddd M/d
+xwiki.calendar.columnFormat.week=ddd M/D
+xwiki.calendar.columnFormat.day=dddd M/D
 
-xwiki.calendar.titleFormat.month=MMMM yyyy
-xwiki.calendar.titleFormat.week=MMM d[ yyyy]{ '&amp;#8212;'[ MMM] d yyyy}
-xwiki.calendar.titleFormat.day=dddd, MMM d, yyyy
+xwiki.calendar.titleFormat.month=MMMM YYYY
+xwiki.calendar.titleFormat.week=MMM D YYYY
+xwiki.calendar.titleFormat.day=dddd, MMM D, YYYY
 
-xwiki.calendar.timeFormat=h(:mm)tt
-xwiki.calendar.axisFormat=h(:mm)tt
+xwiki.calendar.timeFormat=h(:mm)t
+xwiki.calendar.axisFormat=h(:mm)t
 
 xwiki.calendar.allDayText=All day
 xwiki.calendar.button.today=today

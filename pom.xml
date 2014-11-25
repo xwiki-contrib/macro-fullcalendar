@@ -68,6 +68,10 @@
       <id>lucaa</id>
       <name>Anca Luca</name>
     </developer>
+    <developer>
+      <id>vrachieru</id>
+      <name>Victor Rachieru</name>
+    </developer>
   </developers>
     <build>
    <!-- Needed to add support for the XAR packaging -->
