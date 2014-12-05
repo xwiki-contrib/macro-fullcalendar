@@ -28,11 +28,11 @@ xwiki.calendar.dayNames=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi
 xwiki.calendar.dayNamesShort=['Dim','Lun','Mar','Mer','Jeud','Ven','Sam']
 
 xwiki.calendar.columnFormat.month=ddd
-xwiki.calendar.columnFormat.week=ddd d/MM
-xwiki.calendar.columnFormat.day=dddd d/MM
-xwiki.calendar.titleFormat.month=MMMM yyyy
-xwiki.calendar.titleFormat.week=d MMM [ yyyy]{ '&amp;#8212;' d MMM yyyy}
-xwiki.calendar.titleFormat.day=dddd d MMM yyyy
+xwiki.calendar.columnFormat.week=ddd D/MM
+xwiki.calendar.columnFormat.day=dddd D/MM
+xwiki.calendar.titleFormat.month=MMMM YYYY
+xwiki.calendar.titleFormat.week=D MMM YYYY
+xwiki.calendar.titleFormat.day=dddd D MMM YYYY
 
 xwiki.calendar.timeFormat=HH:mm
 xwiki.calendar.axisFormat=HH:mm

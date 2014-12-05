@@ -72,6 +72,10 @@
       <id>gabrielasmeria</id>
       <name>Gabriela Smeria</name>
     </developer>
+    <developer>
+      <id>vrachieru</id>
+      <name>Victor Rachieru</name>
+    </developer>
   </developers>
     <build>
    <!-- Needed to add support for the XAR packaging -->

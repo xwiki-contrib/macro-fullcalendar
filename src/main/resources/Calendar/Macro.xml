@@ -141,6 +141,7 @@
 #set($ok = $services.localization.use('document', 'Calendar.Translations'))
 #set($discard = $xwiki.jsx.use("Calendar.JQuery", {'defer': false}))
 #set($discard = $xwiki.jsx.use("Calendar.JQueryUI", {'defer': false}))
+#set($discard = $xwiki.jsx.use("Calendar.Moment", {'defer': false}))
 #set($discard = $xwiki.jsx.use("Calendar.FullCalendar", {'defer': false}))
 #set($discard = $xwiki.ssx.use("Calendar.FullCalendar"))
 #if($calcounter)
@@ -178,15 +179,19 @@
 #end
 #set($year = $xcontext.macro.params.year)
 #if(!$year)
- #set($year = "")
+ #set($year = "${datetool.year}")
 #end
 #set($month = $xcontext.macro.params.month)
 #if(!$month)
- #set($month = "")
+ #set($month = "01")
+#elseif ($stringtool.length($month) == 1)
+ #set($month = "0${month}")
 #end
 #set($date = $xcontext.macro.params.date)
 #if(!$date)
- #set($date = "")
+ #set($date = "01")
+#elseif ($stringtool.length($date) == 1)
+ #set($date = "0${date}")
 #end
 #set($firstDay = $xcontext.macro.params.firstDay)
 #if(!$firstDay)
@@ -199,10 +204,14 @@
 #set($minTime = $xcontext.macro.params.minTime)
 #if(!$minTime)
  #set($minTime = "")
+#elseif($minTime.indexOf(':') == -1)
+ #set($minTime = "${minTime}:00")
 #end
 #set($maxTime = $xcontext.macro.params.maxTime)
 #if(!$maxTime)
  #set($maxTime = "")
+#elseif($maxTime.indexOf(':') == -1)
+ #set($maxTime = "${maxTime}:00")
 #end
 #set($editable = $xcontext.macro.params.editable)
 #if(!$editable)
@@ -218,94 +227,93 @@
 #end
 {{html clean="false"}}
 &lt;script&gt;
-
-function updateEvent(page,isResize, dayDelta,minuteDelta,allDay,revertFunc) {
-        var savingBox = new XWiki.widgets.Notification("Saving...", "inprogress", {inactive: true});
-        var savedBox = new XWiki.widgets.Notification("Saved", "done", {inactive: true});
-        var failedBox = new XWiki.widgets.Notification("Failed to save the document. Reason: &lt;span id=\"ajaxRequestFailureReason\"&gt;&lt;/span&gt;", "error", {inactive: true});
-        savingBox.show();
-        savedBox.hide();
-        failedBox.hide();
-           // let's call the calendar update
-           var url = '$updateurl';
-           url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
-           // alert(url);
-           jQuery.ajax({ url: url}).fail(function ( data ) {
-              savingBox.hide();
-              failedBox.show();
-              $('ajaxRequestFailureReason').update("update failed");
-              revertFunc();
-           }).success(function ( data ) {
-              if (data.indexOf("OK ")==0) {
+require(['fullcalendar'], function ($) {
+  function updateEvent(page,isResize, dayDelta,minuteDelta,allDay,revertFunc) {
+          var savingBox = new XWiki.widgets.Notification("Saving...", "inprogress", {inactive: true});
+          var savedBox = new XWiki.widgets.Notification("Saved", "done", {inactive: true});
+          var failedBox = new XWiki.widgets.Notification("Failed to save the document. Reason: &lt;span id=\"ajaxRequestFailureReason\"&gt;&lt;/span&gt;", "error", {inactive: true});
+          savingBox.show();
+          savedBox.hide();
+          failedBox.hide();
+             // let's call the calendar update
+             var url = '$updateurl';
+             url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
+             // alert(url);
+             jQuery.ajax({ url: url}).fail(function ( data ) {
                 savingBox.hide();
-                savedBox.show();
-                // alert("Update success");
-              } else {
-               savingBox.hide();
-               failedBox.show();
-               $('ajaxRequestFailureReason').update("update failed");
-               // alert("Update failed: " + data);
-               revertFunc();
-              }
-           });
-    }
+                failedBox.show();
+                $('ajaxRequestFailureReason').update("update failed");
+                revertFunc();
+             }).success(function ( data ) {
+                if (data.indexOf("OK ")==0) {
+                  savingBox.hide();
+                  savedBox.show();
+                  // alert("Update success");
+                } else {
+                 savingBox.hide();
+                 failedBox.show();
+                 $('ajaxRequestFailureReason').update("update failed");
+                 // alert("Update failed: " + data);
+                 revertFunc();
+                }
+             });
+      }
 
-var monthNames = $!services.localization.render('xwiki.calendar.monthNames')
-var monthNamesShort = $!services.localization.render('xwiki.calendar.monthNamesShort');
-var dayNames = $!services.localization.render('xwiki.calendar.dayNames');
-var dayNamesShort = $!services.localization.render('xwiki.calendar.dayNamesShort');
+  var monthNames = $!services.localization.render('xwiki.calendar.monthNames')
+  var monthNamesShort = $!services.localization.render('xwiki.calendar.monthNamesShort');
+  var dayNames = $!services.localization.render('xwiki.calendar.dayNames');
+  var dayNamesShort = $!services.localization.render('xwiki.calendar.dayNamesShort');
 
-jQuery(document).ready(function() {
-  // page is now ready, initialize the calendar...
-  jQuery('#calendar${calcounter}').fullCalendar({
-       columnFormat: {
-         month: "$!services.localization.render('xwiki.calendar.columnFormat.month')",
-         week: "$!services.localization.render('xwiki.calendar.columnFormat.week')",
-         day: "$!services.localization.render('xwiki.calendar.columnFormat.day')"
-        },
-        titleFormat: {
-          month: "$!services.localization.render('xwiki.calendar.titleFormat.month')", 
-          week: "$!services.localization.render('xwiki.calendar.titleFormat.week')",
-          day: "$!services.localization.render('xwiki.calendar.titleFormat.day')"
-        },
-        buttonText: {
-          today: "$!services.localization.render('xwiki.calendar.button.today')", 
-          day: "$!services.localization.render('xwiki.calendar.button.day')", 
-          week: "$!services.localization.render('xwiki.calendar.button.week')", 
-          month: "$!services.localization.render('xwiki.calendar.button.month')"
-        }, 
-        timeFormat : "$!services.localization.render('xwiki.calendar.timeFormat')",
-        axisFormat : "$!services.localization.render('xwiki.calendar.axisFormat')",
-        allDayText : "$!services.localization.render('xwiki.calendar.allDayText')",
-        monthNames : monthNames,
-        monthNamesShort :monthNamesShort, 
-        dayNames : dayNames,
-        dayNamesShort : dayNamesShort, 
+  jQuery(document).ready(function() {
+    // page is now ready, initialize the calendar...
+    jQuery('#calendar${calcounter}').fullCalendar({
+         columnFormat: {
+           month: "$!services.localization.render('xwiki.calendar.columnFormat.month')",
+           week: "$!services.localization.render('xwiki.calendar.columnFormat.week')",
+           day: "$!services.localization.render('xwiki.calendar.columnFormat.day')"
+          },
+          titleFormat: {
+            month: "$!services.localization.render('xwiki.calendar.titleFormat.month')",
+            week: "$!services.localization.render('xwiki.calendar.titleFormat.week')",
+            day: "$!services.localization.render('xwiki.calendar.titleFormat.day')"
+          },
+          buttonText: {
+            today: "$!services.localization.render('xwiki.calendar.button.today')",
+            day: "$!services.localization.render('xwiki.calendar.button.day')",
+            week: "$!services.localization.render('xwiki.calendar.button.week')",
+            month: "$!services.localization.render('xwiki.calendar.button.month')"
+          },
+          timeFormat : "$!services.localization.render('xwiki.calendar.timeFormat')",
+          axisFormat : "$!services.localization.render('xwiki.calendar.axisFormat')",
+          allDayText : "$!services.localization.render('xwiki.calendar.allDayText')",
+          monthNames : monthNames,
+          monthNamesShort : monthNamesShort,
+          dayNames : dayNames,
+          dayNamesShort : dayNamesShort,
 
-        events: "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}",
-        header: {
+          events: "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}",
+          header: {
 		  left: '$left',
 		  center: '$center',
 		  right: '$right'
-	}
-        #if($timeFormat!=""), timeFormat: '$timeFormat' #end 
-        #if($defaultView!=""), defaultView: '$defaultView' #end
-        #if($year!=""), year: $year#end
-        #if($month!=""), month: $month #end
-        #if($date!=""), date: $date #end
-        #if($firstDay!=""), firstDay: $firstDay #end
-        #if($firstHour!=""), firstHour: $firstHour #end
-        #if($minTime!=""), minTime: $minTime #end
-        #if($maxTime!=""), maxTime: $maxTime #end
-        ,editable: $editable
-        ,eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
-           updateEvent(event.id, false, dayDelta, minuteDelta, allDay, revertFunc);
-        }
-        ,eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
-           updateEvent(event.id, true, dayDelta, minuteDelta, false, revertFunc);
-       }  
-    })
+	  },
+          defaultDate: '${year}-${month}-${date}'
+          #if($timeFormat!=""), timeFormat: '$timeFormat' #end
+          #if($defaultView!=""), defaultView: '$defaultView' #end
+          #if($firstDay!=""), firstDay: '$firstDay' #end
+          #if($firstHour!=""), firstHour: '$firstHour' #end
+          #if($minTime!=""), minTime: '$minTime' #end
+          #if($maxTime!=""), maxTime: '$maxTime' #end
+          ,editable: $editable
+          ,eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
+             updateEvent(event.id, false, dayDelta, minuteDelta, allDay, revertFunc);
+          }
+          ,eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
+             updateEvent(event.id, true, dayDelta, minuteDelta, false, revertFunc);
+         }
+      })
 
+  });
 });
 &lt;/script&gt;
 {{/html}}
@@ -1222,7 +1230,7 @@ basicDay</description>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>6fb67465-9a86-428f-bc23-cd54491be84a</guid>
     <property>
-      <defaultValue>8</defaultValue>
+      <defaultValue>8:00</defaultValue>
     </property>
     <property>
       <description>First time to show in the calendar. Users won't see hours before this time. Leave empty for default (8.00)
@@ -1289,7 +1297,7 @@ basicDay</description>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>e3d67031-5c35-4556-89f2-9543c7e0c455</guid>
     <property>
-      <defaultValue>23</defaultValue>
+      <defaultValue>23:00</defaultValue>
     </property>
     <property>
       <description>Last time to show in the calendar. Users won't see hours before this time. Leave empty for default (23.00)
