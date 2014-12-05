@@ -1372,6 +1372,10 @@ be a descendant of the grid when it is being dragged.
   background-color: #F5F5F5;
 }
 
+.fc-view table {
+  border-top: 1px solid #ddd;
+}
+
 /* Scale the table header in gadget mode */
 .gadget-content .fc table.fc-header {
   font-size: 80%;
