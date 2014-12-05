@@ -1368,37 +1368,8 @@ be a descendant of the grid when it is being dragged.
       <cache>long</cache>
     </property>
     <property>
-      <code>.fc-header td {
-  border: 0px;
-}
-
-.fc {
-  width: 99%;
-}
-
-.fc-agenda-allday th.fc-agenda-gutter {
-  background-color: transparent;
-}
-
-.skin-flamingo .fc-border-separate thead tr.fc-first th {
-  border-top: 1px solid #ddd;
- }
-
-.skin-flamingo .fc-agenda-allday .fc-day-content {
-  border-bottom: 1px solid #ddd;
-}
-
-th {
+      <code>th {
   background-color: #F5F5F5;
-}
-
-th[class="fc-widget-header fc-agenda-axis"] {
-  max-width: 50px;
-}
-
-table[class="fc-agenda-allday"] {
-  margin-top: 14px;
-  margin-bottom: 14px;
 }
 
 /* Scale the table header in gadget mode */
@@ -1426,14 +1397,14 @@ table[class="fc-agenda-allday"] {
 .fc-scroller,
 .fc-day-grid-container,
 .fc-time-grid-container {
-  overflow: visible !important;
+  overflow: visible;
   height: auto !important;
 }
 
 /* kill the horizontal border/padding used to compensate for scrollbars */
 .fc-row {
-  border: 0 !important;
-  margin: 0 !important;
+  border: 0;
+  margin: 0;
 }</code>
     </property>
     <property>
