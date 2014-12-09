@@ -25,12 +25,12 @@ xwiki.calendar.dayNames=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','
 xwiki.calendar.dayNamesShort=['So','Mo','Di','Mi','Do','Fr','Sa']
 
 xwiki.calendar.columnFormat.month=ddd
-xwiki.calendar.columnFormat.week=ddd d
-xwiki.calendar.columnFormat.day=dddd M/D
+xwiki.calendar.columnFormat.week=ddd D
+xwiki.calendar.columnFormat.day=dddd, D MMMM
 
 xwiki.calendar.titleFormat.month=MMMM YYYY
 xwiki.calendar.titleFormat.week=D MMM YYYY
-xwiki.calendar.titleFormat.day=dddd, D MMMM YYYY
+xwiki.calendar.titleFormat.day=ddd, D MMM YYYY
 
 xwiki.calendar.timeFormat=HH:mm
 xwiki.calendar.axisFormat=HH:mm
