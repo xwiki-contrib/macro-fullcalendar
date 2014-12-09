@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>Calendar</web>
-<name>Moment</name>
-<language></language>
-<defaultLanguage></defaultLanguage>
-<translation>0</translation>
-<parent>Calendar.WebHome</parent>
-<creator>xwiki:XWiki.Admin</creator>
-<author>xwiki:XWiki.Admin</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-<creationDate>1416837508000</creationDate>
-<date>1416915590000</date>
-<contentUpdateDate>1416837558000</contentUpdateDate>
-<version>1.1</version>
-<title>Moment</title>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.1</syntaxId>
-<hidden>true</hidden><attachment>
-<filename>moment-2.8.4.min.js</filename>
-<filesize>33783</filesize>
-<author>XWiki.Admin</author>
-<date>1416837544000</date>
-<version>1.1</version>
-<comment></comment><content>Ly8hIG1vbWVudC5qcwovLyEgdmVyc2lvbiA6IDIuOC40Ci8vISBhdXRob3JzIDogVGltIFdvb2Qs
+  <web>Calendar</web>
+  <name>Moment</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Calendar.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1416837508000</creationDate>
+  <date>1416915590000</date>
+  <contentUpdateDate>1416837558000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Moment</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <attachment>
+    <filename>moment-2.8.4.min.js</filename>
+    <filesize>33783</filesize>
+    <author>XWiki.Admin</author>
+    <date>1416837544000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>Ly8hIG1vbWVudC5qcwovLyEgdmVyc2lvbiA6IDIuOC40Ci8vISBhdXRob3JzIDogVGltIFdvb2Qs
 IElza3JlbiBDaGVybmV2LCBNb21lbnQuanMgY29udHJpYnV0b3JzCi8vISBsaWNlbnNlIDogTUlU
 Ci8vISBtb21lbnRqcy5jb20KKGZ1bmN0aW9uKGEpe2Z1bmN0aW9uIGIoYSxiLGMpe3N3aXRjaChh
 cmd1bWVudHMubGVuZ3RoKXtjYXNlIDI6cmV0dXJuIG51bGwhPWE/YTpiO2Nhc2UgMzpyZXR1cm4g
@@ -619,98 +622,100 @@ aCI7cmV0dXJuIGErY319KSxKYj9tb2R1bGUuZXhwb3J0cz10YjoiZnVuY3Rpb24iPT10eXBlb2Yg
 ZGVmaW5lJiZkZWZpbmUuYW1kPyhkZWZpbmUoIm1vbWVudCIsZnVuY3Rpb24oYSxiLGMpe3JldHVy
 biBjLmNvbmZpZyYmYy5jb25maWcoKSYmYy5jb25maWcoKS5ub0dsb2JhbD09PSEwJiYoeGIubW9t
 ZW50PXViKSx0Yn0pLHNiKCEwKSk6c2IoKX0pLmNhbGwodGhpcyk7
-</content></attachment>
-<object>
-<class>
-<name>XWiki.JavaScriptExtension</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<cache>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<multiSelect>0</multiSelect>
-<name>cache</name>
-<number>5</number>
-<prettyName>Caching policy</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>1</size>
-<unmodifiable>0</unmodifiable>
-<values>long|short|default|forbid</values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</cache>
-<code>
-<disabled>0</disabled>
-<name>code</name>
-<number>2</number>
-<prettyName>Code</prettyName>
-<rows>20</rows>
-<size>50</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-</code>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-<parse>
-<disabled>0</disabled>
-<displayFormType>select</displayFormType>
-<displayType>yesno</displayType>
-<name>parse</name>
-<number>4</number>
-<prettyName>Parse content</prettyName>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-</parse>
-<use>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<multiSelect>0</multiSelect>
-<name>use</name>
-<number>3</number>
-<prettyName>Use this extension</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>1</size>
-<unmodifiable>0</unmodifiable>
-<values>currentPage|onDemand|always</values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</use>
-</class>
-<name>Calendar.Moment</name>
-<number>0</number>
-<className>XWiki.JavaScriptExtension</className>
-<guid>0907b056-27d7-4168-9519-a75a82b7bf45</guid>
-<property>
-<cache>long</cache>
-</property>
-<property>
-<code>#set($momentDoc = $xwiki.getDocument('Calendar.Moment'))
+</content>
+  </attachment>
+  <object>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <name>Calendar.Moment</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>0907b056-27d7-4168-9519-a75a82b7bf45</guid>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>#set($momentDoc = $xwiki.getDocument('Calendar.Moment'))
 $momentDoc.getAttachment('moment-2.8.4.min.js').getContentAsString()</code>
-</property>
-<property>
-<name>moment-2.8.4.min.js</name>
-</property>
-<property>
-<parse>1</parse>
-</property>
-<property>
-<use>onDemand</use>
-</property>
-</object>
-<content></content></xwikidoc>
+    </property>
+    <property>
+      <name>moment-2.8.4.min.js</name>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <content/>
+</xwikidoc>
