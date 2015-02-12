@@ -846,7 +846,7 @@ The editable parameter needs to be set to true for this field to be used.</descr
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>dd60beeb-5501-436c-9af6-c2bee5fbf7c2</guid>
     <property>
-      <defaultValue>duration</defaultValue>
+      <defaultValue/>
     </property>
     <property>
       <description>Field in the object where the duration of the events are stored. The field needs to be a date field. The parameter is necessary unless a JSON service and and Update URL are provided</description>

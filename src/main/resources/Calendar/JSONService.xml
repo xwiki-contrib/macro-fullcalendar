@@ -37,18 +37,24 @@
 #set($itemdoc = $xwiki.getDocument($item))
 #set($startdate = $itemdoc.getValue($request.startfield))
 #set($duration = $itemdoc.getValue($request.durationfield))
-#if(!$duration)
- #set($duration = "30")
-#end
 #if($startdate)
+#set($id     = $escapetool.javascript($itemdoc.fullName))
+#set($title  = $escapetool.javascript($itemdoc.plainTitle))
+#set($url    = $escapetool.javascript($itemdoc.getExternalURL()))
+#set($start  = $xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm'))
+#set($allDay = true)
+#if($duration)
 #set($enddate = $xwiki.jodatime.getDateTime($startdate.getTime()))
 #set($enddate = $enddate.plusMinutes($util.parseInt($duration)))
+#set($end     = $xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm'))
+#set($allDay  = false)
+#end
 #if($started)
 ,
 #else
 #set($started = true)
 #end
-{ "id" : "${escapetool.javascript($itemdoc.fullName)}", "title" : "${escapetool.javascript($itemdoc.plainTitle)}", "url" : "${escapetool.javascript($itemdoc.getExternalURL())}", "start" : "$!{xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm')}", "end" : "$!{xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm')}", "allDay" : false }
+{ "id" : "${id}", "title" : "${title}", "url" : "${url}", "start" : "$!{start}"#if($end), "end" : "$!{end}"#end, "allDay" : ${allDay} }
 #end
 #end
 ]
