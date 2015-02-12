@@ -233,13 +233,16 @@
 {{html clean="false"}}
 &lt;script&gt;
 require(['fullcalendar', 'gcal'], function ($) {
-  function updateEvent(page,isResize, dayDelta,minuteDelta,allDay,revertFunc) {
+  function updateEvent(page, isResize, delta, allDay, revertFunc) {
           var savingBox = new XWiki.widgets.Notification("Saving...", "inprogress", {inactive: true});
           var savedBox = new XWiki.widgets.Notification("Saved", "done", {inactive: true});
           var failedBox = new XWiki.widgets.Notification("Failed to save the document. Reason: &lt;span id=\"ajaxRequestFailureReason\"&gt;&lt;/span&gt;", "error", {inactive: true});
           savingBox.show();
           savedBox.hide();
           failedBox.hide();
+             // Compute days and minutes in order to keep backwards compatibility
+             var dayDelta = delta._data.days;
+             var minuteDelta = delta._data.hours * 60 + delta._data.minutes;
              // let's call the calendar update
              var url = '$updateurl';
              url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
@@ -247,7 +250,7 @@ require(['fullcalendar', 'gcal'], function ($) {
              jQuery.ajax({ url: url}).fail(function ( data ) {
                 savingBox.hide();
                 failedBox.show();
-                $('ajaxRequestFailureReason').update("update failed");
+                jQuery('ajaxRequestFailureReason').update("update failed");
                 revertFunc();
              }).success(function ( data ) {
                 if (data.indexOf("OK ")==0) {
@@ -257,7 +260,7 @@ require(['fullcalendar', 'gcal'], function ($) {
                 } else {
                  savingBox.hide();
                  failedBox.show();
-                 $('ajaxRequestFailureReason').update("update failed");
+                 jQuery('ajaxRequestFailureReason').update("update failed");
                  // alert("Update failed: " + data);
                  revertFunc();
                 }
@@ -324,11 +327,11 @@ require(['fullcalendar', 'gcal'], function ($) {
           #if($minTime!=""), minTime: '$minTime' #end
           #if($maxTime!=""), maxTime: '$maxTime' #end
           ,editable: $editable
-          ,eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
-             updateEvent(event.id, false, dayDelta, minuteDelta, allDay, revertFunc);
+          ,eventDrop: function(event, delta, revertFunc) {
+             updateEvent(event.id, false, delta, event._allDay, revertFunc);
           }
-          ,eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
-             updateEvent(event.id, true, dayDelta, minuteDelta, false, revertFunc);
+          ,eventResize: function(event, delta, revertFunc) {
+             updateEvent(event.id, true, delta, false, revertFunc);
          }
       })
 
