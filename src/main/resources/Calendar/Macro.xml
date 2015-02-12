@@ -183,13 +183,19 @@
 #end
 #set($month = $xcontext.macro.params.month)
 #if(!$month)
- #set($month = "01")
+ #set($month = "${mathtool.add($datetool.month, 1)}")
+ #if ($stringtool.length($month) == 1)
+   #set($month = "0${month}")
+ #end
 #elseif ($stringtool.length($month) == 1)
  #set($month = "0${month}")
 #end
 #set($date = $xcontext.macro.params.date)
 #if(!$date)
- #set($date = "01")
+ #set($date = "${datetool.day}")
+ #if ($stringtool.length($date) == 1)
+   #set($date = "0${date}")
+ #end
 #elseif ($stringtool.length($date) == 1)
  #set($date = "0${date}")
 #end
