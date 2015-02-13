@@ -26,36 +26,39 @@
 #if($xcontext.action == 'get' &amp;&amp; "$!{request.outputSyntax}" == 'plain')
   $response.setContentType('application/json')
 #end
+##
 #if("$!{request.sql}"!="")
- #set($hql = $request.sql)
+  #set($hql = $request.sql)
 #else
- #set($hql =", BaseObject as obj $!{request.fromsql} where doc.fullName=obj.name and obj.className='${request.classname}' $!{request.wheresql}")
+  #set($hql =", BaseObject as obj $!{request.fromsql} where doc.fullName=obj.name and obj.className='${request.classname}' $!{request.wheresql}")
 #end
+##
 [
 #set($started = false)
-#foreach($item in $xwiki.searchDocuments($hql))
-#set($itemdoc = $xwiki.getDocument($item))
-#set($startdate = $itemdoc.getValue($request.startfield))
-#set($duration = $itemdoc.getValue($request.durationfield))
-#if($startdate)
-#set($id     = $escapetool.javascript($itemdoc.fullName))
-#set($title  = $escapetool.javascript($itemdoc.plainTitle))
-#set($url    = $escapetool.javascript($itemdoc.getExternalURL()))
-#set($start  = $xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm'))
-#set($allDay = true)
-#if($duration)
-#set($enddate = $xwiki.jodatime.getDateTime($startdate.getTime()))
-#set($enddate = $enddate.plusMinutes($util.parseInt($duration)))
-#set($end     = $xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm'))
-#set($allDay  = false)
-#end
-#if($started)
-,
-#else
-#set($started = true)
-#end
-{ "id" : "${id}", "title" : "${title}", "url" : "${url}", "start" : "$!{start}"#if($end), "end" : "$!{end}"#end, "allDay" : ${allDay} }
-#end
+#foreach($item in $services.query.hql($hql).execute())
+  #set($itemdoc   = $xwiki.getDocument($item))
+  #set($startdate = $itemdoc.getValue($request.startfield))
+  #set($duration  = $itemdoc.getValue($request.durationfield))
+  ##
+  #if($startdate)
+    #set($id     = $escapetool.javascript($itemdoc.fullName))
+    #set($title  = $escapetool.javascript($itemdoc.plainTitle))
+    #set($url    = $escapetool.javascript($itemdoc.getExternalURL()))
+    #set($start  = $xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm'))
+    #set($allDay = true)
+    #if($duration)
+      #set($enddate = $xwiki.jodatime.getDateTime($startdate.getTime()))
+      #set($enddate = $enddate.plusMinutes($mathtool.toInteger($duration)))
+      #set($end     = $xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm'))
+      #set($allDay  = false)
+    #end
+    #if($started)
+    ,
+    #else
+      #set($started = true)
+    #end
+    { "id" : "${id}", "title" : "${title}", "url" : "${url}", "start" : "$!{start}"#if($end), "end" : "$!{end}"#end, "allDay" : ${allDay} }
+  #end
 #end
 ]
 {{/velocity}}</content>

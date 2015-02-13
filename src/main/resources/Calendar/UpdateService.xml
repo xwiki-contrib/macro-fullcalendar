@@ -24,59 +24,64 @@
   <hidden>true</hidden>
   <content>{{velocity}}
 #set($page = $request.page)
+##
 #if($request.durationfield)
-#set($durationfield = $request.durationfield)
+  #set($durationfield = $request.durationfield)
 #else
-#set($durationfield = "duration")
+  #set($durationfield = "duration")
 #end
+##
 #if($request.startfield)
-#set($startfield = $request.startfield)
+  #set($startfield = $request.startfield)
 #else
-#set($startfield = "datetime")
+  #set($startfield = "datetime")
 #end
+##
 #if($request.classname)
-#set($classname = $request.classname)
+  #set($classname = $request.classname)
 #else
-#set($classname = "")
+  #set($classname = "")
 #end
+##
 #set($success = false)
-#if($page&amp;&amp;$page!="")
- #set($pagedoc = $xwiki.getDocument($page))
- #if(!$pagedoc.isNew())
-#set($ok = $pagedoc.use($classname))
-#if("$!{request.isResize}"=="1")
- #set($cduration = $pagedoc.getValue($durationfield))
- #if(!$cduration)
-  #set($cduration = "30")
- #end
- #set($nduration = $util.parseInt($cduration))
- #set($dayDelta = $util.parseInt($request.dayDelta))
- #set($minuteDelta = $util.parseInt($request.minuteDelta))
- #set($nduration = $nduration + $dayDelta * 24 + $minuteDelta)
- #set($ok = $pagedoc.set($durationfield, "$!{nduration}"))
- #set($success = true)
+##
+#if($page &amp;&amp; $page != "")
+  #set($pagedoc = $xwiki.getDocument($page))
+  #if(!$pagedoc.isNew())
+    #set($discard = $pagedoc.use($classname))
+    #if("$!{request.isResize}" == "1")
+      #set($cduration = $pagedoc.getValue($durationfield))
+      #if(!$cduration)
+        #set($cduration = "30")
+      #end
+      #set($nduration   = $mathtool.toInteger($cduration))
+      #set($dayDelta    = $mathtool.toInteger($request.dayDelta))
+      #set($minuteDelta = $mathtool.toInteger($request.minuteDelta))
+      #set($nduration   = $nduration + $dayDelta * 24 + $minuteDelta)
+      #set($discard     = $pagedoc.set($durationfield, "$!{nduration}"))
+      #set($success     = true)
+    #else
+      #set($datetime = $pagedoc.getValue($startfield))
+      #if(!$datetime)
+        #set($datetime = $xwiki.jodatime.getDateTime(2012, 7, 22, 8, 0, 0, 0).toDate())
+      #end
+      #set($jdatetime = $xwiki.jodatime.getDateTime($datetime.getTime()))
+      #set($jdatetime = $jdatetime.plusDays($mathtool.toInteger($request.dayDelta)))
+      #set($jdatetime = $jdatetime.plusMinutes($mathtool.toInteger($request.minuteDelta)))
+      #set($discard   = $pagedoc.set($startfield, $jdatetime.toDate()))
+      #set($success   = true)
+    #end
+    #if($success)
+      #set($discard = $pagedoc.save("Update session time"))
+      OK $pagedoc.getValue($durationfield) $pagedoc.getValue($startfield)
+    #else
+      FAIL $message ($pagedoc.fullName $pagedoc.getValue($durationfield) $pagedoc.getValue($startfield))
+    #end
+  #else
+    FAIL No Document
+  #end
 #else
- #set($datetime = $pagedoc.getValue($startfield))
- #if(!$datetime)
-  #set($datetime = $xwiki.jodatime.getDateTime(2012, 7, 22, 8, 0, 0, 0).toDate())
- #end
- #set($jdatetime = $xwiki.jodatime.getDateTime($datetime.getTime()))
- #set($jdatetime = $jdatetime.plusDays($util.parseInt($request.dayDelta)))
- #set($jdatetime = $jdatetime.plusMinutes($util.parseInt($request.minuteDelta)))
- #set($ok = $pagedoc.set($startfield, $jdatetime.toDate()))
- #set($success = true)
-#end
-#if($success)
-#set($ok = $pagedoc.save("Update session time"))
-OK $pagedoc.getValue($durationfield) $pagedoc.getValue($startfield)
-#else
-FAIL $message ($pagedoc.fullName $pagedoc.getValue($durationfield) $pagedoc.getValue($startfield))
-#end
- #else
-FAIL No Document
- #end
-#else
-FAIL No Document
+  FAIL No Document
 #end
 {{/velocity}}</content>
 </xwikidoc>

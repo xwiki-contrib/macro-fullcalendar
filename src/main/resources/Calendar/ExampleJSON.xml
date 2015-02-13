@@ -27,6 +27,20 @@
   $response.setContentType('application/json')
 #end
 
-[{"id":111,"title":"Event1","start":"2012-06-10","url":"http:\/\/yahoo.com\/"},{"id":222,"title":"Event2","start":"2012-06-20","end":"2012-06-22","url":"http:\/\/yahoo.com\/"}]
+[
+  {
+    "id"    : 111,
+    "title" : "Event1",
+    "start" : "2012-06-10",
+    "url"   : "http:\/\/yahoo.com\/"
+  },
+  {
+    "id"    : 222,
+    "title" : "Event2",
+    "start" : "2012-06-20",
+    "end"   : "2012-06-22",
+    "url"   : "http:\/\/yahoo.com\/"
+  }
+]
 {{/velocity}}</content>
 </xwikidoc>
