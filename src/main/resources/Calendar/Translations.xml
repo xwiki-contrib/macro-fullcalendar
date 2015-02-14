@@ -77,5 +77,9 @@ xwiki.calendar.allDayText=All day
 xwiki.calendar.button.today=today
 xwiki.calendar.button.day=day
 xwiki.calendar.button.week=week
-xwiki.calendar.button.month=month</content>
+xwiki.calendar.button.month=month
+
+xwiki.calendar.notification.inprogress=Saving...
+xwiki.calendar.notification.done=Saved
+xwiki.calendar.notification.error=Failed to save the document. Reason: update failed!</content>
 </xwikidoc>

@@ -41,5 +41,9 @@ xwiki.calendar.allDayText=Journée
 xwiki.calendar.button.today=Aujourd'hui
 xwiki.calendar.button.day=Jour
 xwiki.calendar.button.week=Semaine
-xwiki.calendar.button.month=Mois</content>
+xwiki.calendar.button.month=Mois
+
+xwiki.calendar.notification.inprogress=Enregistrement...
+xwiki.calendar.notification.done=Enregistré
+xwiki.calendar.notification.error=Impossible d'enregistrer le document en raison de: mise à jour a échoué!</content>
 </xwikidoc>

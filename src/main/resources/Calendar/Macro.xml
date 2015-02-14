@@ -242,9 +242,9 @@
 require(['fullcalendar', 'gcal'], function ($) {
   function updateEvent(page, isResize, delta, allDay, revertFunc) {
     // Initialize notification boxes
-    var savingBox = new XWiki.widgets.Notification("Saving...", "inprogress", {inactive: true});
-    var savedBox  = new XWiki.widgets.Notification("Saved", "done", {inactive: true});
-    var failedBox = new XWiki.widgets.Notification("Failed to save the document. Reason: update failed!", "error", {inactive: true});
+    var savingBox = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.inprogress')", "inprogress", {inactive: true});
+    var savedBox  = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.done')", "done", {inactive: true});
+    var failedBox = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.error')", "error", {inactive: true});
 
     // Display loading notification
     savingBox.show();
