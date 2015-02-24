@@ -6,9 +6,9 @@
   <language>pl</language>
   <defaultLanguage/>
   <translation>1</translation>
-  <parent>Calendar.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
   <creationDate>1418112619000</creationDate>
+  <parent>Calendar.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <date>1418112966000</date>
