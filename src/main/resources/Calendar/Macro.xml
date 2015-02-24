@@ -162,7 +162,6 @@ or
     </class>
     <property>
       <code>{{velocity}}
-#set($discard = $services.localization.use('document', 'Calendar.Translations'))
 #set($discard = $xwiki.jsx.use("Calendar.JQuery", {'defer': false, 'minify': false}))
 #set($discard = $xwiki.jsx.use("Calendar.JQueryUI", {'defer': false, 'minify': false}))
 #set($discard = $xwiki.jsx.use("Calendar.Moment", {'defer': false, 'minify': false}))
