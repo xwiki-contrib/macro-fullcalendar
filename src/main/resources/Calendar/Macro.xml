@@ -1484,7 +1484,7 @@ basicDay</description>
       <defaultValue>23:00</defaultValue>
     </property>
     <property>
-      <description>Last time to show in the calendar. Users won't see hours before this time. Leave empty for default (23.00)
+      <description>Last time to show in the calendar. Users won't see hours after this time. Leave empty for default (23.00)
 </description>
     </property>
     <property>
