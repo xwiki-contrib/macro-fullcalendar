@@ -33,7 +33,7 @@
   #set($hql =", BaseObject as obj $!{request.fromsql} where doc.fullName=obj.name and obj.className='${request.classname}' $!{request.wheresql}")
 #end
 ##
-[
+#set($jsonResult = [])
 #set($started = false)
 #foreach($item in $services.query.hql($hql).execute())
   #set($itemdoc   = $xwiki.getDocument($item))
@@ -41,9 +41,9 @@
   #set($duration  = $itemdoc.getValue($request.durationfield))
   ##
   #if($startdate)
-    #set($id     = $escapetool.javascript($itemdoc.fullName))
-    #set($title  = $escapetool.javascript($itemdoc.plainTitle))
-    #set($url    = $escapetool.javascript($itemdoc.getExternalURL()))
+    #set($id     = $itemdoc.fullName)
+    #set($title  = $itemdoc.plainTitle)
+    #set($url    = $itemdoc.getExternalURL())
     #set($start  = $xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm'))
     #set($allDay = true)
     #if($duration)
@@ -52,14 +52,13 @@
       #set($end     = $xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm'))
       #set($allDay  = false)
     #end
-    #if($started)
-    ,
-    #else
-      #set($started = true)
+    #set($currentResult = { "id" : $itemdoc.fullName, "title" : $itemdoc.plainTitle, "url" : $itemdoc.getExternalURL(), "start" : ${start}, "allDay" : $allDay})
+    #if ($end)
+      #set($discard = $currentResult.put('end', $end))
     #end
-    { "id" : "${id}", "title" : "${title}", "url" : "${url}", "start" : "$!{start}"#if($end), "end" : "$!{end}"#end, "allDay" : ${allDay} }
+    #set($discard = $jsonResult.add($currentResult))
   #end
 #end
-]
+$jsontool.serialize($jsonResult)
 {{/velocity}}</content>
 </xwikidoc>
