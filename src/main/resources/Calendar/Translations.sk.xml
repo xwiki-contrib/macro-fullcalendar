@@ -22,7 +22,7 @@
 <xwikidoc>
   <web>Calendar</web>
   <name>Translations</name>
-  <language>pl</language>
+  <language>sk</language>
   <defaultLanguage>en</defaultLanguage>
   <translation>1</translation>
   <parent>Calendar.WebHome</parent>
@@ -42,23 +42,30 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>## XWiki Translation for language pl generated from http://www.l10n.xwiki.org
-xwiki.calendar.allDayText=Cały dzień
-xwiki.calendar.axisFormat=H\:mm
-xwiki.calendar.button.day=Dzień
-xwiki.calendar.button.month=Miesiąc
-xwiki.calendar.button.today=Dzisiaj
-xwiki.calendar.button.week=Tydzień
-xwiki.calendar.columnFormat.day=dddd D.M
-xwiki.calendar.columnFormat.month=ddd
-xwiki.calendar.columnFormat.week=ddd D.M
-xwiki.calendar.dayNames=['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota']
-xwiki.calendar.dayNamesShort=['Nie','Pon','Wto','Śro','Czw','Pią','Sob']
-xwiki.calendar.monthNames=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień']
-xwiki.calendar.monthNamesShort=['Sty','Lut','Mar','Kwi','Maj','Cze','Lip','Sie','Wrz','Paź','Lis','Gru']
-xwiki.calendar.timeFormat=H\:mm
-xwiki.calendar.titleFormat.day=dddd, D MMM, YYYY
-xwiki.calendar.titleFormat.month=MMMM YYYY
-xwiki.calendar.titleFormat.week=D MMM YYYY
+  <content>## XWiki Translation for language sk generated from http://www.l10n.xwiki.org
+rendering.macro.calendar.description=Zobraziť kalendár
+rendering.macro.calendar.name=Kalendár
+rendering.macro.calendar.parameter.date.name=Deň
+rendering.macro.calendar.parameter.defaultView.name=Predvolené zobrazenie
+rendering.macro.calendar.parameter.durationfield.name=Doba trvania
+rendering.macro.calendar.parameter.editable.name=Editovateľné
+rendering.macro.calendar.parameter.firstDay.name=Prvý deň
+rendering.macro.calendar.parameter.firstHour.name=Prvá hodina
+rendering.macro.calendar.parameter.gApiKey.name=gApiKey
+rendering.macro.calendar.parameter.gCal.name=gCal
+rendering.macro.calendar.parameter.json.name=JSON
+rendering.macro.calendar.parameter.month.name=Mesiac
+rendering.macro.calendar.parameter.updateurl.name=Aktualizovať URL
+rendering.macro.calendar.parameter.year.name=Rok
+xwiki.calendar.button.day=deň
+xwiki.calendar.button.month=mesiac
+xwiki.calendar.button.today=dnes
+xwiki.calendar.button.week=týždeň
+xwiki.calendar.dayNames=['Nedeľa', 'Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota']
+xwiki.calendar.dayNamesShort=['Ned', 'Pon', 'Ut', 'Str', 'Štv', 'Pia', 'Sob']
+xwiki.calendar.monthNames=['Január', 'Február', 'Marec', 'Apríl', 'Máj', 'Jún', 'Júl', 'August', 'September', 'Október', 'November', 'December']
+xwiki.calendar.monthNamesShort=['Jan', 'Febr', 'Mar', 'Apr', 'Máj', 'Jún', 'Júl', 'Aug', 'Sept', 'Okt', 'Nov', 'Dec']
+xwiki.calendar.notification.done=Uložené
+xwiki.calendar.notification.error=Nepodarilo sa uložiť dokument.
 </content>
 </xwikidoc>
