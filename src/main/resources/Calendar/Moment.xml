@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc reference="Calendar.Moment" locale="">
   <web>Calendar</web>
   <name>Moment</name>
   <language/>
@@ -664,7 +664,7 @@ ZW50PXViKSx0Yn0pLHNiKCEwKSk6c2IoKX0pLmNhbGwodGhpcyk7
         <prettyName>Caching policy</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>long|short|default|forbid</values>
@@ -672,6 +672,7 @@ ZW50PXViKSx0Yn0pLHNiKCEwKSk6c2IoKX0pLmNhbGwodGhpcyk7
       </cache>
       <code>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>code</name>
         <number>2</number>
         <prettyName>Code</prettyName>
@@ -709,7 +710,7 @@ ZW50PXViKSx0Yn0pLHNiKCEwKSk6c2IoKX0pLmNhbGwodGhpcyk7
         <prettyName>Use this extension</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>currentPage|onDemand|always</values>
