@@ -279,7 +279,7 @@ require(['fullcalendar', 'gcal'], function ($) {
 
     // Let's call the calendar update
     var url = '$updateurl';
-    url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
+    url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endField=$!{xcontext.macro.params.endField}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
 
     jQuery.ajax({ url: url }).fail(function(data) {
       savingBox.hide();
@@ -331,7 +331,7 @@ require(['fullcalendar', 'gcal'], function ($) {
       googleCalendarApiKey : "$gApiKey",
       eventSources: [
         #if($json != $jsonService || $!{xcontext.macro.params.classname} != '')
-          "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}"
+          "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endField=$!{xcontext.macro.params.endField}&amp;durationfield=$!{xcontext.macro.params.durationfield}"
         #end
         #if($!gCal != '')
           ,
@@ -1507,6 +1507,73 @@ basicDay</description>
     </property>
     <property>
       <name>maxTime</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <editor/>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Calendar.Macro</name>
+    <number>16</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>a6782467-7316-410e-a4dd-2b6586a35bc1</guid>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description>Field in the object where the end date of the events are stored. The field needs to be a date field. The parameter is necessary unless a JSON service and and Update URL are provided</description>
+    </property>
+    <property>
+      <mandatory>0</mandatory>
+    </property>
+    <property>
+      <name>endField</name>
     </property>
   </object>
   <content>Example usage:
