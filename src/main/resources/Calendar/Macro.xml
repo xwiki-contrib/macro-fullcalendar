@@ -279,7 +279,7 @@ require(['fullcalendar', 'gcal'], function ($) {
 
     // Let's call the calendar update
     var url = '$updateurl';
-    url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endField=$!{xcontext.macro.params.endField}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
+    url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
 
     jQuery.ajax({ url: url }).fail(function(data) {
       savingBox.hide();
@@ -331,7 +331,7 @@ require(['fullcalendar', 'gcal'], function ($) {
       googleCalendarApiKey : "$gApiKey",
       eventSources: [
         #if($json != $jsonService || $!{xcontext.macro.params.classname} != '')
-          "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endField=$!{xcontext.macro.params.endField}&amp;durationfield=$!{xcontext.macro.params.durationfield}"
+          "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}"
         #end
         #if($!gCal != '')
           ,
@@ -1573,7 +1573,7 @@ basicDay</description>
       <mandatory>0</mandatory>
     </property>
     <property>
-      <name>endField</name>
+      <name>endfield</name>
     </property>
   </object>
   <content>Example usage:

@@ -57,6 +57,8 @@
   #set($startfield = "datetime")
 #end
 ##
+#set($endfield = $request.endfield)
+##
 #if($request.classname)
   #set($classname = $request.classname)
 #else
@@ -69,31 +71,40 @@
   #set($pagedoc = $xwiki.getDocument($page))
   #if(!$pagedoc.isNew())
     #set($discard = $pagedoc.use($classname))
+    #set($dayDelta    = $mathtool.toInteger($request.dayDelta))
+    #set($minuteDelta = $mathtool.toInteger($request.minuteDelta))
     #if("$!{request.isResize}" == "1")
+      #set($enddate = $pagedoc.getValue($endfield))
       #set($cduration = $pagedoc.getValue($durationfield))
-      #if(!$cduration)
-        #set($cduration = "30")
+      #if ($enddate)
+        #set ($jenddate = $xwiki.jodatime.getDateTime($enddate.time))
+        #set ($jenddate = $jenddate.plusDays($dayDelta))
+        #set ($jenddate = $jenddate.plusMinutes($minuteDelta))
+        #set ($discard = $pagedoc.set($endfield, $jenddate.toDate()))
+        #set ($success = true)
+      #else
+        #if(!$cduration)
+          #set($cduration = "30")
+        #end
+        #set($nduration   = $mathtool.toInteger($cduration))
+        #set($nduration   = $nduration + $dayDelta * 24 + $minuteDelta)
+        #set($discard     = $pagedoc.set($durationfield, "$!{nduration}"))
+        #set($success     = true)
       #end
-      #set($nduration   = $mathtool.toInteger($cduration))
-      #set($dayDelta    = $mathtool.toInteger($request.dayDelta))
-      #set($minuteDelta = $mathtool.toInteger($request.minuteDelta))
-      #set($nduration   = $nduration + $dayDelta * 24 + $minuteDelta)
-      #set($discard     = $pagedoc.set($durationfield, "$!{nduration}"))
-      #set($success     = true)
     #else
       #set($datetime = $pagedoc.getValue($startfield))
       #if(!$datetime)
         #set($datetime = $xwiki.jodatime.getDateTime(2012, 7, 22, 8, 0, 0, 0).toDate())
       #end
       #set($jdatetime = $xwiki.jodatime.getDateTime($datetime.getTime()))
-      #set($jdatetime = $jdatetime.plusDays($mathtool.toInteger($request.dayDelta)))
-      #set($jdatetime = $jdatetime.plusMinutes($mathtool.toInteger($request.minuteDelta)))
+      #set($jdatetime = $jdatetime.plusDays($dayDelta))
+      #set($jdatetime = $jdatetime.plusMinutes($minuteDelta))
       #set($discard   = $pagedoc.set($startfield, $jdatetime.toDate()))
       #set($success   = true)
     #end
     #if($success)
       #set($discard = $pagedoc.save("Update session time"))
-      OK $pagedoc.getValue($durationfield) $pagedoc.getValue($startfield)
+      OK $!pagedoc.getValue($durationfield) $pagedoc.getValue($startfield) $pagedoc.getValue($endfield)
     #else
       FAIL $message ($pagedoc.fullName $pagedoc.getValue($durationfield) $pagedoc.getValue($startfield))
     #end
