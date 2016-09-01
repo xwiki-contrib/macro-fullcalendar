@@ -74,15 +74,15 @@
     #set($dayDelta    = $mathtool.toInteger($request.dayDelta))
     #set($minuteDelta = $mathtool.toInteger($request.minuteDelta))
     #if("$!{request.isResize}" == "1")
-      #set($enddate = $pagedoc.getValue($endfield))
-      #set($cduration = $pagedoc.getValue($durationfield))
-      #if ($enddate)
+      #if ("$!endfield" != '')
+        #set ($enddate = $pagedoc.getValue($endfield))
         #set ($jenddate = $xwiki.jodatime.getDateTime($enddate.time))
         #set ($jenddate = $jenddate.plusDays($dayDelta))
         #set ($jenddate = $jenddate.plusMinutes($minuteDelta))
         #set ($discard = $pagedoc.set($endfield, $jenddate.toDate()))
         #set ($success = true)
       #else
+        #set ($cduration = $pagedoc.getValue($durationfield))
         #if(!$cduration)
           #set($cduration = "30")
         #end
