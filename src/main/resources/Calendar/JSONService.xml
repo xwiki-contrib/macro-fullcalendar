@@ -59,7 +59,7 @@
   #set ($itemdoc   = $xwiki.getDocument($item))
   #set ($startField = $request.startfield)
   ##
-  #if ("$!startField" != '')
+  #if ("$!startField" != '' &amp;&amp; $itemdoc.getValue($startField))
     #set ($startdate = $itemdoc.getValue($startField))
     #set ($id     = $itemdoc.fullName)
     #set ($title  = $itemdoc.plainTitle)
