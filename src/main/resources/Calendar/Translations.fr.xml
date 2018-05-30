@@ -42,60 +42,65 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>## XWiki Translation for language fr generated from http://www.l10n.xwiki.org
-rendering.macro.calendar.description=Afficher un Calendrier
-rendering.macro.calendar.name=Calendrier
-rendering.macro.calendar.parameter.classname.description=Classname où les objets d'événements sont stockés. Ce paramètre est nécessaire, sauf si un service JSON et une URL de mise à jour sont fournis
-rendering.macro.calendar.parameter.classname.name=Classname
-rendering.macro.calendar.parameter.date.description=Jour (de 1 à 31) de la date à montrer lors du chargement du calendrier. Laissez vide pour aujourd'hui
-rendering.macro.calendar.parameter.date.name=Jour
-rendering.macro.calendar.parameter.defaultView.description=Vue de l'agenda à afficher par défaut au chargement de l'agenda. Les valeurs possibles sont\: month, agendaWeek, agendaDay, basicWeek, basicDay
-rendering.macro.calendar.parameter.defaultView.name=Affichage par défaut
-rendering.macro.calendar.parameter.durationfield.description=Champ de l'objet où la durée des événements sera stockée. Ce champ doit être un champ date. Ce paramètre est nécessaire, sauf si service JSON et URL de mise à jour sont fournis
-rendering.macro.calendar.parameter.durationfield.name=Durée
-rendering.macro.calendar.parameter.editable.description=Permet d'activer la fonction d'édition permettant de déplacer des événements
-rendering.macro.calendar.parameter.editable.name=Modifiable
-rendering.macro.calendar.parameter.firstDay.description=Premier jour de la semaine à afficher dans le calendrier (de 0 pour dimanche à 6 pour lundi). Laissez vide pour choisir le lundi
-rendering.macro.calendar.parameter.firstDay.name=Premier jour
-rendering.macro.calendar.parameter.firstHour.description=Première heure à afficher dans le calendrier. Laissez vide pour le défaut
-rendering.macro.calendar.parameter.firstHour.name=Première heure
-rendering.macro.calendar.parameter.gApiKey.description=Clé pour l'API Google Calendrier.
-rendering.macro.calendar.parameter.gApiKey.name=gApiKey
-rendering.macro.calendar.parameter.gCal.description=ID d'agendas Google (séparés par des virgules)
-rendering.macro.calendar.parameter.gCal.name=gCal
-rendering.macro.calendar.parameter.json.description=URL vers une page de génération du JSON. Ceci n'est nécessaire que si le JSON généré par Calendar.JSONService ne correspond pas à vos besoins.
-rendering.macro.calendar.parameter.json.name=JSON
-rendering.macro.calendar.parameter.maxTime.description=Dernière heure à afficher dans le calendrier. Les utilisateurs ne verront pas les heures après cette heure. Laissez vide pour le défaut (23.00)
-rendering.macro.calendar.parameter.maxTime.name=Temps maximum
-rendering.macro.calendar.parameter.minTime.description=Première heure à afficher dans le calendrier. Les utilisateurs ne verront pas les heures avant cette heure. Laissez vide pour le défaut (8.00)
-rendering.macro.calendar.parameter.minTime.name=Temps minimum
-rendering.macro.calendar.parameter.month.description=Mois (de 0 à 11) de la date à montrer lors du chargement du calendrier. Laissez vide pour aujourd'hui
-rendering.macro.calendar.parameter.month.name=Mois
-rendering.macro.calendar.parameter.startfield.description=Champ de l'objet dans lequel la date de début des événements est stockée. Ce champ doit être un champ de date. Ce paramètre est nécessaire, sauf si un service JSON et une URL de mise à jour sont fournis.
-rendering.macro.calendar.parameter.startfield.name=Champ de démarrage
-rendering.macro.calendar.parameter.updateurl.description=URL de la page de mise à jour des événements quand ils ont déplacés ou redimensionnés dans le calendrier. Le paramètre «modifiable» doit être mis à true pour que ce champ soit pris en compte
-rendering.macro.calendar.parameter.updateurl.name=URL de mise à jour
-rendering.macro.calendar.parameter.year.description=Année de la date à montrer lors du chargement du calendrier. Laissez vide pour aujourd'hui
-rendering.macro.calendar.parameter.year.name=Année
-xwiki.calendar.allDayText=Journée 
-xwiki.calendar.axisFormat=HH\:mm
-xwiki.calendar.button.day=Jour
-xwiki.calendar.button.month=Mois
-xwiki.calendar.button.today=Aujourd'hui
-xwiki.calendar.button.week=Semaine
-xwiki.calendar.columnFormat.day=dddd D/MM
-xwiki.calendar.columnFormat.month=ddd
-xwiki.calendar.columnFormat.week=ddd D/MM
+  <content>xwiki.calendar.monthNames=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
+xwiki.calendar.monthNamesShort=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
 xwiki.calendar.dayNames=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi']
 xwiki.calendar.dayNamesShort=['Dim','Lun','Mar','Mer','Jeud','Ven','Sam']
-xwiki.calendar.monthNames=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
-xwiki.calendar.monthNamesShort=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
-xwiki.calendar.notification.done=Enregistré
-xwiki.calendar.notification.error=Impossible d'enregistrer le document en raison de\: mise à jour a échoué\!
-xwiki.calendar.notification.inprogress=Enregistrement...
-xwiki.calendar.timeFormat=HH\:mm
-xwiki.calendar.titleFormat.day=dddd D MMM YYYY
+
+xwiki.calendar.columnFormat.month=ddd
+xwiki.calendar.columnFormat.week=ddd D/MM
+xwiki.calendar.columnFormat.day=dddd D/MM
+
 xwiki.calendar.titleFormat.month=MMMM YYYY
 xwiki.calendar.titleFormat.week=D MMM YYYY
+xwiki.calendar.titleFormat.day=dddd D MMM YYYY
+
+xwiki.calendar.timeFormat=HH\:mm
+xwiki.calendar.axisFormat=HH\:mm
+
+xwiki.calendar.allDayText=Journée 
+xwiki.calendar.button.today=Aujourd'hui
+xwiki.calendar.button.day=Jour
+xwiki.calendar.button.week=Semaine
+xwiki.calendar.button.month=Mois
+
+xwiki.calendar.notification.inprogress=Enregistrement...
+xwiki.calendar.notification.done=Enregistré
+xwiki.calendar.notification.error=Impossible d'enregistrer le document en raison de\: mise à jour a échoué\!
+
+rendering.macro.calendar.name=Calendrier
+rendering.macro.calendar.description=Afficher un Calendrier
+rendering.macro.calendar.parameter.gApiKey.name=gApiKey
+rendering.macro.calendar.parameter.gApiKey.description=Clé pour l'API Google Calendrier.
+rendering.macro.calendar.parameter.gCal.name=gCal
+rendering.macro.calendar.parameter.gCal.description=ID d'agendas Google (séparés par des virgules)
+rendering.macro.calendar.parameter.json.name=JSON
+rendering.macro.calendar.parameter.json.description=URL vers une page de génération du JSON. Ceci n'est nécessaire que si le JSON généré par Calendar.JSONService ne correspond pas à vos besoins.
+rendering.macro.calendar.parameter.updateurl.name=URL de mise à jour
+rendering.macro.calendar.parameter.updateurl.description=URL de la page de mise à jour des événements quand ils ont déplacés ou redimensionnés dans le calendrier. Le paramètre «modifiable» doit être mis à true pour que ce champ soit pris en compte
+rendering.macro.calendar.parameter.classname.name=Classname
+rendering.macro.calendar.parameter.classname.description=Classname où les objets d'événements sont stockés. Ce paramètre est nécessaire, sauf si un service JSON et une URL de mise à jour sont fournis
+rendering.macro.calendar.parameter.startfield.name=Champ de démarrage
+rendering.macro.calendar.parameter.startfield.description=Champ de l'objet dans lequel la date de début des événements est stockée. Ce champ doit être un champ de date. Ce paramètre est nécessaire, sauf si un service JSON et une URL de mise à jour sont fournis.
+rendering.macro.calendar.parameter.durationfield.name=Durée
+rendering.macro.calendar.parameter.durationfield.description=Champ de l'objet où la durée des événements sera stockée. Ce champ doit être un champ date. Ce paramètre est nécessaire, sauf si service JSON et URL de mise à jour sont fournis
+rendering.macro.calendar.parameter.editable.name=Modifiable
+rendering.macro.calendar.parameter.editable.description=Permet d'activer la fonction d'édition permettant de déplacer des événements
+rendering.macro.calendar.parameter.defaultView.name=Affichage par défaut
+rendering.macro.calendar.parameter.defaultView.description=Vue de l'agenda à afficher par défaut au chargement de l'agenda. Les valeurs possibles sont\: month, agendaWeek, agendaDay, basicWeek, basicDay
+rendering.macro.calendar.parameter.year.name=Année
+rendering.macro.calendar.parameter.year.description=Année de la date à montrer lors du chargement du calendrier. Laissez vide pour aujourd'hui
+rendering.macro.calendar.parameter.month.name=Mois
+rendering.macro.calendar.parameter.month.description=Mois (de 0 à 11) de la date à montrer lors du chargement du calendrier. Laissez vide pour aujourd'hui
+rendering.macro.calendar.parameter.date.name=Jour
+rendering.macro.calendar.parameter.date.description=Jour (de 1 à 31) de la date à montrer lors du chargement du calendrier. Laissez vide pour aujourd'hui
+rendering.macro.calendar.parameter.firstDay.name=Premier jour
+rendering.macro.calendar.parameter.firstDay.description=Premier jour de la semaine à afficher dans le calendrier (de 0 pour dimanche à 6 pour lundi). Laissez vide pour choisir le lundi
+rendering.macro.calendar.parameter.firstHour.name=Première heure
+rendering.macro.calendar.parameter.firstHour.description=Première heure à afficher dans le calendrier. Laissez vide pour le défaut
+rendering.macro.calendar.parameter.minTime.name=Temps minimum
+rendering.macro.calendar.parameter.minTime.description=Première heure à afficher dans le calendrier. Les utilisateurs ne verront pas les heures avant cette heure. Laissez vide pour le défaut (8.00)
+rendering.macro.calendar.parameter.maxTime.name=Temps maximum
+rendering.macro.calendar.parameter.maxTime.description=Dernière heure à afficher dans le calendrier. Les utilisateurs ne verront pas les heures après cette heure. Laissez vide pour le défaut (23.00)
 </content>
 </xwikidoc>
