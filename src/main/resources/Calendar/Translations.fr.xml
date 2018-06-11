@@ -58,7 +58,7 @@ xwiki.calendar.titleFormat.day=dddd D MMM YYYY
 xwiki.calendar.timeFormat=HH\:mm
 xwiki.calendar.axisFormat=HH\:mm
 
-xwiki.calendar.allDayText=Journée 
+xwiki.calendar.allDayText=Journée
 xwiki.calendar.button.today=Aujourd'hui
 xwiki.calendar.button.day=Jour
 xwiki.calendar.button.week=Semaine
