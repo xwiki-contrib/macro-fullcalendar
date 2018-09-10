@@ -55,8 +55,8 @@ xwiki.calendar.titleFormat.month=MMMM YYYY
 xwiki.calendar.titleFormat.week=D MMM YYYY
 xwiki.calendar.titleFormat.day=dddd D MMM YYYY
 
-xwiki.calendar.timeFormat=HH\:mm
-xwiki.calendar.axisFormat=HH\:mm
+xwiki.calendar.timeFormat=HH:mm
+xwiki.calendar.axisFormat=HH:mm
 
 xwiki.calendar.allDayText=Journée
 xwiki.calendar.button.today=Aujourd'hui
@@ -66,7 +66,7 @@ xwiki.calendar.button.month=Mois
 
 xwiki.calendar.notification.inprogress=Enregistrement...
 xwiki.calendar.notification.done=Enregistré
-xwiki.calendar.notification.error=Impossible d'enregistrer le document en raison de\: mise à jour a échoué\!
+xwiki.calendar.notification.error=Impossible d'enregistrer le document. Erreur : la mise à jour a échoué !
 
 rendering.macro.calendar.name=Calendrier
 rendering.macro.calendar.description=Afficher un Calendrier
@@ -87,7 +87,7 @@ rendering.macro.calendar.parameter.durationfield.description=Champ de l'objet o�
 rendering.macro.calendar.parameter.editable.name=Modifiable
 rendering.macro.calendar.parameter.editable.description=Permet d'activer la fonction d'édition permettant de déplacer des événements
 rendering.macro.calendar.parameter.defaultView.name=Affichage par défaut
-rendering.macro.calendar.parameter.defaultView.description=Vue de l'agenda à afficher par défaut au chargement de l'agenda. Les valeurs possibles sont\: month, agendaWeek, agendaDay, basicWeek, basicDay
+rendering.macro.calendar.parameter.defaultView.description=Vue de l'agenda à afficher par défaut au chargement de l'agenda. Les valeurs possibles sont: month, agendaWeek, agendaDay, basicWeek, basicDay
 rendering.macro.calendar.parameter.year.name=Année
 rendering.macro.calendar.parameter.year.description=Année de la date à montrer lors du chargement du calendrier. Laissez vide pour aujourd'hui
 rendering.macro.calendar.parameter.month.name=Mois
