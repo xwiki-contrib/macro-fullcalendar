@@ -37,6 +37,9 @@
   <description>
     Displays a Calendar in Javascript and allows to get events from XWiki pages.
   </description>
+  <properties>
+    <platform.version>${commons.version}</platform.version>
+  </properties>
   <developers>
     <developer>
       <id>vmassol</id>
@@ -72,6 +75,7 @@
     </developer>
   </developers>
   <modules>
+    <module>macro-fullcalendar-api</module>
     <module>macro-fullcalendar-ui</module>
   </modules>
   <build>

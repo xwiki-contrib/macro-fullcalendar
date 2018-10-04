@@ -1,0 +1,2 @@
+org.xwiki.fullcalendar.internal.DefaultFullCalendarManager
+org.xwiki.fullcalendar.script.FullCalendarScriptService

@@ -41,4 +41,12 @@
     <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
     <xwiki.extension.features>org.xwiki.contrib:macro-fullcalendar</xwiki.extension.features>
   </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>macro-fullcalendar-api</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
 </project>
