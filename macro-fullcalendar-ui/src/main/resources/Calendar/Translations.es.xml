@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,7 +23,7 @@
 <xwikidoc>
   <web>Calendar</web>
   <name>Translations</name>
-  <language>pl</language>
+  <language>es</language>
   <defaultLanguage/>
   <translation>1</translation>
   <parent>Calendar.WebHome</parent>
@@ -41,27 +42,27 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>xwiki.calendar.monthNames=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień']
-xwiki.calendar.monthNamesShort=['Sty','Lut','Mar','Kwi','Maj','Cze','Lip','Sie','Wrz','Paź','Lis','Gru']
-xwiki.calendar.dayNames=['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota']
-xwiki.calendar.dayNamesShort=['Nie','Pon','Wto','Śro','Czw','Pią','Sob']
+  <content>xwiki.calendar.monthNames=['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+xwiki.calendar.monthNamesShort=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
+xwiki.calendar.dayNames=['Lunes','Martes','Miércoles','Jueves','Viernes','Sabado','Domingo']
+xwiki.calendar.dayNamesShort=['Lun','Mar','Mié','Jue','Vie','Sab','Dom']
 
 xwiki.calendar.columnFormat.month=ddd
-xwiki.calendar.columnFormat.week=ddd D.M
-xwiki.calendar.columnFormat.day=dddd D.M
+xwiki.calendar.columnFormat.week=ddd D/M
+xwiki.calendar.columnFormat.day=dddd D/M
 
 xwiki.calendar.titleFormat.month=MMMM YYYY
-xwiki.calendar.titleFormat.week=D MMM YYYY
+xwiki.calendar.titleFormat.week=MMM D YYYY
 xwiki.calendar.titleFormat.day=dddd, D MMM, YYYY
 
 xwiki.calendar.timeFormat=H\:mm
 xwiki.calendar.axisFormat=H\:mm
 
-xwiki.calendar.allDayText=Cały dzień
-xwiki.calendar.button.today=Dzisiaj
-xwiki.calendar.button.day=Dzień
-xwiki.calendar.button.week=Tydzień
-xwiki.calendar.button.month=Miesiąc
+xwiki.calendar.allDayText=dia todo
+xwiki.calendar.button.today=hoy
+xwiki.calendar.button.day=dia
+xwiki.calendar.button.week=semana
+xwiki.calendar.button.month=mes
 
 ### Missing: xwiki.calendar.notification.inprogress=Saving...
 ### Missing: xwiki.calendar.notification.done=Saved
