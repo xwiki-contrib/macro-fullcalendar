@@ -25,18 +25,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.commons</groupId>
-    <artifactId>xwiki-commons-pom</artifactId>
-    <version>5.2.4</version>
+   <groupId>org.xwiki.commons</groupId>
+   <artifactId>xwiki-commons-pom</artifactId>
+   <version>5.2.4</version>
   </parent>
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>macro-fullcalendar</artifactId>
-  <packaging>pom</packaging>
-  <name>Full Calendar Macro - Parent POM</name>
+  <packaging>xar</packaging>
+  <name>Full Calendar Macro</name>
   <version>2.0.5-SNAPSHOT</version>
   <description>
     Displays a Calendar in Javascript and allows to get events from XWiki pages.
   </description>
+  <properties>
+    <!-- Don't run CLIRR here since there's no Java code. -->
+    <xwiki.clirr.skip>true</xwiki.clirr.skip>
+    <!-- Old id of the extension, in the time when it was just a poor page on extensions.xwiki.org where we uploaded xars -->
+    <xwiki.extension.features>vincentmassol:fullcalendar-application</xwiki.extension.features>
+  </properties>
   <developers>
     <developer>
       <id>vmassol</id>
@@ -71,13 +77,35 @@
       <name>Victor Rachieru</name>
     </developer>
   </developers>
-  <modules>
-    <module>macro-fullcalendar-ui</module>
-  </modules>
+    <build>
+   <!-- Needed to add support for the XAR packaging -->
+   <extensions>
+     <extension>
+       <groupId>org.xwiki.commons</groupId>
+       <artifactId>xwiki-commons-tool-xar-handlers</artifactId>
+       <version>${commons.version}</version>
+     </extension>
+   </extensions>
+   <plugins>
+     <!-- The XAR packaging uses the XAR plugin and thus we need to define what version to use -->
+     <plugin>
+       <groupId>org.xwiki.commons</groupId>
+       <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
+       <version>${commons.version}</version>
+     </plugin>
+   </plugins>
+ </build>
   <scm>
-    <connection>scm:git:git://github.com/xwiki-contrib/macro-fullcalendar.git</connection>
-    <developerConnection>scm:git:git@github.com:xwiki-contrib/macro-fullcalendar.git</developerConnection>
-    <url>https://github.com/xwiki-contrib/macro-fullcalendar</url>
-    <tag>HEAD</tag>
+   <connection>scm:git:git://github.com/xwiki-contrib/macro-fullcalendar.git</connection>
+   <developerConnection>scm:git:git@github.com:xwiki-contrib/macro-fullcalendar.git</developerConnection>
+   <url>https://github.com/xwiki-contrib/macro-fullcalendar</url>
+   <tag>HEAD</tag>
   </scm>
+ <distributionManagement>
+   <repository>
+     <id>xwiki-staging</id>
+     <name>XWiki Staging Repository</name>
+     <url>http://nexus.xwiki.org/nexus/service/local/staging/deploy/maven2/</url>
+   </repository>
+ </distributionManagement>
 </project>
