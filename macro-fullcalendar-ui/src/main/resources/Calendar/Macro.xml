@@ -247,7 +247,7 @@
 ## The iCal format is serialized as JSON and should be used only when the JSON parameter is not specified.
 #set($iCal = $xcontext.macro.params.iCal)
 #if(!$json)
- #set($json = $xwiki.getDocument('Calendar.ICalToJSON').getURL('get', "iCal=$iCal"))
+ #set($json = $xwiki.getDocument('Calendar.ICalToJSON').getURL('get', "iCal=$escapetool.url($iCal)"))
 #end
 #if(!$json)
  #set($json = $xwiki.getDocument("Calendar.JSONService").getURL("get"))
@@ -364,6 +364,14 @@ require(['fullcalendar', 'gcal'], function ($) {
       }
       ,eventResize : function(event, delta, revertFunc) {
         updateEvent(event.id, true, delta, false, revertFunc);
+      },
+      eventRender: function(event, element) {
+
+        // Add tooltip on the calendar element.
+        var tooltip = "$services.localization.render('xwiki.calendar.event.status') " + event.status + 
+                      "\n$services.localization.render('xwiki.calendar.event.location') " + event.location + 
+                      "\n$services.localization.render('xwiki.calendar.event.description') " + event.description;
+        element.attr('title', tooltip);
       }
     })
   });

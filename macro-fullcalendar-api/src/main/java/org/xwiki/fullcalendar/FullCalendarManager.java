@@ -37,5 +37,5 @@ public interface FullCalendarManager
      * @return the JSON representation of a calendar.
      * @throws Exception in case of exceptions.
      */
-    String getJSON(String iCalStringURL) throws Exception;
+    String iCalToJSON(String iCalStringURL) throws Exception;
 }

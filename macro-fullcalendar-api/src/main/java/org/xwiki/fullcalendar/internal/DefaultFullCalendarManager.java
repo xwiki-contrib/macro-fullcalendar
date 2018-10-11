@@ -54,7 +54,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 {
 
     @Override
-    public String getJSON(String iCalStringURL) throws Exception
+    public String iCalToJSON(String iCalStringURL) throws Exception
     {
         URL iCalURL = new URL(iCalStringURL);
 
@@ -69,6 +69,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 
         ArrayList<Object> jsonArrayList = new ArrayList<Object>();
 
+        // FullCalendar will accept ISO8601 date strings written with hours, minutes, seconds, and milliseconds.
         DateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
 
         for (CalendarComponent component : calendar.getComponents()) {
@@ -76,11 +77,25 @@ public class DefaultFullCalendarManager implements FullCalendarManager
             jsonMap.put("id", component.getProperty("UID").getValue());
             jsonMap.put("title", component.getProperty("SUMMARY").getValue());
 
-            DateTime startDateTime = new DateTime(component.getProperty("DTSTART").getValue(), timeZone);
+            String startDateValue = component.getProperty("DTSTART").getValue();
+            String endDateValue = component.getProperty("DTEND").getValue();
+
+            // If either the start or end value has a "T" as part of the ISO8601 date string, allDay will become false.
+            // Otherwise, it will be true.
+            boolean allDay = startDateValue.contains("T") || endDateValue.contains("T");
+            jsonMap.put("allDay", !allDay);
+
+            DateTime startDateTime = new DateTime(startDateValue, timeZone);
             jsonMap.put("start", jsonDateFormat.format(startDateTime));
 
-            DateTime endDateTime = new DateTime(component.getProperty("DTEND").getValue(), timeZone);
+            DateTime endDateTime = new DateTime(endDateValue, timeZone);
             jsonMap.put("end", jsonDateFormat.format(endDateTime));
+
+            // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
+            jsonMap.put("description", component.getProperty("DESCRIPTION").getValue());
+            jsonMap.put("location", component.getProperty("LOCATION").getValue());
+            jsonMap.put("status", component.getProperty("STATUS").getValue());
+
             jsonArrayList.add(jsonMap);
         }
 

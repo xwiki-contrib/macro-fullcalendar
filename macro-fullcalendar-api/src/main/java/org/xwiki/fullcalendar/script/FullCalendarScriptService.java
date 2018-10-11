@@ -41,8 +41,8 @@ public class FullCalendarScriptService implements ScriptService
     @Inject
     private FullCalendarManager fullCalendarManager;
 
-    public String getJSON(String iCalStringURL) throws Exception
+    public String iCalToJSON(String iCalStringURL) throws Exception
     {
-        return fullCalendarManager.getJSON(iCalStringURL);
+        return fullCalendarManager.iCalToJSON(iCalStringURL);
     }
 }

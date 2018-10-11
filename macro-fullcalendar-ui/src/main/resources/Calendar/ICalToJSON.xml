@@ -39,11 +39,11 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity}}
+  <content>{{velocity wiki="false"}}
 #if ($xcontext.action == 'get' &amp;&amp; "$!{request.outputSyntax}" == 'plain')
   $response.setContentType('application/json')
   ## Display the JSON content.
-  $services.fullcalendar.getJSON($request.iCal)
+  $services.fullcalendar.iCalToJSON($request.iCal)
 #end
 {{/velocity}}</content>
 </xwikidoc>

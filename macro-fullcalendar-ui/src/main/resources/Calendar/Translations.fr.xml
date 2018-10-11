@@ -51,6 +51,10 @@ xwiki.calendar.columnFormat.month=ddd
 xwiki.calendar.columnFormat.week=ddd D/MM
 xwiki.calendar.columnFormat.day=dddd D/MM
 
+xwiki.calendar.event.description=Description:
+xwiki.calendar.event.location=Location:
+xwiki.calendar.event.status=Statut:
+
 xwiki.calendar.titleFormat.month=MMMM YYYY
 xwiki.calendar.titleFormat.week=D MMM YYYY
 xwiki.calendar.titleFormat.day=dddd D MMM YYYY
