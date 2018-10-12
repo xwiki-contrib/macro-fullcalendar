@@ -30,7 +30,7 @@
     <version>5.2.4</version>
   </parent>
   <groupId>org.xwiki.contrib</groupId>
-  <artifactId>macro-fullcalendar</artifactId>
+  <artifactId>macro-fullcalendar-pom</artifactId>
   <packaging>pom</packaging>
   <name>Full Calendar Macro - Parent POM</name>
   <version>2.2-SNAPSHOT</version>
