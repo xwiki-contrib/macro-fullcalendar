@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xwiki.contrib</groupId>
-    <artifactId>macro-fullcalendar</artifactId>
+    <artifactId>macro-fullcalendar-pom</artifactId>
     <version>2.2-SNAPSHOT</version>
   </parent>
   <artifactId>macro-fullcalendar-api</artifactId>
