@@ -36,6 +36,8 @@
     Displays a Calendar in Javascript and allows to get events from XWiki pages.
   </description>
   <properties>
+	<!-- Name to display by the Extension Manager -->
+	<xwiki.extension.name>Full Calendar Macro</xwiki.extension.name>
     <!-- Don't run CLIRR here since there's no Java code. -->
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
     <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
