@@ -158,8 +158,6 @@
     <guid>9f4db11e-04c3-486d-914f-c1d7992f4886</guid>
     <property>
       <code>{{velocity}}
-#set($discard = $xwiki.jsx.use("Calendar.JQuery", {'defer': false, 'minify': false}))
-#set($discard = $xwiki.jsx.use("Calendar.JQueryUI", {'defer': false, 'minify': false}))
 #set($discard = $xwiki.jsx.use("Calendar.Moment", {'defer': false, 'minify': false}))
 #set($discard = $xwiki.jsx.use("Calendar.FullCalendar", {'defer': false, 'minify': false}))
 #set($discard = $xwiki.ssx.use("Calendar.FullCalendar"))
@@ -263,7 +261,18 @@
 #set($gCal = $xcontext.macro.params.gCal)
 {{html clean="false"}}
 &lt;script&gt;
-require(['fullcalendar', 'gcal'], function ($) {
+/************************************
+ * Configure RequireJS to use jQuery-UI
+ ************************************/
+require.config({
+  paths: {
+    'jquery-ui' : "$xwiki.jsx.use('Calendar.JQueryUI')"
+  },
+  shim: {
+    'jquery-ui' : ['jquery']
+  }
+});
+require(['jquery', 'jquery-ui', 'fullcalendar', 'gcal'], function ($) {
   function updateEvent(page, isResize, delta, allDay, revertFunc) {
     // Initialize notification boxes
     var savingBox = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.inprogress')", "inprogress", {inactive: true});
