@@ -158,8 +158,6 @@
     <guid>9f4db11e-04c3-486d-914f-c1d7992f4886</guid>
     <property>
       <code>{{velocity}}
-#set($discard = $xwiki.jsx.use("Calendar.Moment", {'defer': false, 'minify': false}))
-#set($discard = $xwiki.jsx.use("Calendar.FullCalendar", {'defer': false, 'minify': false}))
 #set($discard = $xwiki.ssx.use("Calendar.FullCalendar"))
 ##
 #if($calcounter)
@@ -266,10 +264,14 @@
  ************************************/
 require.config({
   paths: {
-    'jquery-ui' : "$xwiki.jsx.use('Calendar.JQueryUI')"
+    // Use the 'r=1' query string in order to inform the require that there's no need to append .js at the end of the path.
+    'jquery-ui': "$xwiki.getURL('Calendar.JQueryUI', 'jsx', 'r=1')",
+    'moment': "$xwiki.getDocument('Calendar.Moment').getAttachmentURL('moment-2.8.4.min.js', 'download', 'r=1')",
+    'fullcalendar': "$xwiki.getURL('Calendar.FullCalendar', 'jsx', 'r=1')",
+    'gcal': "$xwiki.getDocument('Calendar.FullCalendar').getAttachmentURL('gcal.min.js', 'download', 'r=1')"
   },
   shim: {
-    'jquery-ui' : ['jquery']
+    'gcal': ['fullcalendar']  
   }
 });
 require(['jquery', 'jquery-ui', 'fullcalendar', 'gcal'], function ($) {
@@ -292,7 +294,7 @@ require(['jquery', 'jquery-ui', 'fullcalendar', 'gcal'], function ($) {
     var url = '$updateurl';
     url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
 
-    jQuery.ajax({ url: url }).fail(function(data) {
+    $.ajax({ url: url }).fail(function(data) {
       savingBox.hide();
       failedBox.show();
       revertFunc();
@@ -313,9 +315,9 @@ require(['jquery', 'jquery-ui', 'fullcalendar', 'gcal'], function ($) {
   var dayNames = $!services.localization.render('xwiki.calendar.dayNames');
   var dayNamesShort = $!services.localization.render('xwiki.calendar.dayNamesShort');
 
-  jQuery(document).ready(function() {
+  $(document).ready(function() {
     // The page is now ready, initialize the calendar...
-    jQuery('#calendar${calcounter}').fullCalendar({
+    $('#calendar${calcounter}').fullCalendar({
       columnFormat: {
         month : "$!services.localization.render('xwiki.calendar.columnFormat.month')",
         week  : "$!services.localization.render('xwiki.calendar.columnFormat.week')",

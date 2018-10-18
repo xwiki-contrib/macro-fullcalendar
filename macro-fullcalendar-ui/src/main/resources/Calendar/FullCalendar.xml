@@ -22,6 +22,56 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
+  <attachment>
+    <filename>gcal.min.js</filename>
+    <filesize>2304</filesize>
+    <author>XWiki.Admin</author>
+    <date>1539850994000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>LyoKICogRnVsbENhbGVuZGFyIHYyLjkuMCBHb29nbGUgQ2FsZW5kYXIgUGx1Z2luCiAqIERvY3Mg
+JiBMaWNlbnNlOiBodHRwOi8vZnVsbGNhbGVuZGFyLmlvLwogKiAoYykgMjAxNiBBZGFtIFNoYXcK
+ICovCihmdW5jdGlvbihhKXtpZih0eXBlb2YgZGVmaW5lPT09ImZ1bmN0aW9uIiYmZGVmaW5lLmFt
+ZCl7ZGVmaW5lKCJnY2FsIixbImpxdWVyeSJdLGEpfWVsc2V7aWYodHlwZW9mIGV4cG9ydHM9PT0i
+b2JqZWN0Iil7bW9kdWxlLmV4cG9ydHM9YShyZXF1aXJlKCJqcXVlcnkiKSl9ZWxzZXthKGpRdWVy
+eSl9fX0pKGZ1bmN0aW9uKGYpe3ZhciBlPSJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9jYWxl
+bmRhci92My9jYWxlbmRhcnMiO3ZhciBjPWYuZnVsbENhbGVuZGFyO3ZhciBiPWMuYXBwbHlBbGw7
+Yy5zb3VyY2VOb3JtYWxpemVycy5wdXNoKGZ1bmN0aW9uKGcpe3ZhciBqPWcuZ29vZ2xlQ2FsZW5k
+YXJJZDt2YXIgaT1nLnVybDt2YXIgaDtpZighaiYmaSl7aWYoL15bXlwvXStAKFteXC9cLl0rXC4p
+Kihnb29nbGV8Z29vZ2xlbWFpbHxnbWFpbClcLmNvbSQvLnRlc3QoaSkpe2o9aX1lbHNle2lmKCho
+PS9eaHR0cHM6XC9cL3d3dy5nb29nbGVhcGlzLmNvbVwvY2FsZW5kYXJcL3YzXC9jYWxlbmRhcnNc
+LyhbXlwvXSopLy5leGVjKGkpKXx8KGg9L15odHRwcz86XC9cL3d3dy5nb29nbGUuY29tXC9jYWxl
+bmRhclwvZmVlZHNcLyhbXlwvXSopLy5leGVjKGkpKSl7aj1kZWNvZGVVUklDb21wb25lbnQoaFsx
+XSl9fWlmKGope2cuZ29vZ2xlQ2FsZW5kYXJJZD1qfX1pZihqKXtpZihnLmVkaXRhYmxlPT1udWxs
+KXtnLmVkaXRhYmxlPWZhbHNlfWcudXJsPWp9fSk7Yy5zb3VyY2VGZXRjaGVycy5wdXNoKGZ1bmN0
+aW9uKGgsaixnLGkpe2lmKGguZ29vZ2xlQ2FsZW5kYXJJZCl7cmV0dXJuIGQoaCxqLGcsaSx0aGlz
+KX19KTtmdW5jdGlvbiBkKG8saSxqLG4sbCl7dmFyIGc9ZSsiLyIrZW5jb2RlVVJJQ29tcG9uZW50
+KG8uZ29vZ2xlQ2FsZW5kYXJJZCkrIi9ldmVudHM/Y2FsbGJhY2s9PyI7dmFyIG09by5nb29nbGVD
+YWxlbmRhckFwaUtleXx8bC5vcHRpb25zLmdvb2dsZUNhbGVuZGFyQXBpS2V5O3ZhciBwPW8uc3Vj
+Y2Vzczt2YXIgazt2YXIgaDtmdW5jdGlvbiBxKHMsdCl7dmFyIHI9dHx8W3ttZXNzYWdlOnN9XTso
+by5nb29nbGVDYWxlbmRhckVycm9yfHxmLm5vb3ApLmFwcGx5KGwscik7KGwub3B0aW9ucy5nb29n
+bGVDYWxlbmRhckVycm9yfHxmLm5vb3ApLmFwcGx5KGwscik7Yy53YXJuLmFwcGx5KG51bGwsW3Nd
+LmNvbmNhdCh0fHxbXSkpfWlmKCFtKXtxKCJTcGVjaWZ5IGEgZ29vZ2xlQ2FsZW5kYXJBcGlLZXku
+IFNlZSBodHRwOi8vZnVsbGNhbGVuZGFyLmlvL2RvY3MvZ29vZ2xlX2NhbGVuZGFyLyIpO3JldHVy
+bnt9fWlmKCFpLmhhc1pvbmUoKSl7aT1pLmNsb25lKCkudXRjKCkuYWRkKC0xLCJkYXkiKX1pZigh
+ai5oYXNab25lKCkpe2o9ai5jbG9uZSgpLnV0YygpLmFkZCgxLCJkYXkiKX1pZihuJiZuIT0ibG9j
+YWwiKXtoPW4ucmVwbGFjZSgiICIsIl8iKX1rPWYuZXh0ZW5kKHt9LG8uZGF0YXx8e30se2tleTpt
+LHRpbWVNaW46aS5mb3JtYXQoKSx0aW1lTWF4OmouZm9ybWF0KCksdGltZVpvbmU6aCxzaW5nbGVF
+dmVudHM6dHJ1ZSxtYXhSZXN1bHRzOjk5OTl9KTtyZXR1cm4gZi5leHRlbmQoe30sbyx7Z29vZ2xl
+Q2FsZW5kYXJJZDpudWxsLHVybDpnLGRhdGE6ayxzdGFydFBhcmFtOmZhbHNlLGVuZFBhcmFtOmZh
+bHNlLHRpbWV6b25lUGFyYW06ZmFsc2Usc3VjY2VzczpmdW5jdGlvbih1KXt2YXIgcz1bXTt2YXIg
+cjt2YXIgdDtpZih1LmVycm9yKXtxKCJHb29nbGUgQ2FsZW5kYXIgQVBJOiAiK3UuZXJyb3IubWVz
+c2FnZSx1LmVycm9yLmVycm9ycyl9ZWxzZXtpZih1Lml0ZW1zKXtmLmVhY2godS5pdGVtcyxmdW5j
+dGlvbih3LHgpe3ZhciB2PXguaHRtbExpbmt8fG51bGw7aWYoaCYmdiE9PW51bGwpe3Y9YSh2LCJj
+dHo9IitoKX1zLnB1c2goe2lkOnguaWQsdGl0bGU6eC5zdW1tYXJ5LHN0YXJ0Onguc3RhcnQuZGF0
+ZVRpbWV8fHguc3RhcnQuZGF0ZSxlbmQ6eC5lbmQuZGF0ZVRpbWV8fHguZW5kLmRhdGUsdXJsOnYs
+bG9jYXRpb246eC5sb2NhdGlvbixkZXNjcmlwdGlvbjp4LmRlc2NyaXB0aW9ufSl9KTtyPVtzXS5j
+b25jYXQoQXJyYXkucHJvdG90eXBlLnNsaWNlLmNhbGwoYXJndW1lbnRzLDEpKTt0PWIocCx0aGlz
+LHIpO2lmKGYuaXNBcnJheSh0KSl7cmV0dXJuIHR9fX1yZXR1cm4gc319KX1mdW5jdGlvbiBhKGgs
+Zyl7cmV0dXJuIGgucmVwbGFjZSgvKFw/Lio/KT8oI3wkKS8sZnVuY3Rpb24oaixpLGspe3JldHVy
+bihpP2krIiYiOiI/IikrZytrfSl9fSk7
+</content>
+  </attachment>
   <object>
     <class>
       <name>XWiki.JavaScriptExtension</name>
@@ -114,103 +164,6 @@ a.el.css("visibility","hidden")},a)},renderedEventSegEach:function(a,b){var c,d=
     </property>
     <property>
       <name>fullcalendar.min.js</name>
-    </property>
-    <property>
-      <parse>0</parse>
-    </property>
-    <property>
-      <use>onDemand</use>
-    </property>
-  </object>
-  <object>
-    <class>
-      <name>XWiki.JavaScriptExtension</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <cache>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <multiSelect>0</multiSelect>
-        <name>cache</name>
-        <number>5</number>
-        <prettyName>Caching policy</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators> ,|</separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>long|short|default|forbid</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </cache>
-      <code>
-        <disabled>0</disabled>
-        <name>code</name>
-        <number>2</number>
-        <prettyName>Code</prettyName>
-        <rows>20</rows>
-        <size>50</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </code>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <prettyName>Name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-      <parse>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>parse</name>
-        <number>4</number>
-        <prettyName>Parse content</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </parse>
-      <use>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <multiSelect>0</multiSelect>
-        <name>use</name>
-        <number>3</number>
-        <prettyName>Use this extension</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators> ,|</separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </use>
-    </class>
-    <name>Calendar.FullCalendar</name>
-    <number>2</number>
-    <className>XWiki.JavaScriptExtension</className>
-    <guid>6ac4e7dd-7b5c-4c38-a2aa-fd8775b51a44</guid>
-    <property>
-      <cache>long</cache>
-    </property>
-    <property>
-      <code>/*
- * FullCalendar v2.9.0 Google Calendar Plugin
- * Docs &amp; License: http://fullcalendar.io/
- * (c) 2016 Adam Shaw
- */
-(function(a){if(typeof define==="function"&amp;&amp;define.amd){define("gcal",["jquery"],a)}else{if(typeof exports==="object"){module.exports=a(require("jquery"))}else{a(jQuery)}}})(function(f){var e="https://www.googleapis.com/calendar/v3/calendars";var c=f.fullCalendar;var b=c.applyAll;c.sourceNormalizers.push(function(g){var j=g.googleCalendarId;var i=g.url;var h;if(!j&amp;&amp;i){if(/^[^\/]+@([^\/\.]+\.)*(google|googlemail|gmail)\.com$/.test(i)){j=i}else{if((h=/^https:\/\/www.googleapis.com\/calendar\/v3\/calendars\/([^\/]*)/.exec(i))||(h=/^https?:\/\/www.google.com\/calendar\/feeds\/([^\/]*)/.exec(i))){j=decodeURIComponent(h[1])}}if(j){g.googleCalendarId=j}}if(j){if(g.editable==null){g.editable=false}g.url=j}});c.sourceFetchers.push(function(h,j,g,i){if(h.googleCalendarId){return d(h,j,g,i,this)}});function d(o,i,j,n,l){var g=e+"/"+encodeURIComponent(o.googleCalendarId)+"/events?callback=?";var m=o.googleCalendarApiKey||l.options.googleCalendarApiKey;var p=o.success;var k;var h;function q(s,t){var r=t||[{message:s}];(o.googleCalendarError||f.noop).apply(l,r);(l.options.googleCalendarError||f.noop).apply(l,r);c.warn.apply(null,[s].concat(t||[]))}if(!m){q("Specify a googleCalendarApiKey. See http://fullcalendar.io/docs/google_calendar/");return{}}if(!i.hasZone()){i=i.clone().utc().add(-1,"day")}if(!j.hasZone()){j=j.clone().utc().add(1,"day")}if(n&amp;&amp;n!="local"){h=n.replace(" ","_")}k=f.extend({},o.data||{},{key:m,timeMin:i.format(),timeMax:j.format(),timeZone:h,singleEvents:true,maxResults:9999});return f.extend({},o,{googleCalendarId:null,url:g,data:k,startParam:false,endParam:false,timezoneParam:false,success:function(u){var s=[];var r;var t;if(u.error){q("Google Calendar API: "+u.error.message,u.error.errors)}else{if(u.items){f.each(u.items,function(w,x){var v=x.htmlLink||null;if(h&amp;&amp;v!==null){v=a(v,"ctz="+h)}s.push({id:x.id,title:x.summary,start:x.start.dateTime||x.start.date,end:x.end.dateTime||x.end.date,url:v,location:x.location,description:x.description})});r=[s].concat(Array.prototype.slice.call(arguments,1));t=b(p,this,r);if(f.isArray(t)){return t}}}return s}})}function a(h,g){return h.replace(/(\?.*?)?(#|$)/,function(j,i,k){return(i?i+"&amp;":"?")+g+k})}});</code>
-    </property>
-    <property>
-      <name>gcal.min.js</name>
     </property>
     <property>
       <parse>0</parse>
