@@ -55,8 +55,8 @@ xwiki.calendar.titleFormat.month=MMMM YYYY
 xwiki.calendar.titleFormat.week=D MMM YYYY
 xwiki.calendar.titleFormat.day=ddd, D MMM YYYY
 
-xwiki.calendar.timeFormat=HH\:mm
-xwiki.calendar.axisFormat=HH\:mm
+xwiki.calendar.timeFormat=HH:mm
+xwiki.calendar.axisFormat=HH:mm
 
 xwiki.calendar.allDayText=Ganzer Tag
 xwiki.calendar.button.today=Heute
@@ -64,11 +64,11 @@ xwiki.calendar.button.day=Tag
 xwiki.calendar.button.week=Woche
 xwiki.calendar.button.month=Monat
 
-### Missing: xwiki.calendar.notification.inprogress=Saving...
-### Missing: xwiki.calendar.notification.done=Saved
+xwiki.calendar.notification.inprogress=Speichern...
+xwiki.calendar.notification.done=Gespeichert
 ### Missing: xwiki.calendar.notification.error=Failed to save the document. Reason: update failed!
 
-### Missing: rendering.macro.calendar.name=Calendar
+rendering.macro.calendar.name=Kalender
 ### Missing: rendering.macro.calendar.description=Displays a Calendar
 ### Missing: rendering.macro.calendar.parameter.gApiKey.name=gApiKey
 ### Missing: rendering.macro.calendar.parameter.gApiKey.description=Key for the Google Calendar API.
