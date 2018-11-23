@@ -37,6 +37,7 @@ import org.xwiki.velocity.tools.JSONTool;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.TimeZone;
 import net.fortuna.ical4j.model.TimeZoneRegistry;
 import net.fortuna.ical4j.model.component.CalendarComponent;
@@ -65,7 +66,13 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         Calendar calendar = builder.build(in);
 
         TimeZoneRegistry timeZoneRegistry = builder.getRegistry();
-        TimeZone timeZone = timeZoneRegistry.getTimeZone(calendar.getProperty("X-WR-TIMEZONE").getValue());
+        // Some calendars rely on X-WR-TIMEZONE property from the main component for defining the timeZone.
+        String timeZoneValue = getCalendarValue(calendar, "X-WR-TIMEZONE");
+        if (timeZoneValue == null) {
+            // Some calendars rely on TZID property from the VTIMEZONE component for defining the timeZone.
+            timeZoneValue = getComponentValue(calendar.getComponent("VTIMEZONE"), "TZID");
+        }
+        TimeZone timeZone = timeZoneRegistry.getTimeZone(timeZoneValue);
 
         ArrayList<Object> jsonArrayList = new ArrayList<Object>();
 
@@ -73,32 +80,44 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         DateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
 
         for (CalendarComponent component : calendar.getComponents()) {
-            Map<String, Object> jsonMap = new HashMap<String, Object>();
-            jsonMap.put("id", component.getProperty("UID").getValue());
-            jsonMap.put("title", component.getProperty("SUMMARY").getValue());
+            if (component.getName().equals("VEVENT")) {
+                Map<String, Object> jsonMap = new HashMap<String, Object>();
+                jsonMap.put("id", getComponentValue(component, "UID"));
+                jsonMap.put("title", getComponentValue(component, "SUMMARY"));
 
-            String startDateValue = component.getProperty("DTSTART").getValue();
-            String endDateValue = component.getProperty("DTEND").getValue();
+                String startDateValue = getComponentValue(component, "DTSTART");
+                String endDateValue = getComponentValue(component, "DTEND");
 
-            // If either the start or end value has a "T" as part of the ISO8601 date string, allDay will become false.
-            // Otherwise, it will be true.
-            boolean allDay = startDateValue.contains("T") || endDateValue.contains("T");
-            jsonMap.put("allDay", !allDay);
+                // If either the start or end value has a "T" as part of the ISO8601 date string, allDay will become
+                // false. Otherwise, it will be true.
+                boolean allDay = startDateValue.contains("T") || endDateValue.contains("T");
+                jsonMap.put("allDay", !allDay);
 
-            DateTime startDateTime = new DateTime(startDateValue, timeZone);
-            jsonMap.put("start", jsonDateFormat.format(startDateTime));
+                DateTime startDateTime = new DateTime(startDateValue, timeZone);
+                jsonMap.put("start", jsonDateFormat.format(startDateTime));
 
-            DateTime endDateTime = new DateTime(endDateValue, timeZone);
-            jsonMap.put("end", jsonDateFormat.format(endDateTime));
+                DateTime endDateTime = new DateTime(endDateValue, timeZone);
+                jsonMap.put("end", jsonDateFormat.format(endDateTime));
 
-            // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
-            jsonMap.put("description", component.getProperty("DESCRIPTION").getValue());
-            jsonMap.put("location", component.getProperty("LOCATION").getValue());
-            jsonMap.put("status", component.getProperty("STATUS").getValue());
+                // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
+                jsonMap.put("description", getComponentValue(component, "DESCRIPTION"));
+                jsonMap.put("location", getComponentValue(component, "LOCATION"));
+                jsonMap.put("status", getComponentValue(component, "STATUS"));
 
-            jsonArrayList.add(jsonMap);
+                jsonArrayList.add(jsonMap);
+            }
         }
 
         return new JSONTool().serialize(jsonArrayList);
+    }
+
+    private String getComponentValue(CalendarComponent component, String propertyName)
+    {
+        return component.getProperty(propertyName) == null ? null : component.getProperty(propertyName).getValue();
+    }
+
+    private String getCalendarValue(Calendar calendar, String propertyName)
+    {
+        return calendar.getProperty(propertyName) == null ? null : calendar.getProperty(propertyName).getValue();
     }
 }
