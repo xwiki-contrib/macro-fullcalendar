@@ -51,6 +51,10 @@ xwiki.calendar.columnFormat.month=ddd
 xwiki.calendar.columnFormat.week=ddd D/M
 xwiki.calendar.columnFormat.day=dddd D/M
 
+### Missing: xwiki.calendar.event.description=Description:
+### Missing: xwiki.calendar.event.location=Location:
+### Missing: xwiki.calendar.event.status=Status:
+
 xwiki.calendar.titleFormat.month=MMMM YYYY
 xwiki.calendar.titleFormat.week=MMM D YYYY
 xwiki.calendar.titleFormat.day=dddd, D MMM, YYYY
