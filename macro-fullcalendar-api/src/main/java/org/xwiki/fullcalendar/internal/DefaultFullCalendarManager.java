@@ -36,11 +36,12 @@ import org.xwiki.velocity.tools.JSONTool;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.DateTime;
-import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.TimeZone;
 import net.fortuna.ical4j.model.TimeZoneRegistry;
-import net.fortuna.ical4j.model.component.CalendarComponent;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.util.CompatibilityHints;
 
 /**
@@ -70,7 +71,8 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         String timeZoneValue = getCalendarValue(calendar, "X-WR-TIMEZONE");
         if (timeZoneValue == null) {
             // Some calendars rely on TZID property from the VTIMEZONE component for defining the timeZone.
-            timeZoneValue = getComponentValue(calendar.getComponent("VTIMEZONE"), "TZID");
+            VTimeZone vTimeZone = (VTimeZone) calendar.getComponent(net.fortuna.ical4j.model.Component.VTIMEZONE); 
+            timeZoneValue = vTimeZone.getTimeZoneId().getValue();
         }
         TimeZone timeZone = timeZoneRegistry.getTimeZone(timeZoneValue);
 
@@ -79,41 +81,36 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         // FullCalendar will accept ISO8601 date strings written with hours, minutes, seconds, and milliseconds.
         DateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
 
-        for (CalendarComponent component : calendar.getComponents()) {
-            if (component.getName().equals("VEVENT")) {
-                Map<String, Object> jsonMap = new HashMap<String, Object>();
-                jsonMap.put("id", getComponentValue(component, "UID"));
-                jsonMap.put("title", getComponentValue(component, "SUMMARY"));
+        ComponentList<VEvent> events = calendar.getComponents(net.fortuna.ical4j.model.Component.VEVENT);
 
-                String startDateValue = getComponentValue(component, "DTSTART");
-                String endDateValue = getComponentValue(component, "DTEND");
+        for (VEvent event : events) {
+            Map<String, Object> jsonMap = new HashMap<String, Object>();
+            jsonMap.put("id", event.getUid().getValue());
+            jsonMap.put("title", event.getSummary().getValue());
 
-                // If either the start or end value has a "T" as part of the ISO8601 date string, allDay will become
-                // false. Otherwise, it will be true.
-                boolean allDay = startDateValue.contains("T") || endDateValue.contains("T");
-                jsonMap.put("allDay", !allDay);
+            String startDateValue = event.getStartDate().getValue();
+            String endDateValue = event.getEndDate().getValue();
 
-                DateTime startDateTime = new DateTime(startDateValue, timeZone);
-                jsonMap.put("start", jsonDateFormat.format(startDateTime));
+            // If either the start or end value has a "T" as part of the ISO8601 date string, allDay will become
+            // false. Otherwise, it will be true.
+            boolean allDay = startDateValue.contains("T") || endDateValue.contains("T");
+            jsonMap.put("allDay", !allDay);
 
-                DateTime endDateTime = new DateTime(endDateValue, timeZone);
-                jsonMap.put("end", jsonDateFormat.format(endDateTime));
+            DateTime startDateTime = new DateTime(startDateValue, timeZone);
+            jsonMap.put("start", jsonDateFormat.format(startDateTime));
 
-                // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
-                jsonMap.put("description", getComponentValue(component, "DESCRIPTION"));
-                jsonMap.put("location", getComponentValue(component, "LOCATION"));
-                jsonMap.put("status", getComponentValue(component, "STATUS"));
+            DateTime endDateTime = new DateTime(endDateValue, timeZone);
+            jsonMap.put("end", jsonDateFormat.format(endDateTime));
 
-                jsonArrayList.add(jsonMap);
-            }
+            // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
+            jsonMap.put("description", event.getDescription().getValue());
+            jsonMap.put("location", event.getLocation().getValue());
+            jsonMap.put("status", event.getStatus().getValue());
+
+            jsonArrayList.add(jsonMap);
         }
 
         return new JSONTool().serialize(jsonArrayList);
-    }
-
-    private String getComponentValue(CalendarComponent component, String propertyName)
-    {
-        return component.getProperty(propertyName) == null ? null : component.getProperty(propertyName).getValue();
     }
 
     private String getCalendarValue(Calendar calendar, String propertyName)
