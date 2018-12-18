@@ -41,7 +41,7 @@
     <!-- Don't run CLIRR here since there's no Java code. -->
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
     <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
-    <xwiki.extension.features>org.xwiki.contrib:macro-fullcalendar</xwiki.extension.features>
+    <xwiki.extension.features>vincentmassol:fullcalendar-application</xwiki.extension.features>
   </properties>
   <dependencies>
     <dependency>
