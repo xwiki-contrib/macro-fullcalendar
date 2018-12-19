@@ -69,10 +69,12 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         TimeZoneRegistry timeZoneRegistry = builder.getRegistry();
         // Some calendars rely on X-WR-TIMEZONE property from the main component for defining the timeZone.
         String timeZoneValue = getCalendarValue(calendar, "X-WR-TIMEZONE");
-        if (timeZoneValue == null) {
+        if (timeZoneValue.isEmpty()) {
             // Some calendars rely on TZID property from the VTIMEZONE component for defining the timeZone.
-            VTimeZone vTimeZone = (VTimeZone) calendar.getComponent(net.fortuna.ical4j.model.Component.VTIMEZONE); 
-            timeZoneValue = vTimeZone.getTimeZoneId().getValue();
+            VTimeZone vTimeZone = (VTimeZone) calendar.getComponent(net.fortuna.ical4j.model.Component.VTIMEZONE);
+            if (vTimeZone != null) {
+                timeZoneValue = vTimeZone.getTimeZoneId() == null ? "" : vTimeZone.getTimeZoneId().getValue();
+            }
         }
         TimeZone timeZone = timeZoneRegistry.getTimeZone(timeZoneValue);
 
@@ -85,11 +87,11 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 
         for (VEvent event : events) {
             Map<String, Object> jsonMap = new HashMap<String, Object>();
-            jsonMap.put("id", event.getUid().getValue());
-            jsonMap.put("title", event.getSummary().getValue());
+            jsonMap.put("id", event.getUid() == null ? "" : event.getUid().getValue());
+            jsonMap.put("title", event.getSummary() == null ? "" : event.getSummary().getValue());
 
-            String startDateValue = event.getStartDate().getValue();
-            String endDateValue = event.getEndDate().getValue();
+            String startDateValue = event.getStartDate() == null ? "" : event.getStartDate().getValue();
+            String endDateValue = event.getEndDate() == null ? "" : event.getEndDate().getValue();
 
             // If either the start or end value has a "T" as part of the ISO8601 date string, allDay will become
             // false. Otherwise, it will be true.
@@ -103,9 +105,9 @@ public class DefaultFullCalendarManager implements FullCalendarManager
             jsonMap.put("end", jsonDateFormat.format(endDateTime));
 
             // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
-            jsonMap.put("description", event.getDescription().getValue());
-            jsonMap.put("location", event.getLocation().getValue());
-            jsonMap.put("status", event.getStatus().getValue());
+            jsonMap.put("description", event.getDescription() == null ? "" : event.getDescription().getValue());
+            jsonMap.put("location", event.getLocation() == null ? "" : event.getLocation().getValue());
+            jsonMap.put("status", event.getStatus() == null ? "" : event.getStatus().getValue());
 
             jsonArrayList.add(jsonMap);
         }
@@ -115,6 +117,6 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 
     private String getCalendarValue(Calendar calendar, String propertyName)
     {
-        return calendar.getProperty(propertyName) == null ? null : calendar.getProperty(propertyName).getValue();
+        return calendar.getProperty(propertyName) == null ? "" : calendar.getProperty(propertyName).getValue();
     }
 }
