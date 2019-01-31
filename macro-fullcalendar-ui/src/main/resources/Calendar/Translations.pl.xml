@@ -105,6 +105,5 @@ rendering.macro.calendar.parameter.firstHour.description=Pierwsza godzina do wy�
 rendering.macro.calendar.parameter.minTime.name=Minimalna godzina
 rendering.macro.calendar.parameter.minTime.description=Początkowa godzina, aby pokazać w kalendarzu. Użytkownicy nie będą widzieć godzin przed tym czasem. Pozostaw puste dla domyślnych (8.00)
 rendering.macro.calendar.parameter.maxTime.name=Maksymalna godzina
-rendering.macro.calendar.parameter.maxTime.description=Ostatnia godzina, aby pokazać w kalendarzu. Użytkownicy nie będą widzieć godzin po tym czasem. Pozostaw puste dla domyślnych (23.00)
-</content>
+rendering.macro.calendar.parameter.maxTime.description=Ostatnia godzina, aby pokazać w kalendarzu. Użytkownicy nie będą widzieć godzin po tym czasem. Pozostaw puste dla domyślnych (23.00)</content>
 </xwikidoc>
