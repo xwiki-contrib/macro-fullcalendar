@@ -105,6 +105,5 @@ rendering.macro.calendar.name=Kalender
 ### Missing: rendering.macro.calendar.parameter.minTime.name=Min Time
 ### Missing: rendering.macro.calendar.parameter.minTime.description=First time to show in the calendar. Users won't see hours before this time. Leave empty for default (8.00)
 ### Missing: rendering.macro.calendar.parameter.maxTime.name=Max Time
-### Missing: rendering.macro.calendar.parameter.maxTime.description=Last time to show in the calendar. Users won't see hours after this time. Leave empty for default (23.00)
-</content>
+### Missing: rendering.macro.calendar.parameter.maxTime.description=Last time to show in the calendar. Users won't see hours after this time. Leave empty for default (23.00)</content>
 </xwikidoc>
