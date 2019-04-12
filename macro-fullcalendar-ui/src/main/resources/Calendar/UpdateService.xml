@@ -92,14 +92,10 @@
         #set ($success   = true)
       #end
     #else
-      #set ($datetime = $pagedoc.getValue($startfield))
-      #if (!$datetime)
-        #set ($datetime = $xwiki.jodatime.getDateTime(2012, 7, 22, 8, 0, 0, 0).toDate())
+      #setNewDatetime($startfield $dayDelta $minuteDelta)
+      #if ("$!endfield" != '')
+        #setNewDatetime($endfield $dayDelta $minuteDelta)
       #end
-      #set ($jdatetime = $xwiki.jodatime.getDateTime($datetime.getTime()))
-      #set ($jdatetime = $jdatetime.plusDays($dayDelta))
-      #set ($jdatetime = $jdatetime.plusMinutes($minuteDelta))
-      #set ($discard   = $pagedoc.set($startfield, $jdatetime.toDate()))
       #set ($success   = true)
     #end
     #if ($success)
@@ -113,6 +109,16 @@
   #end
 #else
   FAIL No Document
+#end
+#macro(setNewDatetime $field $dayDelta $minuteDelta)
+  #set ($datetime = $pagedoc.getValue($field))
+  #if (!$datetime)
+    #set ($datetime = $xwiki.jodatime.getDateTime(2012, 7, 22, 8, 0, 0, 0).toDate())
+  #end
+  #set ($jdatetime = $xwiki.jodatime.getDateTime($datetime.getTime()))
+  #set ($jdatetime = $jdatetime.plusDays($dayDelta))
+  #set ($jdatetime = $jdatetime.plusMinutes($minuteDelta))
+  #set ($discard   = $pagedoc.set($field, $jdatetime.toDate()))
 #end
 {{/velocity}}</content>
 </xwikidoc>
