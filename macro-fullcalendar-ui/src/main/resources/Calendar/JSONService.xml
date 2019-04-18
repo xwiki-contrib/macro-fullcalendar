@@ -80,7 +80,7 @@
       #set ($allDay  = false)
     #end
     #set ($currentResult = {
-      'id'     : $itemdoc.fullName,
+      'id'     : $escapetool.url($itemdoc.fullName),
       'title'  : $itemdoc.plainTitle,
       'url'    : $itemdoc.getExternalURL(),
       'start'  : ${start},
