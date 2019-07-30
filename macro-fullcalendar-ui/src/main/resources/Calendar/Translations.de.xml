@@ -52,7 +52,7 @@ xwiki.calendar.columnFormat.week=ddd D
 xwiki.calendar.columnFormat.day=dddd, D MMMM
 
 xwiki.calendar.event.description=Beschreibung:
-### Missing: xwiki.calendar.event.location=Location:
+xwiki.calendar.event.location=Seitenort:
 xwiki.calendar.event.status=Status:
 
 xwiki.calendar.titleFormat.month=MMMM YYYY
@@ -78,7 +78,7 @@ rendering.macro.calendar.parameter.gApiKey.name=gApiKey
 rendering.macro.calendar.parameter.gApiKey.description=Key/Schlüssel für die Google Kalender API.
 rendering.macro.calendar.parameter.gCal.name=gCal
 rendering.macro.calendar.parameter.gCal.description=Google Kalender IDs, durch Kommata getrennt.
-### Missing: rendering.macro.calendar.parameter.json.name=JSON
+rendering.macro.calendar.parameter.json.name=JSON
 rendering.macro.calendar.parameter.json.description=URL zu der Seite, die das JSON erzeugt. Diese Angabe wird nur benötigt, wenn das von der Seite "Calendar.JSONService" erzeugte JSON für Ihren Bedarf ungeeignet ist.
 rendering.macro.calendar.parameter.updateurl.name=URL zum Aktualisieren
 rendering.macro.calendar.parameter.updateurl.description=URL, an die Aktualisierungen für Kalendereinträge geschickt werden, wenn die Einträge im Kalender bewegt oder verändert werden. Der Parameter 'Bearbeitbar' muss auf den Wert 'true' gesetzt sein, damit dieses Feld verwendet werden kann.
