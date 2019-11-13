@@ -159,6 +159,7 @@
     <property>
       <code>{{velocity}}
 #set($discard = $xwiki.ssx.use("Calendar.FullCalendar"))
+#set ($discard = $xwiki.jsx.use('Calendar.FullCalendar'))
 ##
 #if($calcounter)
  #set($calcounter = $calcounter + 1)
@@ -262,19 +263,7 @@
 /************************************
  * Configure RequireJS to use jQuery-UI
  ************************************/
-require.config({
-  paths: {
-    // Use the 'r=1' query string in order to inform the require that there's no need to append .js at the end of the path.
-    'jquery-ui': "$xwiki.getURL('Calendar.JQueryUI', 'jsx', 'defer=false&amp;minify=false')",
-    'moment': "$xwiki.getDocument('Calendar.Moment').getAttachmentURL('moment-2.8.4.min.js', 'download', 'r=1')",
-    'fullcalendar': "$xwiki.getURL('Calendar.FullCalendar', 'jsx', 'defer=false&amp;minify=false')",
-    'gcal': "$xwiki.getDocument('Calendar.FullCalendar').getAttachmentURL('gcal.min.js', 'download', 'r=1')"
-  },
-  shim: {
-    'gcal': ['fullcalendar']  
-  }
-});
-require(['jquery', 'jquery-ui', 'fullcalendar', 'gcal'], function ($) {
+require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
   function updateEvent(page, isResize, delta, allDay, revertFunc) {
     // Initialize notification boxes
     var savingBox = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.inprogress')", "inprogress", {inactive: true});
@@ -318,21 +307,25 @@ require(['jquery', 'jquery-ui', 'fullcalendar', 'gcal'], function ($) {
   $(document).ready(function() {
     // The page is now ready, initialize the calendar...
     $('#calendar${calcounter}').fullCalendar({
-      columnFormat: {
-        month : "$!services.localization.render('xwiki.calendar.columnFormat.month')",
-        week  : "$!services.localization.render('xwiki.calendar.columnFormat.week')",
-        day   : "$!services.localization.render('xwiki.calendar.columnFormat.day')"
-      },
-      titleFormat: {
-        month : "$!services.localization.render('xwiki.calendar.titleFormat.month')",
-        week  : "$!services.localization.render('xwiki.calendar.titleFormat.week')",
-        day   : "$!services.localization.render('xwiki.calendar.titleFormat.day')"
-      },
-      buttonText: {
-        today : "$!services.localization.render('xwiki.calendar.button.today')",
-        day   : "$!services.localization.render('xwiki.calendar.button.day')",
-        week  : "$!services.localization.render('xwiki.calendar.button.week')",
-        month : "$!services.localization.render('xwiki.calendar.button.month')"
+      views: {
+        month : {
+          columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.month')",
+          titleFormat: "$!services.localization.render('xwiki.calendar.titleFormat.month')",
+          buttonText: "$!services.localization.render('xwiki.calendar.button.month')"
+        },
+        week : {
+          columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.week')",
+          titleFormat: "$!services.localization.render('xwiki.calendar.titleFormat.week')",
+          buttonText: "$!services.localization.render('xwiki.calendar.button.week')"
+        },
+        day : {
+          columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.day')",
+          titleFormat: "$!services.localization.render('xwiki.calendar.titleFormat.day')",
+          buttonText: "$!services.localization.render('xwiki.calendar.button.day')"
+        },
+        today: {
+          buttonText: "$!services.localization.render('xwiki.calendar.button.today')"
+        }
       },
       timeFormat : "$!services.localization.render('xwiki.calendar.timeFormat')",
       axisFormat : "$!services.localization.render('xwiki.calendar.axisFormat')",
