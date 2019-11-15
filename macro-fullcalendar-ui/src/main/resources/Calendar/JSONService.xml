@@ -20,24 +20,21 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc reference="Calendar.JSONService" locale="">
+<xwikidoc version="1.2" reference="Calendar.JSONService" locale="">
   <web>Calendar</web>
   <name>JSONService</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>Calendar.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
-  <author>xwiki:XWiki.Admin</author>
-  <customClass/>
-  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1379668201000</creationDate>
-  <date>1538666578000</date>
-  <contentUpdateDate>1538666578000</contentUpdateDate>
+  <parent>Calendar.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1573831472000</date>
+  <contentUpdateDate>1573831472000</contentUpdateDate>
   <version>1.1</version>
   <title>JSON Service</title>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.0</syntaxId>

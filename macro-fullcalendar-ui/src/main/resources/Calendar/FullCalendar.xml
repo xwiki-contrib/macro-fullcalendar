@@ -20,29 +20,31 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.2" reference="Calendar.FullCalendar" locale="">
   <web>Calendar</web>
   <name>FullCalendar</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>Calendar.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
-  <author>xwiki:XWiki.Admin</author>
-  <customClass/>
-  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1379668200000</creationDate>
-  <date>1538666578000</date>
-  <contentUpdateDate>1538666578000</contentUpdateDate>
+  <parent>Calendar.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1573831472000</date>
+  <contentUpdateDate>1573831472000</contentUpdateDate>
   <version>1.1</version>
   <title>FullCalendar</title>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
+  <content>Contains Script Extensions for the Calendar Application</content>
   <object>
+    <name>Calendar.FullCalendar</name>
+    <number>1</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>51f8b2d0-1bdb-4fba-b090-9cf3d82b50a9</guid>
     <class>
       <name>XWiki.JavaScriptExtension</name>
       <customClass/>
@@ -114,10 +116,6 @@
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </use>
     </class>
-    <name>Calendar.FullCalendar</name>
-    <number>1</number>
-    <className>XWiki.JavaScriptExtension</className>
-    <guid>51f8b2d0-1bdb-4fba-b090-9cf3d82b50a9</guid>
     <property>
       <cache>long</cache>
     </property>
@@ -150,6 +148,10 @@ require.config({
     </property>
   </object>
   <object>
+    <name>Calendar.FullCalendar</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>75f3b847-979d-46ac-b96a-69af0c617977</guid>
     <class>
       <name>XWiki.StyleSheetExtension</name>
       <customClass/>
@@ -165,7 +167,7 @@ require.config({
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>cache</name>
-        <number>5</number>
+        <number>6</number>
         <prettyName>Caching policy</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
@@ -178,7 +180,7 @@ require.config({
       <code>
         <disabled>0</disabled>
         <name>code</name>
-        <number>2</number>
+        <number>3</number>
         <prettyName>Code</prettyName>
         <rows>20</rows>
         <size>50</size>
@@ -191,7 +193,7 @@ require.config({
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>contentType</name>
-        <number>6</number>
+        <number>1</number>
         <prettyName>Content Type</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
@@ -204,7 +206,7 @@ require.config({
       <name>
         <disabled>0</disabled>
         <name>name</name>
-        <number>1</number>
+        <number>2</number>
         <prettyName>Name</prettyName>
         <size>30</size>
         <unmodifiable>0</unmodifiable>
@@ -215,7 +217,7 @@ require.config({
         <displayFormType>select</displayFormType>
         <displayType>yesno</displayType>
         <name>parse</name>
-        <number>4</number>
+        <number>5</number>
         <prettyName>Parse content</prettyName>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
@@ -226,7 +228,7 @@ require.config({
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>use</name>
-        <number>3</number>
+        <number>4</number>
         <prettyName>Use this extension</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
@@ -237,10 +239,6 @@ require.config({
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </use>
     </class>
-    <name>Calendar.FullCalendar</name>
-    <number>0</number>
-    <className>XWiki.StyleSheetExtension</className>
-    <guid>75f3b847-979d-46ac-b96a-69af0c617977</guid>
     <property>
       <cache>long</cache>
     </property>
@@ -261,6 +259,10 @@ require.config({
     </property>
   </object>
   <object>
+    <name>Calendar.FullCalendar</name>
+    <number>1</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>aa264ecb-3ff4-462f-9f79-46ffb5f947cd</guid>
     <class>
       <name>XWiki.StyleSheetExtension</name>
       <customClass/>
@@ -276,7 +278,7 @@ require.config({
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>cache</name>
-        <number>5</number>
+        <number>6</number>
         <prettyName>Caching policy</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
@@ -289,7 +291,7 @@ require.config({
       <code>
         <disabled>0</disabled>
         <name>code</name>
-        <number>2</number>
+        <number>3</number>
         <prettyName>Code</prettyName>
         <rows>20</rows>
         <size>50</size>
@@ -302,7 +304,7 @@ require.config({
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>contentType</name>
-        <number>6</number>
+        <number>1</number>
         <prettyName>Content Type</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
@@ -315,7 +317,7 @@ require.config({
       <name>
         <disabled>0</disabled>
         <name>name</name>
-        <number>1</number>
+        <number>2</number>
         <prettyName>Name</prettyName>
         <size>30</size>
         <unmodifiable>0</unmodifiable>
@@ -326,7 +328,7 @@ require.config({
         <displayFormType>select</displayFormType>
         <displayType>yesno</displayType>
         <name>parse</name>
-        <number>4</number>
+        <number>5</number>
         <prettyName>Parse content</prettyName>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
@@ -337,7 +339,7 @@ require.config({
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>use</name>
-        <number>3</number>
+        <number>4</number>
         <prettyName>Use this extension</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
@@ -348,10 +350,6 @@ require.config({
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </use>
     </class>
-    <name>Calendar.FullCalendar</name>
-    <number>1</number>
-    <className>XWiki.StyleSheetExtension</className>
-    <guid>aa264ecb-3ff4-462f-9f79-46ffb5f947cd</guid>
     <property>
       <cache>long</cache>
     </property>
@@ -416,5 +414,4 @@ a.fc-event {
       <use>onDemand</use>
     </property>
   </object>
-  <content>Contains Script Extensions for the Calendar Application</content>
 </xwikidoc>
