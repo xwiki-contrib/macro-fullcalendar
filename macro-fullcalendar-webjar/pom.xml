@@ -29,31 +29,33 @@
     <artifactId>macro-fullcalendar-pom</artifactId>
     <version>2.2-SNAPSHOT</version>
   </parent>
-  <artifactId>macro-fullcalendar-ui</artifactId>
-  <packaging>xar</packaging>
-  <name>Full Calendar Macro - UI</name>
-  <description>
-    Displays a Calendar in Javascript and allows to get events from XWiki pages.
-  </description>
+  <artifactId>macro-fullcalendar-webjar</artifactId>
+  <name>Full Calendar Macro - WebJar</name>
+  <packaging>jar</packaging>
+  <description>Client side resources required by the fullcalendar.io integration in XWiki.</description>
   <properties>
-	<!-- Name to display by the Extension Manager -->
-	<xwiki.extension.name>Full Calendar Macro</xwiki.extension.name>
-    <!-- Don't run CLIRR here since there's no Java code. -->
-    <xwiki.clirr.skip>true</xwiki.clirr.skip>
-    <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
-    <xwiki.extension.features>org.xwiki.contrib:macro-fullcalendar,vincentmassol:fullcalendar-application</xwiki.extension.features>
+    <momentjs.version>2.9.0</momentjs.version>
+    <fullcalendar.version>3.0.0</fullcalendar.version>
+    <jqueryui.version>1.11.1</jqueryui.version>
+    <webjar.contentDirectory>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</webjar.contentDirectory>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.xwiki.contrib</groupId>
-      <artifactId>macro-fullcalendar-api</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.webjars</groupId>
+      <artifactId>momentjs</artifactId>
+      <version>${momentjs.version}</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>macro-fullcalendar-webjar</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.webjars</groupId>
+      <artifactId>fullcalendar</artifactId>
+      <version>${fullcalendar.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery-ui</artifactId>
+      <version>${jqueryui.version}</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
