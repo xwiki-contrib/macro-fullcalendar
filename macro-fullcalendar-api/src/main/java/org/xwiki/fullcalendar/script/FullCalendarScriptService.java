@@ -41,6 +41,13 @@ public class FullCalendarScriptService implements ScriptService
     @Inject
     private FullCalendarManager fullCalendarManager;
 
+    /**
+     * Convert an iCal to a JSON.
+     *
+     * @param iCalStringURL the String representation of an iCal URL.
+     * @return the JSON representation of a calendar.
+     * @throws Exception in case of exceptions.
+     */
     public String iCalToJSON(String iCalStringURL) throws Exception
     {
         return fullCalendarManager.iCalToJSON(iCalStringURL);

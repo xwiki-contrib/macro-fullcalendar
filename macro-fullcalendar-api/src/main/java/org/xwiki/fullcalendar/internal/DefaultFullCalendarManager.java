@@ -54,6 +54,7 @@ import net.fortuna.ical4j.util.CompatibilityHints;
 @Singleton
 public class DefaultFullCalendarManager implements FullCalendarManager
 {
+    private static final String T_VALUE = "T";
 
     @Override
     public String iCalToJSON(String iCalStringURL) throws Exception
@@ -67,15 +68,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         Calendar calendar = builder.build(in);
 
         TimeZoneRegistry timeZoneRegistry = builder.getRegistry();
-        // Some calendars rely on X-WR-TIMEZONE property from the main component for defining the timeZone.
-        String timeZoneValue = getCalendarValue(calendar, "X-WR-TIMEZONE");
-        if (timeZoneValue.isEmpty()) {
-            // Some calendars rely on TZID property from the VTIMEZONE component for defining the timeZone.
-            VTimeZone vTimeZone = (VTimeZone) calendar.getComponent(net.fortuna.ical4j.model.Component.VTIMEZONE);
-            if (vTimeZone != null) {
-                timeZoneValue = vTimeZone.getTimeZoneId() == null ? "" : vTimeZone.getTimeZoneId().getValue();
-            }
-        }
+        String timeZoneValue = getTimeZoneValue(calendar);
         TimeZone timeZone = timeZoneRegistry.getTimeZone(timeZoneValue);
 
         ArrayList<Object> jsonArrayList = new ArrayList<Object>();
@@ -95,7 +88,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 
             // If either the start or end value has a "T" as part of the ISO8601 date string, allDay will become
             // false. Otherwise, it will be true.
-            boolean allDay = startDateValue.contains("T") || endDateValue.contains("T");
+            boolean allDay = startDateValue.contains(T_VALUE) || endDateValue.contains(T_VALUE);
             jsonMap.put("allDay", !allDay);
 
             DateTime startDateTime = new DateTime(startDateValue, timeZone);
@@ -118,5 +111,18 @@ public class DefaultFullCalendarManager implements FullCalendarManager
     private String getCalendarValue(Calendar calendar, String propertyName)
     {
         return calendar.getProperty(propertyName) == null ? "" : calendar.getProperty(propertyName).getValue();
+    }
+
+    private String getTimeZoneValue(Calendar calendar) {
+        // Some calendars rely on X-WR-TIMEZONE property from the main component for defining the timeZone.
+        String timeZoneValue = getCalendarValue(calendar, "X-WR-TIMEZONE");
+        if (timeZoneValue.isEmpty()) {
+            // Some calendars rely on TZID property from the VTIMEZONE component for defining the timeZone.
+            VTimeZone vTimeZone = (VTimeZone) calendar.getComponent(net.fortuna.ical4j.model.Component.VTIMEZONE);
+            if (vTimeZone != null) {
+                timeZoneValue = vTimeZone.getTimeZoneId() == null ? "" : vTimeZone.getTimeZoneId().getValue();
+            }
+        }
+        return timeZoneValue;
     }
 }
