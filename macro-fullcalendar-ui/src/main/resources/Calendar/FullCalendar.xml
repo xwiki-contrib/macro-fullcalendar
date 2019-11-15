@@ -122,15 +122,16 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>var fullCalendarBasePath = "$services.webjars.url('org.xwiki.contrib:macro-fullcalendar-webjar', '')" + 'fullcalendar-3.0.0/';
+      <code>var fullCalendarBasePath = "$services.webjars.url('org.webjars:fullcalendar', '')";
 var momentBasePath = "$services.webjars.url('org.webjars:momentjs', '')";
+var jqueryUIBasePath = "$services.webjars.url('org.webjars:jquery-ui', '')";
 
 require.config({
   paths: {
-    'fullcalendar': fullCalendarBasePath + 'fullcalendar.min.js',
-    'moment': momentBasePath + 'min/moment.min.js',
-    'gcal': fullCalendarBasePath + 'gcal.min.js',
-    'jqueryui': fullCalendarBasePath + 'lib/jquery-ui.min.js'
+    'fullcalendar': fullCalendarBasePath + 'fullcalendar.min',
+    'moment': momentBasePath + 'min/moment.min',
+    'gcal': fullCalendarBasePath + 'gcal',
+    'jqueryui': jqueryUIBasePath + 'jquery-ui.min'
   },
   shim: {
     'fullcalendar': ['moment'],
@@ -244,7 +245,7 @@ require.config({
       <cache>long</cache>
     </property>
     <property>
-      <code>@import url("$services.webjars.url('org.xwiki.contrib:macro-fullcalendar-webjar', 'fullcalendar-3.0.0/fullcalendar.min.css')");</code>
+      <code>@import url("$services.webjars.url('org.webjars:fullcalendar', 'fullcalendar.min.css')");</code>
     </property>
     <property>
       <contentType>CSS</contentType>
