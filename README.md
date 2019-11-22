@@ -7,6 +7,6 @@ Full Calendar Macro, using jQuery FullCalendar plugin, allowing to display objec
 * [Issue Tracker](http://jira.xwiki.org/browse/FULLCAL)
 * Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists>), [IRC]( http://dev.xwiki.org/xwiki/bin/view/Community/IRC)
 * [Development Practices](http://dev.xwiki.org)
-* Minimal XWiki version supported: XWiki 5.2.4
+* Minimal XWiki version supported: XWiki 7.4
 * License: LGPL 2.1+.
 * [Translations](http://l10n.xwiki.org/xwiki/bin/view/Contrib/CalendarTranslations)
