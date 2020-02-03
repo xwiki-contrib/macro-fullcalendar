@@ -41,38 +41,38 @@
   <hidden>true</hidden>
   <content>xwiki.calendar.monthNames=['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 xwiki.calendar.monthNamesShort=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
-xwiki.calendar.dayNames=['Lunes','Martes','Miércoles','Jueves','Viernes','Sabado','Domingo']
-xwiki.calendar.dayNamesShort=['Lun','Mar','Mié','Jue','Vie','Sab','Dom']
+xwiki.calendar.dayNames=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado']
+xwiki.calendar.dayNamesShort=['Dom','Lun','Mar','Mié','Jue','Vie','Sab']
 
 xwiki.calendar.columnFormat.month=ddd
 xwiki.calendar.columnFormat.week=ddd D/M
 xwiki.calendar.columnFormat.day=dddd D/M
 
-### Missing: xwiki.calendar.event.description=Description:
-### Missing: xwiki.calendar.event.location=Location:
-### Missing: xwiki.calendar.event.status=Status:
+xwiki.calendar.event.description=Descripción:
+xwiki.calendar.event.location=Lugar:
+xwiki.calendar.event.status=Estado:
 
 xwiki.calendar.titleFormat.month=MMMM YYYY
 xwiki.calendar.titleFormat.week=MMM D YYYY
 xwiki.calendar.titleFormat.day=dddd, D MMM, YYYY
 
-xwiki.calendar.timeFormat=H\:mm
-xwiki.calendar.axisFormat=H\:mm
+xwiki.calendar.timeFormat=H:mm
+xwiki.calendar.axisFormat=H:mm
 
-xwiki.calendar.allDayText=dia todo
+xwiki.calendar.allDayText=Todo el día
 xwiki.calendar.button.today=hoy
 xwiki.calendar.button.day=dia
 xwiki.calendar.button.week=semana
 xwiki.calendar.button.month=mes
 
-### Missing: xwiki.calendar.notification.inprogress=Saving...
-### Missing: xwiki.calendar.notification.done=Saved
-### Missing: xwiki.calendar.notification.error=Failed to save the document. Reason: update failed!
+xwiki.calendar.notification.inprogress=Guardando...
+xwiki.calendar.notification.done=Guardado
+xwiki.calendar.notification.error=Error al guardar el documento: Motivo: ¡Error en actualización!
 
-### Missing: rendering.macro.calendar.name=Calendar
-### Missing: rendering.macro.calendar.description=Displays a Calendar
-### Missing: rendering.macro.calendar.parameter.gApiKey.name=gApiKey
-### Missing: rendering.macro.calendar.parameter.gApiKey.description=Key for the Google Calendar API.
+rendering.macro.calendar.name=Calendario
+rendering.macro.calendar.description=Muestra un Calendario
+rendering.macro.calendar.parameter.gApiKey.name=gApiKey
+rendering.macro.calendar.parameter.gApiKey.description=Key para el API de Google Calendar
 ### Missing: rendering.macro.calendar.parameter.gCal.name=gCal
 ### Missing: rendering.macro.calendar.parameter.gCal.description=Google calendar IDs separated by commas.
 ### Missing: rendering.macro.calendar.parameter.json.name=JSON
