@@ -330,6 +330,8 @@ require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
 
   $(document).ready(function() {
     // The page is now ready, initialize the calendar...
+    var progressNotification = new XWiki.widgets.Notification(
+          "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loading'))", 'inprogress');
     $('#calendar${calcounter}').fullCalendar({
       views: {
         month : {
@@ -400,8 +402,14 @@ require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
                       "\n$services.localization.render('xwiki.calendar.event.location') " + event.location + 
                       "\n$services.localization.render('xwiki.calendar.event.description') " + event.description;
         element.attr('title', tooltip);
+      },
+      loading: function(isLoading) {
+        if (!isLoading) {
+          progressNotification.replace(new XWiki.widgets.Notification(
+            "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loaded'))", 'done'));
+        }
       }
-    })
+    });
   });
 });
 &lt;/script&gt;

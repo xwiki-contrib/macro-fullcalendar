@@ -68,6 +68,8 @@ xwiki.calendar.button.month=month
 xwiki.calendar.notification.inprogress=Saving...
 xwiki.calendar.notification.done=Saved
 xwiki.calendar.notification.error=Failed to save the document. Reason: update failed!
+xwiki.calendar.notification.loading=Loading calendar...
+xwiki.calendar.notification.loaded=Calendar loaded
 
 rendering.macro.calendar.name=Calendar
 rendering.macro.calendar.description=Displays a Calendar
