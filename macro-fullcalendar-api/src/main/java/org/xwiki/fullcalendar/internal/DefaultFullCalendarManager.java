@@ -35,8 +35,6 @@ import javax.inject.Singleton;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.component.phase.Initializable;
-import org.xwiki.component.phase.InitializationException;
 import org.xwiki.fullcalendar.FullCalendarManager;
 import org.xwiki.velocity.tools.JSONTool;
 
@@ -58,41 +56,34 @@ import net.fortuna.ical4j.util.CompatibilityHints;
  */
 @Component
 @Singleton
-public class DefaultFullCalendarManager implements FullCalendarManager, Initializable
+public class DefaultFullCalendarManager implements FullCalendarManager
 {
     private static final String T_VALUE = "T";
 
-    private CalendarBuilder builder;
+    // FullCalendar will accept ISO8601 date strings written with hours, minutes, seconds, and milliseconds.
+    private DateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
 
     @Inject
     private Logger logger;
 
-    private TimeZoneRegistry timeZoneRegistry;
-
-    @Override
-    public void initialize() throws InitializationException
-    {
-        CompatibilityHints.setHintEnabled(CompatibilityHints.KEY_RELAXED_PARSING, true);
-        builder = new CalendarBuilder();
-        timeZoneRegistry = builder.getRegistry();
-    }
-
     @Override
     public String iCalToJSON(String iCalStringURL) throws Exception
     {
-        Calendar calendar = getCalendar(iCalStringURL);
+        CalendarBuilder builder = new CalendarBuilder();
+        Calendar calendar = getCalendar(iCalStringURL, builder);
 
-        TimeZone timeZone = getTimeZone(calendar);
+        TimeZoneRegistry timeZoneRegistry = builder.getRegistry();
+        String timeZoneValue = getTimeZoneValue(calendar);
+        TimeZone timeZone = timeZoneRegistry.getTimeZone(timeZoneValue);
+        
+        
 
-        ArrayList<Object> jsonArrayList = new ArrayList<Object>();
-
-        // FullCalendar will accept ISO8601 date strings written with hours, minutes, seconds, and milliseconds.
-        DateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
+        ArrayList<Object> jsonArrayList = new ArrayList<>();
 
         ComponentList<VEvent> events = calendar.getComponents(net.fortuna.ical4j.model.Component.VEVENT);
 
         for (VEvent event : events) {
-            Map<String, Object> jsonMap = new HashMap<String, Object>();
+            Map<String, Object> jsonMap = new HashMap<>();
             jsonMap.put("id", event.getUid() == null ? "" : event.getUid().getValue());
             jsonMap.put("title", event.getSummary() == null ? "" : event.getSummary().getValue());
 
@@ -121,9 +112,12 @@ public class DefaultFullCalendarManager implements FullCalendarManager, Initiali
         return new JSONTool().serialize(jsonArrayList);
     }
 
-    private Calendar getCalendar(String iCalStringURL) throws Exception
+    private Calendar getCalendar(String iCalStringURL, CalendarBuilder builder) throws Exception
     {
         URL iCalURL = new URL(iCalStringURL);
+
+        CompatibilityHints.setHintEnabled(CompatibilityHints.KEY_RELAXED_PARSING, true);
+
         URLConnection conn = iCalURL.openConnection();
         InputStream is = conn.getInputStream();
         Calendar calendar = builder.build(is);
@@ -132,7 +126,6 @@ public class DefaultFullCalendarManager implements FullCalendarManager, Initiali
             logger.debug("InputStream: {}", IOUtils.toString(is, StandardCharsets.UTF_8.name()));
             logger.debug("Calendar: {}", calendar);
         }
-
         return calendar;
     }
 
@@ -141,7 +134,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager, Initiali
         return calendar.getProperty(propertyName) == null ? "" : calendar.getProperty(propertyName).getValue();
     }
 
-    private TimeZone getTimeZone(Calendar calendar)
+    private String getTimeZoneValue(Calendar calendar)
     {
         // Some calendars rely on X-WR-TIMEZONE property from the main component for defining the timeZone.
         String timeZoneValue = getCalendarValue(calendar, "X-WR-TIMEZONE");
@@ -152,6 +145,6 @@ public class DefaultFullCalendarManager implements FullCalendarManager, Initiali
                 timeZoneValue = vTimeZone.getTimeZoneId() == null ? "" : vTimeZone.getTimeZoneId().getValue();
             }
         }
-        return timeZoneRegistry.getTimeZone(timeZoneValue);
+        return timeZoneValue;
     }
 }
