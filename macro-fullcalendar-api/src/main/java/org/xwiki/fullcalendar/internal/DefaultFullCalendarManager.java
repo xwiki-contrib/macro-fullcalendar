@@ -22,15 +22,21 @@ package org.xwiki.fullcalendar.internal;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.component.phase.Initializable;
+import org.xwiki.component.phase.InitializationException;
 import org.xwiki.fullcalendar.FullCalendarManager;
 import org.xwiki.velocity.tools.JSONTool;
 
@@ -52,24 +58,31 @@ import net.fortuna.ical4j.util.CompatibilityHints;
  */
 @Component
 @Singleton
-public class DefaultFullCalendarManager implements FullCalendarManager
+public class DefaultFullCalendarManager implements FullCalendarManager, Initializable
 {
     private static final String T_VALUE = "T";
+
+    private CalendarBuilder builder;
+
+    @Inject
+    private Logger logger;
+
+    private TimeZoneRegistry timeZoneRegistry;
+
+    @Override
+    public void initialize() throws InitializationException
+    {
+        CompatibilityHints.setHintEnabled(CompatibilityHints.KEY_RELAXED_PARSING, true);
+        builder = new CalendarBuilder();
+        timeZoneRegistry = builder.getRegistry();
+    }
 
     @Override
     public String iCalToJSON(String iCalStringURL) throws Exception
     {
-        URL iCalURL = new URL(iCalStringURL);
+        Calendar calendar = getCalendar(iCalStringURL);
 
-        CompatibilityHints.setHintEnabled(CompatibilityHints.KEY_RELAXED_PARSING, true);
-        CalendarBuilder builder = new CalendarBuilder();
-        URLConnection conn = iCalURL.openConnection();
-        InputStream in = conn.getInputStream();
-        Calendar calendar = builder.build(in);
-
-        TimeZoneRegistry timeZoneRegistry = builder.getRegistry();
-        String timeZoneValue = getTimeZoneValue(calendar);
-        TimeZone timeZone = timeZoneRegistry.getTimeZone(timeZoneValue);
+        TimeZone timeZone = getTimeZone(calendar);
 
         ArrayList<Object> jsonArrayList = new ArrayList<Object>();
 
@@ -108,12 +121,28 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         return new JSONTool().serialize(jsonArrayList);
     }
 
+    private Calendar getCalendar(String iCalStringURL) throws Exception
+    {
+        URL iCalURL = new URL(iCalStringURL);
+        URLConnection conn = iCalURL.openConnection();
+        InputStream is = conn.getInputStream();
+        Calendar calendar = builder.build(is);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("InputStream: {}", IOUtils.toString(is, StandardCharsets.UTF_8.name()));
+            logger.debug("Calendar: {}", calendar);
+        }
+
+        return calendar;
+    }
+
     private String getCalendarValue(Calendar calendar, String propertyName)
     {
         return calendar.getProperty(propertyName) == null ? "" : calendar.getProperty(propertyName).getValue();
     }
 
-    private String getTimeZoneValue(Calendar calendar) {
+    private TimeZone getTimeZone(Calendar calendar)
+    {
         // Some calendars rely on X-WR-TIMEZONE property from the main component for defining the timeZone.
         String timeZoneValue = getCalendarValue(calendar, "X-WR-TIMEZONE");
         if (timeZoneValue.isEmpty()) {
@@ -123,6 +152,6 @@ public class DefaultFullCalendarManager implements FullCalendarManager
                 timeZoneValue = vTimeZone.getTimeZoneId() == null ? "" : vTimeZone.getTimeZoneId().getValue();
             }
         }
-        return timeZoneValue;
+        return timeZoneRegistry.getTimeZone(timeZoneValue);
     }
 }
