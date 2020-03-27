@@ -75,8 +75,6 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         TimeZoneRegistry timeZoneRegistry = builder.getRegistry();
         String timeZoneValue = getTimeZoneValue(calendar);
         TimeZone timeZone = timeZoneRegistry.getTimeZone(timeZoneValue);
-        
-        
 
         ArrayList<Object> jsonArrayList = new ArrayList<>();
 
@@ -120,12 +118,13 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 
         URLConnection conn = iCalURL.openConnection();
         InputStream is = conn.getInputStream();
-        Calendar calendar = builder.build(is);
-
         if (logger.isDebugEnabled()) {
             logger.debug("InputStream: {}", IOUtils.toString(is, StandardCharsets.UTF_8.name()));
-            logger.debug("Calendar: {}", calendar);
         }
+
+        Calendar calendar = builder.build(is);
+        logger.debug("Calendar: {}", calendar);
+
         return calendar;
     }
 
