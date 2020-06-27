@@ -68,6 +68,8 @@ xwiki.calendar.button.month=Miesiąc
 xwiki.calendar.notification.inprogress=Trwa zapisywanie...
 xwiki.calendar.notification.done=Zapisane
 xwiki.calendar.notification.error=Nie można zapisać dokumentu. Powód: aktualizacja nie powiodła się!
+### Missing: xwiki.calendar.notification.loading=Loading calendar...
+### Missing: xwiki.calendar.notification.loaded=Calendar loaded
 
 rendering.macro.calendar.name=Kalendarz
 rendering.macro.calendar.description=Wyświetl kalendarz

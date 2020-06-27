@@ -68,6 +68,8 @@ xwiki.calendar.button.month=Monat
 xwiki.calendar.notification.inprogress=Speichern...
 xwiki.calendar.notification.done=Gespeichert
 xwiki.calendar.notification.error=Fehler beim Speichern des Eintrags: Aktualisierung fehlgeschlagen!
+### Missing: xwiki.calendar.notification.loading=Loading calendar...
+### Missing: xwiki.calendar.notification.loaded=Calendar loaded
 
 rendering.macro.calendar.name=Kalender
 rendering.macro.calendar.description=Zeigt einen Kalender an

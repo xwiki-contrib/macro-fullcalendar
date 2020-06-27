@@ -68,6 +68,8 @@ xwiki.calendar.button.month=месяц
 xwiki.calendar.notification.inprogress=Сохранение...
 xwiki.calendar.notification.done=Сохранено
 xwiki.calendar.notification.error=Не удалось сохранить документ. Причина: обновление не удалось!
+### Missing: xwiki.calendar.notification.loading=Loading calendar...
+### Missing: xwiki.calendar.notification.loaded=Calendar loaded
 
 rendering.macro.calendar.name=Календарь
 rendering.macro.calendar.description=Отображает календарь
