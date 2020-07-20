@@ -72,7 +72,7 @@ xwiki.calendar.notification.loading=Cargando calendario...
 xwiki.calendar.notification.loaded=Calendario cargado
 
 rendering.macro.calendar.name=Calendario
-rendering.macro.calendar.description=Muestra un Calendario
+rendering.macro.calendar.description=Mostrar un Calendario
 rendering.macro.calendar.parameter.gApiKey.name=gApiKey
 rendering.macro.calendar.parameter.gApiKey.description=Clave de la API de Google Calendar.
 rendering.macro.calendar.parameter.gCal.name=gCal
