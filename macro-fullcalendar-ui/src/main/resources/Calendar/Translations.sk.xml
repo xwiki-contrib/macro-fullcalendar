@@ -68,6 +68,8 @@ xwiki.calendar.button.month=mesiac
 ### Missing: xwiki.calendar.notification.inprogress=Saving...
 xwiki.calendar.notification.done=Uložené
 xwiki.calendar.notification.error=Nepodarilo sa uložiť dokument.
+### Missing: xwiki.calendar.notification.loading=Loading calendar...
+### Missing: xwiki.calendar.notification.loaded=Calendar loaded
 
 rendering.macro.calendar.name=Kalendár
 rendering.macro.calendar.description=Zobraziť kalendár

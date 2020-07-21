@@ -68,8 +68,8 @@ xwiki.calendar.button.month=Mois
 xwiki.calendar.notification.inprogress=Enregistrement...
 xwiki.calendar.notification.done=Enregistré
 xwiki.calendar.notification.error=Impossible d'enregistrer le document. Erreur : la mise à jour a échoué !
-+xwiki.calendar.notification.loading=Chargement du calendrier ...
-+xwiki.calendar.notification.loaded=Calendrier chargé
+### Missing: xwiki.calendar.notification.loading=Loading calendar...
+### Missing: xwiki.calendar.notification.loaded=Calendar loaded
 
 rendering.macro.calendar.name=Calendrier
 rendering.macro.calendar.description=Afficher un Calendrier
