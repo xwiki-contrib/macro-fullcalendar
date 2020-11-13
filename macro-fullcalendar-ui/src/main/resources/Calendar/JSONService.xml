@@ -84,9 +84,9 @@
     ## Ease the use of the extrafields only when all of them (3) are specified
     ## TODO: Find some better rule to handle this and maybe use a more dynamic list.
     #if ($extraFields.size() == 3)
-      #set ($currentResult.description = $itemdoc.getValue($extraFields[0]))
-      #set ($currentResult.location = $itemdoc.getValue($extraFields[1]))
-      #set ($currentResult.status = $itemdoc.getValue($extraFields[2]))
+      #set ($currentResult.description = $itemdoc.getValue($extraFields[0].trim()))
+      #set ($currentResult.location = $itemdoc.getValue($extraFields[1].trim()))
+      #set ($currentResult.status = $itemdoc.getValue($extraFields[2].trim()))
     #end
     #if ($end)
       #set ($discard = $currentResult.put('end', $end))
