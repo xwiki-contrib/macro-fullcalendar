@@ -264,6 +264,7 @@ or
 #if(!$editable)
  #set($editable = "false")
 #end
+#set($extraFields = $xcontext.macro.params.extraFields)
 #set($json = $xwiki.getDocument('Calendar.JSONService').getURL('get'))
 #if ($xcontext.macro.params.json)
   #set($json = $xcontext.macro.params.json)
@@ -361,8 +362,8 @@ require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
       dayNamesShort   : dayNamesShort,
       googleCalendarApiKey : "$gApiKey",
       eventSources: [
-        #if($json != $jsonService || $!{xcontext.macro.params.classname} != '')
-          "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}"
+        #if("$!xcontext.macro.params.classname" != '')
+          "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;extraFields=$!{extraFields}"
         #end
         #if($!gCal != '')
           ,
@@ -1671,6 +1672,72 @@ basicDay</description>
     </property>
     <property>
       <name>iCal</name>
+    </property>
+  </object>
+  <object>
+    <name>Calendar.Macro</name>
+    <number>18</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>23ec902e-f099-41b2-9f58-301f448f4fa6</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description>Provide extra fields to be displayed in the event tooltip. An empty list or a list of exactly 3 values that represent event description, event location and event status, in this order, is expected.</description>
+    </property>
+    <property>
+      <mandatory>0</mandatory>
+    </property>
+    <property>
+      <name>extraFields</name>
     </property>
   </object>
 </xwikidoc>

@@ -52,15 +52,13 @@
 ##
 #set ($jsonResult = [])
 #set ($started = false)
+#set ($extraFields = $request.extraFields.split(','))
 #foreach ($item in $services.query.hql($hql).execute())
   #set ($itemdoc   = $xwiki.getDocument($item))
   #set ($startField = $request.startfield)
   ##
   #if ("$!startField" != '' &amp;&amp; $itemdoc.getValue($startField))
     #set ($startdate = $itemdoc.getValue($startField))
-    #set ($id     = $itemdoc.fullName)
-    #set ($title  = $itemdoc.plainTitle)
-    #set ($url    = $itemdoc.getExternalURL())
     #set ($start  = $xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm'))
     #set ($allDay = true)
     #set ($endField = $request.endfield)
@@ -80,8 +78,16 @@
       'id'     : $escapetool.url($itemdoc.fullName),
       'title'  : $itemdoc.plainTitle,
       'url'    : $itemdoc.getExternalURL(),
-      'start'  : ${start},
-      'allDay' : $allDay})
+      'start'  : $start,
+      'allDay' : $allDay
+    })
+    ## Ease the use of the extrafields only when all of them (3) are specified
+    ## TODO: Find some better rule to handle this and maybe use a more dynamic list.
+    #if ($extraFields.size() == 3)
+      #set ($currentResult.description = $itemdoc.getValue($extraFields[0]))
+      #set ($currentResult.location = $itemdoc.getValue($extraFields[1]))
+      #set ($currentResult.status = $itemdoc.getValue($extraFields[2]))
+    #end
     #if ($end)
       #set ($discard = $currentResult.put('end', $end))
     #end
