@@ -354,16 +354,22 @@ require.config({
       <cache>long</cache>
     </property>
     <property>
-      <code>th {
-  background-color: #F5F5F5;
+      <code>#template('colorThemeInit.vm')
+th {
+  background-color: $theme.buttonSecondaryBackgroundColor;
 }
 
 .fc-view table {
-  border-top: 1px solid #ddd;
+  border: 1px solid $theme.buttonSecondaryBackgroundColor;
 }
 
 a.fc-event {
-  color: #fff;
+  color: $theme.pageContentBackgroundColor;
+  background-color: $theme.buttonPrimaryBackgroundColor;
+}
+
+.fc-unthemed .fc-today {
+  background-color: $theme.panelBackgroundColor;
 }
 
 /* Scale the table header in gadget mode */
@@ -408,7 +414,7 @@ a.fc-event {
       <name>Fix for the Colibri/Flamingo Skin</name>
     </property>
     <property>
-      <parse>0</parse>
+      <parse>1</parse>
     </property>
     <property>
       <use>onDemand</use>
