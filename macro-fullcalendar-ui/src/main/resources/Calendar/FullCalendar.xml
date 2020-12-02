@@ -360,7 +360,7 @@ th {
 }
 
 .fc-view table {
-  border: 1px solid $theme.buttonSecondaryBackgroundColor;
+  border-top: 1px solid $theme.buttonSecondaryBackgroundColor;
 }
 
 a.fc-event {
