@@ -53,7 +53,7 @@
 #set ($jsonResult = [])
 #set ($started = false)
 #set ($extraFields = $request.extraFields.split(','))
-#foreach ($item in $services.query.hql($hql).execute())
+#foreach ($item in $services.query.hql($hql).addFilter('currentlanguage').execute())
   #set ($itemdoc   = $xwiki.getDocument($item))
   #set ($startField = $request.startfield)
   ##
