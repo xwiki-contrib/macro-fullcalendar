@@ -396,11 +396,17 @@ require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
         updateEvent(event.id, true, delta, false, revertFunc);
       },
       eventRender: function(event, element) {
-
         // Add tooltip on the calendar element.
-        var tooltip = "$services.localization.render('xwiki.calendar.event.status') " + event.status + 
-                      "\n$services.localization.render('xwiki.calendar.event.location') " + event.location + 
-                      "\n$services.localization.render('xwiki.calendar.event.description') " + event.description;
+        var tooltip = '';
+        if (event.status) {
+          tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.status') " + event.status + '\n';
+        }
+        if (event.location) {
+          tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.location') " + event.location + '\n';
+        }
+        if (event.description) {
+          tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.description') " + event.description;
+        }
         element.attr('title', tooltip);
       },
       loading: function( isLoading) {
