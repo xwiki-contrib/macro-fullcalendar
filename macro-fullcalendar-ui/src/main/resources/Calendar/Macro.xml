@@ -183,7 +183,6 @@ or
     <property>
       <code>{{velocity}}
 #set($discard = $xwiki.ssx.use("Calendar.FullCalendar"))
-#set ($discard = $xwiki.jsx.use('Calendar.FullCalendar'))
 ##
 #if($calcounter)
  #set($calcounter = $calcounter + 1)
@@ -288,6 +287,22 @@ or
 /************************************
  * Configure RequireJS to use jQuery-UI
  ************************************/
+var fullCalendarBasePath = "$services.webjars.url('org.webjars:fullcalendar', '')";
+var momentBasePath = "$services.webjars.url('org.webjars:momentjs', '')";
+var jqueryUIBasePath = "$services.webjars.url('org.webjars:jquery-ui', '')";
+
+require.config({
+  paths: {
+    'fullcalendar': fullCalendarBasePath + 'fullcalendar.min',
+    'moment': momentBasePath + 'min/moment.min',
+    'gcal': fullCalendarBasePath + 'gcal',
+    'jqueryui': jqueryUIBasePath + 'jquery-ui.min'
+  },
+  shim: {
+    'fullcalendar': ['moment'],
+    'gcal': ['fullcalendar']
+  }
+});
 require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
   function updateEvent(page, isResize, delta, allDay, revertFunc) {
     // Initialize notification boxes
