@@ -287,6 +287,8 @@ or
 /************************************
  * Configure RequireJS to use jQuery-UI
  ************************************/
+// Moved require configuration to the Macro page because in case of
+// reloading the Chrome tab the resources will not be loaded.
 var fullCalendarBasePath = "$services.webjars.url('org.webjars:fullcalendar', '')";
 var momentBasePath = "$services.webjars.url('org.webjars:momentjs', '')";
 var jqueryUIBasePath = "$services.webjars.url('org.webjars:jquery-ui', '')";
