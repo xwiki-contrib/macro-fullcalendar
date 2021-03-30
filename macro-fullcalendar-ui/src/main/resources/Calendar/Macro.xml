@@ -411,17 +411,20 @@ require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
       },
       loading: function( isLoading) {
         if (isLoading) {
-          /*
-            Clear all the previous notifications before creating a new one.
-            Improve this code when https://jira.xwiki.org/browse/XWIKI-18514 is fixed and the minimal supported version
-            will match the fix version of this issue.
-          */
-          $('.xnotification-container').empty();
-          progressNotification = new XWiki.widgets.Notification(
-          "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loading'))", 'inprogress')
+          if (typeof progressNotification === 'undefined') {
+            progressNotification = new XWiki.widgets.Notification(
+              "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loading'))", 'inprogress');
+          } else {
+            var oldNotification = progressNotification;
+            progressNotification = new XWiki.widgets.Notification(
+              "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loading'))", 'inprogress');
+            oldNotification.replace(progressNotification);
+          }
         } else {
-          progressNotification.replace(new XWiki.widgets.Notification(
-            "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loaded'))", 'done'));
+          var oldNotification = progressNotification;
+          progressNotification = new XWiki.widgets.Notification(
+            "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loaded'))", 'done');
+          oldNotification.replace(progressNotification);
         }
       }
     });
