@@ -334,7 +334,7 @@ require(['fullcalendar-setup'], function() {
     var dayNames = $!services.localization.render('xwiki.calendar.dayNames');
     var dayNamesShort = $!services.localization.render('xwiki.calendar.dayNamesShort');
 
-    $(document).ready(function() {
+    function init() {
       // The page is now ready, initialize the calendar...
       var progressNotification;
       $('#calendar${calcounter}').fullCalendar({
@@ -433,12 +433,21 @@ require(['fullcalendar-setup'], function() {
           }
         }
       });
+    }
+
+    // Load the calendar in edit mode.
+	$(window).on('xwiki:dom:updated', function() {
+	  init();
     });
+	// Load the calendar in view mode.
+	$(document).ready(function() {
+	  init();
+	});
   });
 });
 &lt;/script&gt;
 {{/html}}
-{{velocity}}</code>
+{{/velocity}}</code>
     </property>
     <property>
       <contentDescription/>
