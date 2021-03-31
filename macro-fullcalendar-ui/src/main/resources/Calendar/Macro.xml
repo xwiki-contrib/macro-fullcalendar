@@ -183,7 +183,6 @@ or
     <property>
       <code>{{velocity}}
 #set($discard = $xwiki.ssx.use("Calendar.FullCalendar"))
-#set ($discard = $xwiki.jsx.use('Calendar.FullCalendar'))
 ##
 #if($calcounter)
  #set($calcounter = $calcounter + 1)
@@ -288,145 +287,152 @@ or
 /************************************
  * Configure RequireJS to use jQuery-UI
  ************************************/
-require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
-  function updateEvent(page, isResize, delta, allDay, revertFunc) {
-    // Initialize notification boxes
-    var savingBox = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.inprogress')", "inprogress", {inactive: true});
-    var savedBox  = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.done')", "done", {inactive: true});
-    var failedBox = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.error')", "error", {inactive: true});
+require.config({
+  paths: {
+    'fullcalendar-setup': new XWiki.Document('FullCalendar', 'Calendar').getURL('jsx', 'minify=$!services.debug.minify')
+  }
+});
+require(['fullcalendar-setup'], function() {
+  require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
+    function updateEvent(page, isResize, delta, allDay, revertFunc) {
+      // Initialize notification boxes
+      var savingBox = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.inprogress')", "inprogress", {inactive: true});
+      var savedBox  = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.done')", "done", {inactive: true});
+      var failedBox = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.error')", "error", {inactive: true});
 
-    // Display loading notification
-    savingBox.show();
-    savedBox.hide();
-    failedBox.hide();
+      // Display loading notification
+      savingBox.show();
+      savedBox.hide();
+      failedBox.hide();
 
-    // Compute days and minutes in order to keep backwards compatibility
-    var dayDelta = delta._data.days;
-    var minuteDelta = delta._data.hours * 60 + delta._data.minutes;
+      // Compute days and minutes in order to keep backwards compatibility
+      var dayDelta = delta._data.days;
+      var minuteDelta = delta._data.hours * 60 + delta._data.minutes;
 
-    // Let's call the calendar update
-    var url = '$updateurl';
-    url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
+      // Let's call the calendar update
+      var url = '$updateurl';
+      url = url + "#if($stringtool.contains($updateurl, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;page=" + page + "&amp;isResize=" + (isResize ? "1" : "0") + "&amp;dayDelta=" + dayDelta + "&amp;minuteDelta=" + minuteDelta + ((allDay) ? "&amp;allDay=1" : "");
 
-    $.ajax({ url: url }).fail(function(data) {
-      savingBox.hide();
-      failedBox.show();
-      revertFunc();
-    }).success(function(data) {
-      if (data.indexOf("OK") == 0) {
-        savingBox.hide();
-        savedBox.show();
-      } else {
+      $.ajax({ url: url }).fail(function(data) {
         savingBox.hide();
         failedBox.show();
         revertFunc();
-      }
-    });
-  }
-
-  var monthNames = $!services.localization.render('xwiki.calendar.monthNames')
-  var monthNamesShort = $!services.localization.render('xwiki.calendar.monthNamesShort');
-  var dayNames = $!services.localization.render('xwiki.calendar.dayNames');
-  var dayNamesShort = $!services.localization.render('xwiki.calendar.dayNamesShort');
-
-  $(document).ready(function() {
-    // The page is now ready, initialize the calendar...
-    var progressNotification;
-    $('#calendar${calcounter}').fullCalendar({
-      views: {
-        month : {
-          columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.month')",
-          titleFormat: "$!services.localization.render('xwiki.calendar.titleFormat.month')",
-          buttonText: "$!services.localization.render('xwiki.calendar.button.month')"
-        },
-        week : {
-          columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.week')",
-          titleFormat: "$!services.localization.render('xwiki.calendar.titleFormat.week')",
-          buttonText: "$!services.localization.render('xwiki.calendar.button.week')"
-        },
-        day : {
-          columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.day')",
-          titleFormat: "$!services.localization.render('xwiki.calendar.titleFormat.day')",
-          buttonText: "$!services.localization.render('xwiki.calendar.button.day')"
-        },
-        today: {
-          buttonText: "$!services.localization.render('xwiki.calendar.button.today')"
+      }).success(function(data) {
+        if (data.indexOf("OK") == 0) {
+          savingBox.hide();
+          savedBox.show();
+        } else {
+          savingBox.hide();
+          failedBox.show();
+          revertFunc();
         }
-      },
-      timeFormat : "$!services.localization.render('xwiki.calendar.timeFormat')",
-      axisFormat : "$!services.localization.render('xwiki.calendar.axisFormat')",
-      allDayText : "$!services.localization.render('xwiki.calendar.allDayText')",
-      monthNames      : monthNames,
-      monthNamesShort : monthNamesShort,
-      dayNames        : dayNames,
-      dayNamesShort   : dayNamesShort,
-      googleCalendarApiKey : "$gApiKey",
-      eventSources: [
-        #if("$!xcontext.macro.params.classname" != '')
-          "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;extraFields=$!{extraFields}"
-        #end
-        #if($!gCal != '')
-          ,
-          #set($calendars = $stringtool.split($gCal, ','))
-            #foreach($calendar in $calendars)
-              { googleCalendarId: "$stringtool.strip($calendar)" }
-              #if($velocityCount &lt; $calendars.size())
-              ,
-              #end
+      });
+    }
+
+    var monthNames = $!services.localization.render('xwiki.calendar.monthNames')
+    var monthNamesShort = $!services.localization.render('xwiki.calendar.monthNamesShort');
+    var dayNames = $!services.localization.render('xwiki.calendar.dayNames');
+    var dayNamesShort = $!services.localization.render('xwiki.calendar.dayNamesShort');
+
+    $(document).ready(function() {
+      // The page is now ready, initialize the calendar...
+      var progressNotification;
+      $('#calendar${calcounter}').fullCalendar({
+        views: {
+          month : {
+            columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.month')",
+            titleFormat: "$!services.localization.render('xwiki.calendar.titleFormat.month')",
+            buttonText: "$!services.localization.render('xwiki.calendar.button.month')"
+          },
+          week : {
+            columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.week')",
+            titleFormat: "$!services.localization.render('xwiki.calendar.titleFormat.week')",
+            buttonText: "$!services.localization.render('xwiki.calendar.button.week')"
+          },
+          day : {
+            columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.day')",
+            titleFormat: "$!services.localization.render('xwiki.calendar.titleFormat.day')",
+            buttonText: "$!services.localization.render('xwiki.calendar.button.day')"
+          },
+          today: {
+            buttonText: "$!services.localization.render('xwiki.calendar.button.today')"
+          }
+        },
+        timeFormat : "$!services.localization.render('xwiki.calendar.timeFormat')",
+        axisFormat : "$!services.localization.render('xwiki.calendar.axisFormat')",
+        allDayText : "$!services.localization.render('xwiki.calendar.allDayText')",
+        monthNames      : monthNames,
+        monthNamesShort : monthNamesShort,
+        dayNames        : dayNames,
+        dayNamesShort   : dayNamesShort,
+        googleCalendarApiKey : "$gApiKey",
+        eventSources: [
+          #if("$!xcontext.macro.params.classname" != '')
+            "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;extraFields=$!{extraFields}"
           #end
-        #end
-      ],
-      header: {
-        left   : '$left',
-        center : '$center',
-        right  : '$right'
-      }
-      #if($timeFormat  != ""), timeFormat  : '$timeFormat'  #end
-      #if($defaultView != ""), defaultView : '$defaultView' #end
-      #if($firstDay    != ""), firstDay    : '$firstDay'    #end
-      #if($firstHour   != ""), firstHour   : '$firstHour'   #end
-      #if($minTime     != ""), minTime     : '$minTime'     #end
-      #if($maxTime     != ""), maxTime     : '$maxTime'     #end
-      ,defaultDate : '${year}-${month}-${date}'
-      ,editable    : $editable
-      ,eventDrop   : function(event, delta, revertFunc) {
-        updateEvent(event.id, false, delta, event._allDay, revertFunc);
-      }
-      ,eventResize : function(event, delta, revertFunc) {
-        updateEvent(event.id, true, delta, false, revertFunc);
-      },
-      eventRender: function(event, element) {
-        // Add tooltip on the calendar element.
-        var tooltip = '';
-        if (event.status) {
-          tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.status') " + event.status + '\n';
+          #if($!gCal != '')
+            ,
+            #set($calendars = $stringtool.split($gCal, ','))
+              #foreach($calendar in $calendars)
+                { googleCalendarId: "$stringtool.strip($calendar)" }
+                #if($velocityCount &lt; $calendars.size())
+                ,
+                #end
+            #end
+          #end
+        ],
+        header: {
+          left   : '$left',
+          center : '$center',
+          right  : '$right'
         }
-        if (event.location) {
-          tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.location') " + event.location + '\n';
+        #if($timeFormat  != ""), timeFormat  : '$timeFormat'  #end
+        #if($defaultView != ""), defaultView : '$defaultView' #end
+        #if($firstDay    != ""), firstDay    : '$firstDay'    #end
+        #if($firstHour   != ""), firstHour   : '$firstHour'   #end
+        #if($minTime     != ""), minTime     : '$minTime'     #end
+        #if($maxTime     != ""), maxTime     : '$maxTime'     #end
+        ,defaultDate : '${year}-${month}-${date}'
+        ,editable    : $editable
+        ,eventDrop   : function(event, delta, revertFunc) {
+          updateEvent(event.id, false, delta, event._allDay, revertFunc);
         }
-        if (event.description) {
-          tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.description') " + event.description;
-        }
-        element.attr('title', tooltip);
-      },
-      loading: function( isLoading) {
-        if (isLoading) {
-          if (typeof progressNotification === 'undefined') {
-            progressNotification = new XWiki.widgets.Notification(
-              "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loading'))", 'inprogress');
+        ,eventResize : function(event, delta, revertFunc) {
+          updateEvent(event.id, true, delta, false, revertFunc);
+        },
+        eventRender: function(event, element) {
+          // Add tooltip on the calendar element.
+          var tooltip = '';
+          if (event.status) {
+            tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.status') " + event.status + '\n';
+          }
+          if (event.location) {
+            tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.location') " + event.location + '\n';
+          }
+          if (event.description) {
+            tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.description') " + event.description;
+          }
+          element.attr('title', tooltip);
+        },
+        loading: function( isLoading) {
+          if (isLoading) {
+            if (typeof progressNotification === 'undefined') {
+              progressNotification = new XWiki.widgets.Notification(
+                "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loading'))", 'inprogress');
+            } else {
+              var oldNotification = progressNotification;
+              progressNotification = new XWiki.widgets.Notification(
+                "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loading'))", 'inprogress');
+              oldNotification.replace(progressNotification);
+            }
           } else {
             var oldNotification = progressNotification;
             progressNotification = new XWiki.widgets.Notification(
-              "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loading'))", 'inprogress');
+              "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loaded'))", 'done');
             oldNotification.replace(progressNotification);
           }
-        } else {
-          var oldNotification = progressNotification;
-          progressNotification = new XWiki.widgets.Notification(
-            "$escapetool.javascript($services.localization.render('xwiki.calendar.notification.loaded'))", 'done');
-          oldNotification.replace(progressNotification);
         }
-      }
+      });
     });
   });
 });
