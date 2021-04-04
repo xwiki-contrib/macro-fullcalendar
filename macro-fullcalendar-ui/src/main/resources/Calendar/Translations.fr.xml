@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -43,34 +43,27 @@
 xwiki.calendar.monthNamesShort=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
 xwiki.calendar.dayNames=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi']
 xwiki.calendar.dayNamesShort=['Dim','Lun','Mar','Mer','Jeud','Ven','Sam']
-
 xwiki.calendar.columnFormat.month=ddd
 xwiki.calendar.columnFormat.week=ddd D/MM
 xwiki.calendar.columnFormat.day=dddd D/MM
-
 xwiki.calendar.event.description=Description :
 xwiki.calendar.event.location=Emplacement :
 xwiki.calendar.event.status=Statut :
-
 xwiki.calendar.titleFormat.month=MMMM YYYY
 xwiki.calendar.titleFormat.week=D MMM YYYY
 xwiki.calendar.titleFormat.day=dddd D MMM YYYY
-
 xwiki.calendar.timeFormat=HH:mm
 xwiki.calendar.axisFormat=HH:mm
-
 xwiki.calendar.allDayText=Journée
 xwiki.calendar.button.today=Aujourd'hui
 xwiki.calendar.button.day=Jour
 xwiki.calendar.button.week=Semaine
 xwiki.calendar.button.month=Mois
-
 xwiki.calendar.notification.inprogress=Enregistrement...
 xwiki.calendar.notification.done=Enregistré
 xwiki.calendar.notification.error=Impossible d'enregistrer le document. Erreur : la mise à jour a échoué !
-### Missing: xwiki.calendar.notification.loading=Loading calendar...
-### Missing: xwiki.calendar.notification.loaded=Calendar loaded
-
+xwiki.calendar.notification.loading=Chargement de l'agenda...
+xwiki.calendar.notification.loaded=Agenda chargé
 rendering.macro.calendar.name=Calendrier
 rendering.macro.calendar.description=Afficher un Calendrier
 rendering.macro.calendar.parameter.gApiKey.name=gApiKey
@@ -90,7 +83,7 @@ rendering.macro.calendar.parameter.durationfield.description=Champ de l'objet o�
 rendering.macro.calendar.parameter.editable.name=Modifiable
 rendering.macro.calendar.parameter.editable.description=Permet d'activer la fonction d'édition permettant de déplacer des événements
 rendering.macro.calendar.parameter.defaultView.name=Affichage par défaut
-rendering.macro.calendar.parameter.defaultView.description=Vue de l'agenda à afficher par défaut au chargement de l'agenda. Les valeurs possibles sont: month, agendaWeek, agendaDay, basicWeek, basicDay
+rendering.macro.calendar.parameter.defaultView.description=Vue de l'agenda à afficher par défaut au chargement de l'agenda. Les valeurs possibles sont : month, agendaWeek, agendaDay, basicWeek, basicDay
 rendering.macro.calendar.parameter.year.name=Année
 rendering.macro.calendar.parameter.year.description=Année de la date à montrer lors du chargement du calendrier. Laissez vide pour aujourd'hui
 rendering.macro.calendar.parameter.month.name=Mois
@@ -104,5 +97,6 @@ rendering.macro.calendar.parameter.firstHour.description=Première heure à affi
 rendering.macro.calendar.parameter.minTime.name=Temps minimum
 rendering.macro.calendar.parameter.minTime.description=Première heure à afficher dans le calendrier. Les utilisateurs ne verront pas les heures avant cette heure. Laissez vide pour le défaut (8.00)
 rendering.macro.calendar.parameter.maxTime.name=Temps maximum
-rendering.macro.calendar.parameter.maxTime.description=Dernière heure à afficher dans le calendrier. Les utilisateurs ne verront pas les heures après cette heure. Laissez vide pour le défaut (23.00)</content>
+rendering.macro.calendar.parameter.maxTime.description=Dernière heure à afficher dans le calendrier. Les utilisateurs ne verront pas les heures après cette heure. Laissez vide pour le défaut (23.00)
+</content>
 </xwikidoc>
