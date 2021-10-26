@@ -1,0 +1,102 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.2" reference="Calendar.Translations" locale="sv">
+  <web>Calendar</web>
+  <name>Translations</name>
+  <language>sv</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1392114330000</creationDate>
+  <parent>Calendar.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1573831472000</date>
+  <contentUpdateDate>1573831472000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Calendar Translations</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>xwiki.calendar.monthNames=['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December']
+xwiki.calendar.monthNamesShort=['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec']
+xwiki.calendar.dayNames=['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag']
+xwiki.calendar.dayNamesShort=['sön', 'mån', 'tis', 'ons', 'tor', 'fre', 'lör']
+xwiki.calendar.columnFormat.month=ddd
+xwiki.calendar.columnFormat.week=ddd D/M
+xwiki.calendar.columnFormat.day=dddd D/M
+xwiki.calendar.event.description=Beskrivning:
+xwiki.calendar.event.location=Plats:
+xwiki.calendar.event.status=Status:
+xwiki.calendar.titleFormat.month=MMMM YYYY
+xwiki.calendar.titleFormat.week=MMM D YYYY
+xwiki.calendar.titleFormat.day=dddd, MMM D, YYYY
+xwiki.calendar.timeFormat=k:(mm)t
+xwiki.calendar.axisFormat=k(:mm)t
+xwiki.calendar.allDayText=Hela dagen
+xwiki.calendar.button.today=idag
+xwiki.calendar.button.day=dag
+xwiki.calendar.button.week=vecka
+xwiki.calendar.button.month=månad
+xwiki.calendar.notification.inprogress=Sparar...
+xwiki.calendar.notification.done=Sparad
+xwiki.calendar.notification.error=Misslyckades att spara dokumentet. Anledning: Uppdateringen misslyckades!
+xwiki.calendar.notification.loading=Laddar kalender...
+xwiki.calendar.notification.loaded=Kalender laddad
+rendering.macro.calendar.name=Kalender
+rendering.macro.calendar.description=Visar en kalender
+rendering.macro.calendar.parameter.gApiKey.name=gApiKey
+rendering.macro.calendar.parameter.gApiKey.description=API-nyckel till Google Calendar.
+rendering.macro.calendar.parameter.gCal.name=gCal
+rendering.macro.calendar.parameter.gCal.description=Kommaseparerade identiteter till Google-kalendrar.
+rendering.macro.calendar.parameter.json.name=JSON
+rendering.macro.calendar.parameter.json.description=URL till en tjänst som producerar JSON. Detta behövs endast om JSON-koden från Calendar.JSONService inte passar dina behov.
+rendering.macro.calendar.parameter.updateurl.name=Uppdaterings-URL
+rendering.macro.calendar.parameter.updateurl.description=URL till tjänst för att uppdatera händelser när de flyttas eller storleken ändras i kalendern. Parametern 'editable' måste sättass till true för att detta fält skall användas.
+rendering.macro.calendar.parameter.classname.name=Klassnamn
+rendering.macro.calendar.parameter.classname.description=Klass för lagring av händelseobjekt. Denna parameter är obligatorisk om inte en JSON-tjänst och uppdaterings-URL anges
+rendering.macro.calendar.parameter.startfield.name=Startfält
+rendering.macro.calendar.parameter.startfield.description=Fält i händelseobjekten som lagrar startdatum för händelsen. Fältet måste ha datumtyp. Denna parameter är obligatorisk om inte JSON-tjänst och uppdaterings-URL anges
+rendering.macro.calendar.parameter.durationfield.name=Varaktighetsfält
+rendering.macro.calendar.parameter.durationfield.description=Fält i händelseobjekt där varaktigheten för händelsen lagras. Fältet måste ha datumtyp. Denna parameter är obligatorisk om inte JSON-tjänst och uppdaterings-URL anges
+rendering.macro.calendar.parameter.editable.name=Redigerbar
+rendering.macro.calendar.parameter.editable.description=För att aktivera redigeringsfunktionen vilket gör det möjligt att flytta händelser
+rendering.macro.calendar.parameter.defaultView.name=Startvy
+rendering.macro.calendar.parameter.defaultView.description=Vy som visas då en agenda laddas. Möjliga värden är: month: agendaWeek, agendaDay, basicWeek, basicDay
+rendering.macro.calendar.parameter.year.name=År
+rendering.macro.calendar.parameter.year.description=Årtalet i datumet som skall visas då kalendern laddas. Lämna tomt om dagens datum skall visas
+rendering.macro.calendar.parameter.month.name=Månad
+rendering.macro.calendar.parameter.month.description=Månaden i datumet (från 0 till 11) som skall visas när kalendern laddas. Lämna tomt om dagens datum skall visas
+rendering.macro.calendar.parameter.date.name=Dag
+rendering.macro.calendar.parameter.date.description=Dagen i datumet (från 1 till 31) som skall visas när kalender laddas. Lämna tomt om dagens datum skall visas
+rendering.macro.calendar.parameter.firstDay.name=Första dagen
+rendering.macro.calendar.parameter.firstDay.description=Första dagen i veckan (0 är söndag och 6 är måndag) i kalendern. Om detta lämnas tomt blir första dagen måndag
+rendering.macro.calendar.parameter.firstHour.name=Första timman
+rendering.macro.calendar.parameter.firstHour.description=Första timman som visas i kalender. Lämna tomt för att använda standardvärdet
+rendering.macro.calendar.parameter.minTime.name=Minsta tid
+rendering.macro.calendar.parameter.minTime.description=Första tidpunkt som visas i kalendern. Timmar före denna visas ej. Lämna tomt för standardvärde (8.00)
+rendering.macro.calendar.parameter.maxTime.name=Max tid
+rendering.macro.calendar.parameter.maxTime.description=Sista tidpunkt som visas i kalendern. Timmarna efter denna tidpunkt är ej synliga. Lämna tomt för standardvärdet (23.00)
+</content>
+  </xwikidoc>
