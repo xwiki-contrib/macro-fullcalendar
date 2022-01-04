@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -43,34 +43,27 @@
 xwiki.calendar.monthNamesShort=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez']
 xwiki.calendar.dayNames=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag']
 xwiki.calendar.dayNamesShort=['So','Mo','Di','Mi','Do','Fr','Sa']
-
 xwiki.calendar.columnFormat.month=ddd
 xwiki.calendar.columnFormat.week=ddd D
 xwiki.calendar.columnFormat.day=dddd, D MMMM
-
 xwiki.calendar.event.description=Beschreibung:
 xwiki.calendar.event.location=Ort:
 xwiki.calendar.event.status=Status:
-
 xwiki.calendar.titleFormat.month=MMMM YYYY
 xwiki.calendar.titleFormat.week=D MMM YYYY
 xwiki.calendar.titleFormat.day=ddd, D MMM YYYY
-
 xwiki.calendar.timeFormat=HH:mm
 xwiki.calendar.axisFormat=HH:mm
-
 xwiki.calendar.allDayText=Ganzer Tag
 xwiki.calendar.button.today=Heute
 xwiki.calendar.button.day=Tag
 xwiki.calendar.button.week=Woche
 xwiki.calendar.button.month=Monat
-
 xwiki.calendar.notification.inprogress=Speichern...
 xwiki.calendar.notification.done=Gespeichert
 xwiki.calendar.notification.error=Fehler beim Speichern des Eintrags: Aktualisierung fehlgeschlagen!
 xwiki.calendar.notification.loading=Kalender wird geladen...
 xwiki.calendar.notification.loaded=Kalender geladen
-
 rendering.macro.calendar.name=Kalender
 rendering.macro.calendar.description=Zeigt einen Kalender an
 rendering.macro.calendar.parameter.gApiKey.name=gApiKey
@@ -100,9 +93,10 @@ rendering.macro.calendar.parameter.date.description=Tag (von 1 bis 31) des Datum
 rendering.macro.calendar.parameter.firstDay.name=Erster Tag
 rendering.macro.calendar.parameter.firstDay.description=Der erste Tag der Woche, wie sie im Kalender angezeigt wird (von 0=Sonntag bis 6=Samstag). Wenn leer gelassen, wird Montag genommen
 rendering.macro.calendar.parameter.firstHour.name=Anfangsstunde
-rendering.macro.calendar.parameter.firstHour.description=Die erste Stunde,  die im Kalender angezeigt wird
+rendering.macro.calendar.parameter.firstHour.description=Die erste Stunde, die im Kalender angezeigt wird
 rendering.macro.calendar.parameter.minTime.name=Erste Uhrzeit
 rendering.macro.calendar.parameter.minTime.description=Der erste Zeitpunkt jedes Tages, ab dem Einträge im Kalender angezeigt werden. Stunden vor diesem Zeitpunkt werden nicht dargestellt. Wenn leer gelassen, wird 8:00 Uhr verwendet
 rendering.macro.calendar.parameter.maxTime.name=Letzte Uhrzeit
-rendering.macro.calendar.parameter.maxTime.description=Der letzte Zeitpunkt jedes Tages, bis zu dem Einträge im Kalender angezeigt werden. Stunden nach diesem Zeitpunkt werden nicht dargestellt. Wenn leer gelassen, wird 23:00 Uhr verwendet</content>
+rendering.macro.calendar.parameter.maxTime.description=Der letzte Zeitpunkt jedes Tages, bis zu dem Einträge im Kalender angezeigt werden. Stunden nach diesem Zeitpunkt werden nicht dargestellt. Wenn leer gelassen, wird 23:00 Uhr verwendet
+</content>
 </xwikidoc>
