@@ -120,22 +120,28 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>var fullCalendarBasePath = "$services.webjars.url('org.webjars:fullcalendar', '')";
-var momentBasePath = "$services.webjars.url('org.webjars:momentjs', '')";
-var jqueryUIBasePath = "$services.webjars.url('org.webjars:jquery-ui', '')";
-
-require.config({
-  paths: {
-    'fullcalendar': fullCalendarBasePath + 'fullcalendar.min',
-    'moment': momentBasePath + 'min/moment.min',
-    'gcal': fullCalendarBasePath + 'gcal',
-    'jqueryui': jqueryUIBasePath + 'jquery-ui.min'
-  },
-  shim: {
-    'fullcalendar': ['moment'],
-    'gcal': ['fullcalendar']
+      <code>(function() {
+  const paths = {
+    fullcalendar: $jsontool.serialize($services.webjars.url('fullcalendar', 'fullcalendar.min')),
+    gcal: $jsontool.serialize($services.webjars.url('fullcalendar', 'gcal'))
+  };
+  if (require.toUrl('moment').indexOf('/webjars/') &lt; 0) {
+    // The 'moment' module is not configured.
+    paths.moment = $jsontool.serialize($services.webjars.url('momentjs', 'min/moment.min'));
   }
-});</code>
+  if (require.toUrl('jquery-ui').indexOf('/webjars/') &lt; 0) {
+    // The 'jquery-ui' module is not configured.
+    paths['jquery-ui'] = $jsontool.serialize($services.webjars.url('jquery-ui',
+      "jquery-ui#if ($services.debug.minify).min#{end}"));
+  }
+  require.config({
+    paths: paths,
+    shim: {
+      gcal: ['fullcalendar'],
+      fullcalendar: ['moment']
+    }
+  });
+})();</code>
     </property>
     <property>
       <name>webjars</name>

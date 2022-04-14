@@ -293,7 +293,7 @@ require.config({
   }
 });
 require(['fullcalendar-setup'], function() {
-  require(['jquery', 'jqueryui', 'fullcalendar', 'gcal'], function ($) {
+  require(['jquery', 'jquery-ui', 'fullcalendar', 'gcal'], function ($) {
     function updateEvent(page, isResize, delta, allDay, revertFunc) {
       // Initialize notification boxes
       var savingBox = new XWiki.widgets.Notification("$!services.localization.render('xwiki.calendar.notification.inprogress')", "inprogress", {inactive: true});
