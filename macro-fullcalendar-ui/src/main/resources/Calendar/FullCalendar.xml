@@ -121,26 +121,53 @@
     </property>
     <property>
       <code>(function() {
-  const paths = {
-    fullcalendar: $jsontool.serialize($services.webjars.url('fullcalendar', 'fullcalendar.min')),
-    gcal: $jsontool.serialize($services.webjars.url('fullcalendar', 'gcal'))
-  };
-  if (require.toUrl('moment').indexOf('/webjars/') &lt; 0) {
-    // The 'moment' module is not configured.
-    paths.moment = $jsontool.serialize($services.webjars.url('momentjs', 'min/moment.min'));
-  }
-  if (require.toUrl('jquery-ui').indexOf('/webjars/') &lt; 0) {
-    // The 'jquery-ui' module is not configured.
-    paths['jquery-ui'] = $jsontool.serialize($services.webjars.url('jquery-ui',
-      "jquery-ui#if ($services.debug.minify).min#{end}"));
-  }
-  require.config({
-    paths: paths,
+  const config = {
+    packages: [],
+    paths: {
+      fullcalendar: $jsontool.serialize($services.webjars.url('fullcalendar', 'fullcalendar.min')),
+      gcal: $jsontool.serialize($services.webjars.url('fullcalendar', 'gcal'))
+    },
     shim: {
       gcal: ['fullcalendar'],
       fullcalendar: ['moment']
+    },
+    map: {
+      '*': {}
     }
-  });
+  };
+  if (require.toUrl('jquery-ui').indexOf('/webjars/') &lt; 0) {
+    // The 'jquery-ui' module is not configured.
+    config.paths['jquery-ui'] = $jsontool.serialize($services.webjars.url('jquery-ui',
+      "jquery-ui#if ($services.debug.minify).min#{end}"));
+  }
+  if (require.toUrl('moment').indexOf('/webjars/') &lt; 0) {
+    // Before XWiki 14.1RC1 (XWIKI-19427) there was no global configuration for the 'moment' module available by default
+    // so each extension had to define / duplicate its own configuration. The problem is that RequireJS can throw a load
+    // timeout error if two extensions configure the 'moment' module differently (e.g. using different paths). So we
+    // need to ensure our configuration is compatible with the configuration used by other XWiki extensions. Before
+    // XWiki 13.3RC1 (XWIKI-18535) the date time picker provided by XWiki was using a simple configuration, specifying
+    // only the path to 'moment' module. Starting with XWiki 13.3RC1 the date time picker switched to a package-based
+    // configuration. Below we duplicate the configuration used by the date time picker, depending on the XWiki version.
+    const xwikiVersion = $jsontool.serialize($services.extension.core.getCoreExtension(
+      'org.xwiki.commons:xwiki-commons-script').version.value);
+    const xwikiVersionParts = xwikiVersion.match(/(\d+).(\d+)*/);
+    if (xwikiVersionParts &amp;&amp; parseInt(xwikiVersionParts[1]) &gt;= 13 &amp;&amp; parseInt(xwikiVersionParts[2]) &gt;= 3) {
+      config.packages.push({
+        name: 'moment',
+        location: $jsontool.serialize($stringtool.removeEnd($services.webjars.url('momentjs', ''), '/')),
+        main: 'min/moment.min'
+      });
+      // momentjs locales depend on '../moment' which gets resolved as 'moment/moment' due to our package configuration,
+      // which points to the unminified version. The consequence is that we end up loading both the minified and the
+      // unminified version of momentjs and, more importantly, the locales are loaded into the moment instance created by
+      // the unminified code. In order to fix this we map the unminified version to the minified version so that we work
+      // with a single moment instance (that has the locales loaded).
+      config.map['*']['moment/moment'] = 'moment';
+    } else {
+      config.paths.moment = $jsontool.serialize($services.webjars.url('momentjs', 'min/moment.min'));
+    }
+  }
+  require.config(config);
 })();</code>
     </property>
     <property>
