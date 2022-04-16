@@ -27,6 +27,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -40,10 +41,10 @@ import org.xwiki.velocity.tools.JSONTool;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.TimeZone;
 import net.fortuna.ical4j.model.TimeZoneRegistry;
+import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.util.CompatibilityHints;
@@ -78,9 +79,10 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 
         ArrayList<Object> jsonArrayList = new ArrayList<>();
 
-        ComponentList<VEvent> events = calendar.getComponents(net.fortuna.ical4j.model.Component.VEVENT);
+        List<CalendarComponent> events = calendar.getComponents(net.fortuna.ical4j.model.Component.VEVENT);
 
-        for (VEvent event : events) {
+        for (CalendarComponent eventComponent : events) {
+            VEvent event = (VEvent) eventComponent;
             Map<String, Object> jsonMap = new HashMap<>();
             jsonMap.put("id", event.getUid() == null ? "" : event.getUid().getValue());
             jsonMap.put("title", event.getSummary() == null ? "" : event.getSummary().getValue());
