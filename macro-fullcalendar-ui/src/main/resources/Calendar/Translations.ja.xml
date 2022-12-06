@@ -1,0 +1,102 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.2" reference="Calendar.Translations" locale="ja">
+  <web>Calendar</web>
+  <name>Translations</name>
+  <language>ja</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1392114330000</creationDate>
+  <parent>Calendar.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1573831472000</date>
+  <contentUpdateDate>1573831472000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Calendar Translations</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>xwiki.calendar.monthNames=['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+xwiki.calendar.monthNamesShort=['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+xwiki.calendar.dayNames=['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日']
+xwiki.calendar.dayNamesShort=['日', '月', '火', '水', '木', '金', '土']
+xwiki.calendar.columnFormat.month=曜日
+xwiki.calendar.columnFormat.week=曜日 月/日
+xwiki.calendar.columnFormat.day=曜日 月/日
+xwiki.calendar.event.description=説明：
+xwiki.calendar.event.location=場所：
+xwiki.calendar.event.status=状態：
+xwiki.calendar.titleFormat.month=日 年
+xwiki.calendar.titleFormat.week=月 日 年
+xwiki.calendar.titleFormat.day=曜日, 月 日, 年
+xwiki.calendar.timeFormat=時:分
+xwiki.calendar.axisFormat=時:分
+xwiki.calendar.allDayText=全日
+xwiki.calendar.button.today=今日
+xwiki.calendar.button.day=日
+xwiki.calendar.button.week=週
+xwiki.calendar.button.month=月
+xwiki.calendar.notification.inprogress=保存しています…
+xwiki.calendar.notification.done=保存しました
+xwiki.calendar.notification.error=ドキュメントを保存できませんでした。理由：アップデートに失敗しました！
+xwiki.calendar.notification.loading=カレンダーを読み込んでいます…
+xwiki.calendar.notification.loaded=カレンダーを読み込みました
+rendering.macro.calendar.name=カレンダー
+rendering.macro.calendar.description=カレンダーを表示
+rendering.macro.calendar.parameter.gApiKey.name=gApiKey
+rendering.macro.calendar.parameter.gApiKey.description=GoogleカレンダーのAPIのキー。
+rendering.macro.calendar.parameter.gCal.name=gCal
+rendering.macro.calendar.parameter.gCal.description=GoogleカレンダーのID（コンマで分割）。
+rendering.macro.calendar.parameter.json.name=JSON
+rendering.macro.calendar.parameter.json.description=JSONを生成するページのURL。Calendar.JSONServiceが生成するJSONでは不十分な場合に使用してください。
+rendering.macro.calendar.parameter.updateurl.name=アップデートURL
+rendering.macro.calendar.parameter.updateurl.description=カレンダーで変更するイベントをアップデートする際のページのURL。このフィールドを使用するには'変更可能'のパラメーターを真に設定する必要があります。
+rendering.macro.calendar.parameter.classname.name=クラス名
+rendering.macro.calendar.parameter.classname.description=イベントのオブジェクトを保存するクラス名。JSONサービスとアップデートURLが設定されていない場合に限り必要です
+rendering.macro.calendar.parameter.startfield.name=開始のフィールド
+rendering.macro.calendar.parameter.startfield.description=イベントの開始日を保存するオブジェクトのフィールド。このフィールドは日付のフィールドである必要があります。JSONサービスとアップデートURLが設定されていない場合に限り必要です
+rendering.macro.calendar.parameter.durationfield.name=継続期間のフィールド
+rendering.macro.calendar.parameter.durationfield.description=イベントの期間を保存するオブジェクトのフィールド。このフィールドは日付のフィールドである必要があります。JSONサービスとアップデートURLが設定されていない場合に限り必要です
+rendering.macro.calendar.parameter.editable.name=変更可能
+rendering.macro.calendar.parameter.editable.description=イベントの移動を可能にする変更機能を有効にするために使用
+rendering.macro.calendar.parameter.defaultView.name=既定の表示
+rendering.macro.calendar.parameter.defaultView.description=予定表を読み込む際に表示する既定の予定表。設定可能な値：month、agendaWeek、agendaDay、basicWeek、basicDay
+rendering.macro.calendar.parameter.year.name=年
+rendering.macro.calendar.parameter.year.description=カレンダーを読み込む際に表示する日付の年。空のままにすると今日の年を表示
+rendering.macro.calendar.parameter.month.name=月
+rendering.macro.calendar.parameter.month.description=カレンダーを読み込む際に表示する日付の月（0から11まで）。空のままにすると今日の月を表示
+rendering.macro.calendar.parameter.date.name=日
+rendering.macro.calendar.parameter.date.description=カレンダーを読み込む際に表示する日付の日（1から31まで）。空のままにすると今日の日付を表示
+rendering.macro.calendar.parameter.firstDay.name=最初の日
+rendering.macro.calendar.parameter.firstDay.description=カレンダーに表示する週の最初の日（0が日曜日で6が月曜日）。空のままにすると月曜日に設定します
+rendering.macro.calendar.parameter.firstHour.name=最初の時間
+rendering.macro.calendar.parameter.firstHour.description=カレンダーに表示する最初の時間。空のままにすると既定の値を使用します
+rendering.macro.calendar.parameter.minTime.name=最も早い時間
+rendering.macro.calendar.parameter.minTime.description=カレンダーに表示する最初の時間。この時間以前は表示できません。空のままにすると既定の値（8:00）を使用します
+rendering.macro.calendar.parameter.maxTime.name=最も遅い時間
+rendering.macro.calendar.parameter.maxTime.description=カレンダーに表示する最も遅い時間。この時間以後は表示できません。空のままにすると既定の値（23:00）を使用します
+</content>
+  </xwikidoc>
