@@ -375,7 +375,7 @@ require(['fullcalendar-setup'], function() {
             #set($calendars = $stringtool.split($gCal, ','))
               #foreach($calendar in $calendars)
                 { googleCalendarId: "$stringtool.strip($calendar)" }
-                #if($velocityCount &lt; $calendars.size())
+                #if($foreach.count &lt; $calendars.size())
                 ,
                 #end
             #end
