@@ -19,6 +19,8 @@
  */
 package org.xwiki.fullcalendar.script;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -51,5 +53,19 @@ public class FullCalendarScriptService implements ScriptService
     public String iCalToJSON(String iCalStringURL) throws Exception
     {
         return fullCalendarManager.iCalToJSON(iCalStringURL);
+    }
+
+    /**
+     * Convert an iCal to a JSON.
+     *
+     * @param iCalStringURL the String representation of an iCal URL.
+     * @param startDate the beginning of the interval in which the returned events should be.
+     * @param endDate the end of the interval.
+     * @return the JSON representation of a calendar.
+     * @throws Exception in case of exceptions.
+     * @since 2.3
+     */
+    public String iCalToJSON(String iCalStringURL, Date startDate, Date endDate) throws Exception {
+        return fullCalendarManager.iCalToJSON(iCalStringURL, startDate, endDate);
     }
 }

@@ -19,6 +19,8 @@
  */
 package org.xwiki.fullcalendar;
 
+import java.util.Date;
+
 import org.xwiki.component.annotation.Role;
 
 /**
@@ -38,4 +40,16 @@ public interface FullCalendarManager
      * @throws Exception in case of exceptions.
      */
     String iCalToJSON(String iCalStringURL) throws Exception;
+
+    /**
+     * Convert an iCal to a JSON.
+     *
+     * @param iCalStringURL the String representation of an iCal URL.
+     * @param startDate the start of the interval of the returned calendar events.
+     * @param endDate the end of the interval.
+     * @return the JSON representation of a calendar.
+     * @throws Exception in case of exceptions.
+     * @since 2.3
+     */
+    String iCalToJSON(String iCalStringURL, Date startDate, Date endDate) throws Exception;
 }
