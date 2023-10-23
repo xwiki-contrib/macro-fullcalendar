@@ -66,6 +66,8 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 {
     private static final String T_VALUE = "T";
 
+    private static final String ID_JSON_KEY = "id";
+
     private static final String START_DATE_JSON_KEY = "start";
 
     private static final String END_DATE_JSON_KEY = "end";
@@ -142,7 +144,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 
     private static void addBasicProperties(Map<String, Object> jsonMap, VEvent event)
     {
-        jsonMap.put("id", event.getUid() == null ? "" : event.getUid().getValue());
+        jsonMap.put(ID_JSON_KEY, event.getUid() == null ? "" : event.getUid().getValue());
         jsonMap.put("title", event.getSummary() == null ? "" : event.getSummary().getValue());
 
         // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
@@ -164,16 +166,19 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         if (rRule != null && rRule.getRecur() != null) {
             DateList recurringEventStartDates = rRule.getRecur()
                 .getDates(event.getStartDate().getDate(), icalIntervalStart, icalIntervalEnd, Value.DATE);
-            for (Date recurringEventStartDate : recurringEventStartDates) {
-                if (recurringEventStartDate.equals(event.getStartDate().getDate())) {
+            String groupId = String.format("%s_group", jsonMap.get(ID_JSON_KEY));
+            for (int i = 0; i < recurringEventStartDates.size(); i++) {
+                if (recurringEventStartDates.get(i).equals(event.getStartDate().getDate())) {
                     continue;
                 }
                 Map<String, Object> recurringEvent = new HashMap<>(jsonMap);
 
                 recurringEvent.put(START_DATE_JSON_KEY,
-                    jsonDateFormat.format(new DateTime(recurringEventStartDate, timeZone)));
+                    jsonDateFormat.format(new DateTime(recurringEventStartDates.get(i), timeZone)));
                 recurringEvent.put(END_DATE_JSON_KEY, jsonDateFormat.format(
-                    new DateTime(new Date(recurringEventStartDate.getTime() + differenceInMillis), timeZone)));
+                    new DateTime(new Date(recurringEventStartDates.get(i).getTime() + differenceInMillis), timeZone)));
+                recurringEvent.put(ID_JSON_KEY, String.format("%s_%d", jsonMap.get(ID_JSON_KEY), i));
+                recurringEvent.put("groupId", groupId);
                 jsonArrayList.add(recurringEvent);
             }
         }
