@@ -142,7 +142,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
             // If the interval dates are null, we don't check for recurring events. Done in order to maintain backwards
             // compatibility.
             if (icalIntervalStart == null || icalIntervalEnd == null) {
-                return;
+                continue;
             }
             addRecurringEvents(event, icalIntervalStart, icalIntervalEnd, jsonMap, timeZone, differenceInMillis,
                 jsonArrayList);
@@ -167,7 +167,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         RRule rRule = event.getProperty("rrule");
         if (rRule != null && rRule.getRecur() != null) {
             DateList recurringEventStartDates = rRule.getRecur()
-                .getDates(event.getStartDate().getDate(), icalIntervalStart, icalIntervalEnd, Value.DATE);
+                .getDates(event.getStartDate().getDate(), icalIntervalStart, icalIntervalEnd, Value.DATE_TIME);
             String groupId = String.format("%s_group", jsonMap.get(JSON_KEY_ID));
             for (int i = 0; i < recurringEventStartDates.size(); i++) {
                 if (recurringEventStartDates.get(i).equals(event.getStartDate().getDate())) {
@@ -176,9 +176,9 @@ public class DefaultFullCalendarManager implements FullCalendarManager
                 Map<String, Object> recurringEvent = new HashMap<>(jsonMap);
 
                 recurringEvent.put(JSON_KEY_START_DATE,
-                    jsonDateFormat.format(new DateTime(recurringEventStartDates.get(i), timeZone)));
+                    jsonDateFormat.format(recurringEventStartDates.get(i)));
                 recurringEvent.put(JSON_KEY_END_DATE, jsonDateFormat.format(
-                    new DateTime(new Date(recurringEventStartDates.get(i).getTime() + differenceInMillis), timeZone)));
+                    new DateTime(recurringEventStartDates.get(i).getTime() + differenceInMillis)));
                 recurringEvent.put(JSON_KEY_ID, String.format("%s_%d", jsonMap.get(JSON_KEY_ID), i));
                 recurringEvent.put("groupId", groupId);
                 jsonArrayList.add(recurringEvent);
