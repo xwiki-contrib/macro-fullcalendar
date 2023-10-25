@@ -19,6 +19,9 @@
  */
 package org.xwiki.fullcalendar;
 
+import java.net.URL;
+import java.util.Date;
+
 import org.xwiki.component.annotation.Role;
 
 /**
@@ -32,10 +35,22 @@ public interface FullCalendarManager
 {
     /**
      * Convert an iCal to a JSON.
-     * 
+     *
      * @param iCalStringURL the String representation of an iCal URL.
      * @return the JSON representation of a calendar.
-     * @throws Exception in case of exceptions.
+     * @throws Exception if the retrieval of the iCal fails or if it contains malformed dates.
      */
     String iCalToJSON(String iCalStringURL) throws Exception;
+
+    /**
+     * Get the events from an iCal in a specified date interval. This method expands the recurring events.
+     *
+     * @param iCalStringURL the String representation of an iCal URL.
+     * @param startDate the start of the interval of the returned calendar events.
+     * @param endDate the end of the interval.
+     * @return a JSON that contains a list of FullCalendar Event Objects.
+     * @throws Exception if the retrieval of the iCal fails or if it contains malformed dates.
+     * @since 2.3
+     */
+    String getICalEvents(URL iCalStringURL, Date startDate, Date endDate) throws Exception;
 }

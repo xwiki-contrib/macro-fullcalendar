@@ -42,8 +42,9 @@
   <content>{{velocity wiki="false"}}
 #if ($xcontext.action == 'get' &amp;&amp; "$!{request.outputSyntax}" == 'plain')
   $response.setContentType('application/json')
+  #set ($format = "yyyy-MM-dd")
   ## Display the JSON content.
-  $services.fullcalendar.iCalToJSON($request.iCal)
+  $services.fullcalendar.getICalEvents($request.iCal, $datetool.toDate($format, $request.start), $datetool.toDate($format, $request.end))
 #end
 {{/velocity}}</content>
 </xwikidoc>
