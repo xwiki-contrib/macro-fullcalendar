@@ -19,6 +19,7 @@
  */
 package org.xwiki.fullcalendar.script;
 
+import java.net.URL;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -31,7 +32,7 @@ import org.xwiki.script.service.ScriptService;
 
 /**
  * Exposes simplified APIs to perform calendar operations.
- * 
+ *
  * @version $Id$
  * @since 2.1
  */
@@ -48,7 +49,7 @@ public class FullCalendarScriptService implements ScriptService
      *
      * @param iCalStringURL the String representation of an iCal URL.
      * @return the JSON representation of a calendar.
-     * @throws Exception in case of exceptions.
+     * @throws Exception if the retrieval of the iCal fails or if it contains malformed dates.
      */
     public String iCalToJSON(String iCalStringURL) throws Exception
     {
@@ -56,16 +57,17 @@ public class FullCalendarScriptService implements ScriptService
     }
 
     /**
-     * Convert an iCal to a JSON.
+     * Get the events from an iCal in a specified date interval. This method expands the recurring events.
      *
      * @param iCalStringURL the String representation of an iCal URL.
-     * @param startDate the beginning of the interval in which the returned events should be.
+     * @param startDate the start of the interval of the returned calendar events.
      * @param endDate the end of the interval.
-     * @return the JSON representation of a calendar.
-     * @throws Exception in case of exceptions.
+     * @return a JSON that contains a list of FullCalendar Event Objects.
+     * @throws Exception if the retrieval of the iCal fails or if it contains malformed dates.
      * @since 2.3
      */
-    public String iCalToJSON(String iCalStringURL, Date startDate, Date endDate) throws Exception {
-        return fullCalendarManager.iCalToJSON(iCalStringURL, startDate, endDate);
+    public String getICalEvents(String iCalStringURL, Date startDate, Date endDate) throws Exception
+    {
+        return fullCalendarManager.getICalEvents(new URL(iCalStringURL), startDate, endDate);
     }
 }

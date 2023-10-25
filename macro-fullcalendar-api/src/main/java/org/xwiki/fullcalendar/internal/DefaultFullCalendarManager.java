@@ -38,7 +38,8 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.fullcalendar.FullCalendarManager;
-import org.xwiki.velocity.tools.JSONTool;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
@@ -66,11 +67,13 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 {
     private static final String T_VALUE = "T";
 
-    private static final String ID_JSON_KEY = "id";
+    private static final String JSON_KEY_ID = "id";
 
-    private static final String START_DATE_JSON_KEY = "start";
+    private static final String JSON_KEY_START_DATE = "start";
 
-    private static final String END_DATE_JSON_KEY = "end";
+    private static final String JSON_KEY_END_DATE = "end";
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     // FullCalendar will accept ISO8601 date strings written with hours, minutes, seconds, and milliseconds.
     private final DateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
@@ -81,17 +84,17 @@ public class DefaultFullCalendarManager implements FullCalendarManager
     @Override
     public String iCalToJSON(String iCalStringURL) throws Exception
     {
-        return iCalToJSON(iCalStringURL, null, null);
+        return getICalEvents(new URL(iCalStringURL), null, null);
     }
 
     @Override
-    public String iCalToJSON(String iCalStringURL, java.util.Date intervalStart, java.util.Date intervalEnd)
+    public String getICalEvents(URL iCalURL, java.util.Date intervalStart, java.util.Date intervalEnd)
         throws Exception
     {
         Date icalIntervalStart = intervalStart == null ? null : new Date(intervalStart);
         Date icalIntervalEnd = intervalEnd == null ? null : new Date(intervalEnd);
         CalendarBuilder builder = new CalendarBuilder();
-        Calendar calendar = getCalendar(iCalStringURL, builder);
+        Calendar calendar = getCalendar(iCalURL, builder);
 
         TimeZoneRegistry timeZoneRegistry = builder.getRegistry();
         String timeZoneValue = getTimeZoneValue(calendar);
@@ -102,8 +105,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         List<CalendarComponent> events = calendar.getComponents(net.fortuna.ical4j.model.Component.VEVENT);
 
         addEvents(events, timeZone, icalIntervalStart, icalIntervalEnd, jsonArrayList);
-
-        return new JSONTool().serialize(jsonArrayList);
+        return MAPPER.writeValueAsString(jsonArrayList);
     }
 
     private void addEvents(List<CalendarComponent> events, TimeZone timeZone, Date icalIntervalStart,
@@ -113,7 +115,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
             VEvent event = (VEvent) eventComponent;
             Map<String, Object> jsonMap = new HashMap<>();
 
-            addBasicProperties(jsonMap, event);
+            addBasicEventProperties(jsonMap, event);
 
             String startDateValue = event.getStartDate() == null ? "" : event.getStartDate().getValue();
             String endDateValue = event.getEndDate() == null ? "" : event.getEndDate().getValue();
@@ -132,19 +134,24 @@ public class DefaultFullCalendarManager implements FullCalendarManager
             if (icalIntervalStart == null || icalIntervalEnd == null || areIntervalsIntersected(startDateTime,
                 endDateTime, icalIntervalStart, icalIntervalEnd))
             {
-                jsonMap.put(START_DATE_JSON_KEY, jsonDateFormat.format(startDateTime));
-                jsonMap.put(END_DATE_JSON_KEY, jsonDateFormat.format(endDateTime));
+                jsonMap.put(JSON_KEY_START_DATE, jsonDateFormat.format(startDateTime));
+                jsonMap.put(JSON_KEY_END_DATE, jsonDateFormat.format(endDateTime));
                 jsonArrayList.add(jsonMap);
             }
 
+            // If the interval dates are null, we don't check for recurring events. Done in order to maintain backwards
+            // compatibility.
+            if (icalIntervalStart == null || icalIntervalEnd == null) {
+                return;
+            }
             addRecurringEvents(event, icalIntervalStart, icalIntervalEnd, jsonMap, timeZone, differenceInMillis,
                 jsonArrayList);
         }
     }
 
-    private static void addBasicProperties(Map<String, Object> jsonMap, VEvent event)
+    private static void addBasicEventProperties(Map<String, Object> jsonMap, VEvent event)
     {
-        jsonMap.put(ID_JSON_KEY, event.getUid() == null ? "" : event.getUid().getValue());
+        jsonMap.put(JSON_KEY_ID, event.getUid() == null ? "" : event.getUid().getValue());
         jsonMap.put("title", event.getSummary() == null ? "" : event.getSummary().getValue());
 
         // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
@@ -156,28 +163,23 @@ public class DefaultFullCalendarManager implements FullCalendarManager
     private void addRecurringEvents(VEvent event, Date icalIntervalStart, Date icalIntervalEnd,
         Map<String, Object> jsonMap, TimeZone timeZone, long differenceInMillis, ArrayList<Object> jsonArrayList)
     {
-        // If the interval dates are null, we don't check for recurring events. Done in order to maintain backwards
-        // compatibility.
-        if (icalIntervalStart == null || icalIntervalEnd == null) {
-            return;
-        }
         // Create the recurring events based on the existing RRule.
         RRule rRule = event.getProperty("rrule");
         if (rRule != null && rRule.getRecur() != null) {
             DateList recurringEventStartDates = rRule.getRecur()
                 .getDates(event.getStartDate().getDate(), icalIntervalStart, icalIntervalEnd, Value.DATE);
-            String groupId = String.format("%s_group", jsonMap.get(ID_JSON_KEY));
+            String groupId = String.format("%s_group", jsonMap.get(JSON_KEY_ID));
             for (int i = 0; i < recurringEventStartDates.size(); i++) {
                 if (recurringEventStartDates.get(i).equals(event.getStartDate().getDate())) {
                     continue;
                 }
                 Map<String, Object> recurringEvent = new HashMap<>(jsonMap);
 
-                recurringEvent.put(START_DATE_JSON_KEY,
+                recurringEvent.put(JSON_KEY_START_DATE,
                     jsonDateFormat.format(new DateTime(recurringEventStartDates.get(i), timeZone)));
-                recurringEvent.put(END_DATE_JSON_KEY, jsonDateFormat.format(
+                recurringEvent.put(JSON_KEY_END_DATE, jsonDateFormat.format(
                     new DateTime(new Date(recurringEventStartDates.get(i).getTime() + differenceInMillis), timeZone)));
-                recurringEvent.put(ID_JSON_KEY, String.format("%s_%d", jsonMap.get(ID_JSON_KEY), i));
+                recurringEvent.put(JSON_KEY_ID, String.format("%s_%d", jsonMap.get(JSON_KEY_ID), i));
                 recurringEvent.put("groupId", groupId);
                 jsonArrayList.add(recurringEvent);
             }
@@ -191,10 +193,8 @@ public class DefaultFullCalendarManager implements FullCalendarManager
             || (intervalStart1.after(intervalStart2) && intervalStart1.before(intervalEnd2));
     }
 
-    private Calendar getCalendar(String iCalStringURL, CalendarBuilder builder) throws Exception
+    private Calendar getCalendar(URL iCalURL, CalendarBuilder builder) throws Exception
     {
-        URL iCalURL = new URL(iCalStringURL);
-
         CompatibilityHints.setHintEnabled(CompatibilityHints.KEY_RELAXED_PARSING, true);
 
         URLConnection conn = iCalURL.openConnection();
