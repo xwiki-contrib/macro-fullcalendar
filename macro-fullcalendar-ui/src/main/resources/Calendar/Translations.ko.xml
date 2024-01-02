@@ -1,0 +1,102 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.2" reference="Calendar.Translations" locale="ko">
+  <web>Calendar</web>
+  <name>Translations</name>
+  <language>ko</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1392114330000</creationDate>
+  <parent>Calendar.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1573831472000</date>
+  <contentUpdateDate>1573831472000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Calendar Translations</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>xwiki.calendar.monthNames=['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+xwiki.calendar.monthNamesShort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+xwiki.calendar.dayNames=['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
+xwiki.calendar.dayNamesShort=['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+xwiki.calendar.columnFormat.month=ddd
+xwiki.calendar.columnFormat.week=ddd M/D
+xwiki.calendar.columnFormat.day=dddd M/D
+xwiki.calendar.event.description=비고:
+xwiki.calendar.event.location=위치:
+xwiki.calendar.event.status=상태:
+xwiki.calendar.titleFormat.month=MMMM YYYY
+xwiki.calendar.titleFormat.week=MMM D YYYY
+xwiki.calendar.titleFormat.day=dddd, MMM D, YYYY
+xwiki.calendar.timeFormat=h(:mm)t
+xwiki.calendar.axisFormat=h(:mm)t
+xwiki.calendar.allDayText=종일
+xwiki.calendar.button.today=오늘
+xwiki.calendar.button.day=하루
+xwiki.calendar.button.week=주
+xwiki.calendar.button.month=월
+xwiki.calendar.notification.inprogress=저장중...
+xwiki.calendar.notification.done=저장 완료
+xwiki.calendar.notification.error=문서 저장에 실패했습니다. 이유: 업데이트 실패!
+xwiki.calendar.notification.loading=캘린더 로딩중...
+xwiki.calendar.notification.loaded=캘린더 로딩 완료
+rendering.macro.calendar.name=캘린더
+rendering.macro.calendar.description=캘린더 표시
+rendering.macro.calendar.parameter.gApiKey.name=gApi키
+rendering.macro.calendar.parameter.gApiKey.description=Google Calendar API 키.
+rendering.macro.calendar.parameter.gCal.name=Google Calendar
+rendering.macro.calendar.parameter.gCal.description=쉼표로 구분 된 Google Calendar ID들.
+rendering.macro.calendar.parameter.json.name=JSON
+rendering.macro.calendar.parameter.json.description=JSON을 생성하는 페이지의 URL입니다. 이는 Calendar.JSONService에서 생성된 JSON이 요구 사항에 맞지 않는 경우에만 필요합니다.
+rendering.macro.calendar.parameter.updateurl.name=URL 업데이트
+rendering.macro.calendar.parameter.updateurl.description=캘린더에서 이벤트가 이동되거나 크기가 조정될 때 이벤트를 업데이트하는 URL 페이지입니다. 이 필드를 사용하려면 'editable' 매개변수를 true로 설정해야 합니다.
+rendering.macro.calendar.parameter.classname.name=클래스 이름
+rendering.macro.calendar.parameter.classname.description=이벤트 객체가 저장되는 클래스 이름입니다. JSON 서비스 및 업데이트 URL이 제공되지 않는 한 매개변수가 필요합니다
+rendering.macro.calendar.parameter.startfield.name=시작 필드
+rendering.macro.calendar.parameter.startfield.description=이벤트 시작 날짜가 저장되는 개체의 필드입니다. 필드는 날짜 필드여야 합니다. JSON 서비스 및 업데이트 URL이 제공되지 않는 한 매개변수가 필요합니다
+rendering.macro.calendar.parameter.durationfield.name=기간 필드
+rendering.macro.calendar.parameter.durationfield.description=이벤트 기간이 저장되는 개체의 필드입니다. 필드는 날짜 필드여야 합니다. JSON 서비스 및 업데이트 URL이 제공되지 않는 한 매개변수가 필요합니다
+rendering.macro.calendar.parameter.editable.name=편집 가능
+rendering.macro.calendar.parameter.editable.description=이벤트를 이동할 수 있는 편집 기능을 활성화하는 데 사용됩니다
+rendering.macro.calendar.parameter.defaultView.name=기본 보기
+rendering.macro.calendar.parameter.defaultView.description=의제 로드 시 표시되는 기본 의제입니다. 가능한 값은 다음과 같습니다: 월,agendaWeek,agendaDay, basicWeek, basicDay
+rendering.macro.calendar.parameter.year.name=년도
+rendering.macro.calendar.parameter.year.description=달력을 로드할 때 표시할 날짜의 연도입니다. 오늘은 비워두세요
+rendering.macro.calendar.parameter.month.name=월
+rendering.macro.calendar.parameter.month.description=달력을 로드할 때 표시할 날짜의 월(0~11)입니다. 오늘은 비워두세요
+rendering.macro.calendar.parameter.date.name=낮
+rendering.macro.calendar.parameter.date.description=달력을 로드할 때 표시할 날짜의 일(1~31)입니다. 오늘은 비워두세요
+rendering.macro.calendar.parameter.firstDay.name=첫날
+rendering.macro.calendar.parameter.firstDay.description=달력에 표시할 주의 첫 번째 날(0은 일요일, 6은 월요일)입니다. 월요일은 비워두세요
+rendering.macro.calendar.parameter.firstHour.name=첫 시간
+rendering.macro.calendar.parameter.firstHour.description=달력에 표시되는 첫 번째 시간입니다. 기본값을 사용하려면 비워 두세요
+rendering.macro.calendar.parameter.minTime.name=내 시간
+rendering.macro.calendar.parameter.minTime.description=달력에 처음으로 등장합니다. 사용자는 이 시간 이전의 시간을 볼 수 없습니다. 기본값(8.00)의 경우 비워 두세요
+rendering.macro.calendar.parameter.maxTime.name=최대 시간
+rendering.macro.calendar.parameter.maxTime.description=달력에 마지막으로 표시되는 시간입니다. 이 시간 이후에는 사용자에게 몇 시간이 표시되지 않습니다. 기본값(23.00)의 경우 비워 두세요
+</content>
+  </xwikidoc>
