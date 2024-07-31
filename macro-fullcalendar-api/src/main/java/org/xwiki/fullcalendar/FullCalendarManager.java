@@ -21,12 +21,15 @@ package org.xwiki.fullcalendar;
 
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 
 import org.xwiki.component.annotation.Role;
+import org.xwiki.fullcalendar.model.MoccaCalendarEvent;
+import org.xwiki.stability.Unstable;
 
 /**
  * Manages Full calendar macro.
- * 
+ *
  * @version $Id$
  * @since 2.1
  */
@@ -45,12 +48,38 @@ public interface FullCalendarManager
     /**
      * Get the events from an iCal in a specified date interval. This method expands the recurring events.
      *
-     * @param iCalStringURL the String representation of an iCal URL.
-     * @param startDate the start of the interval of the returned calendar events.
-     * @param endDate the end of the interval.
+     * @param iCalURL the String representation of an iCal URL.
+     * @param intervalStart the start of the interval of the returned calendar events.
+     * @param intervalEnd the end of the interval.
      * @return a JSON that contains a list of FullCalendar Event Objects.
      * @throws Exception if the retrieval of the iCal fails or if it contains malformed dates.
      * @since 2.3
      */
-    String getICalEvents(URL iCalStringURL, Date startDate, Date endDate) throws Exception;
+    String getICalEvents(URL iCalURL, Date intervalStart, Date intervalEnd) throws Exception;
+
+    /**
+     * Get the events from an iCal in a specified date interval.
+     *
+     * @param iCalURL the String representation of an iCal URL.
+     * @param intervalStart the start of the interval of the returned calendar events.
+     * @param intervalEnd the end of the interval.
+     * @param collapse expands the recurring events if {@code true}, or collapses them into the parent otherwise.
+     * @return a JSON that contains a list of FullCalendar Event Objects.
+     * @throws Exception if the retrieval of the iCal fails or if it contains malformed dates.
+     * @since 2.4.0
+     */
+    @Unstable
+    String getICalEvents(URL iCalURL, Date intervalStart, Date intervalEnd, boolean collapse)
+        throws Exception;
+
+    /**
+     * Get the events from an iCal file.
+     * @param iCalFile content of an iCal file.
+     * @param collapse expands the recurring events if {@code true}, or collapses them into the parent otherwise.
+     * @return the {@link List} of events from the iCal file.
+     * @throws Exception if the file format is incorrect, or if it contains malformed dates.
+     * @since 2.4.0
+     */
+    @Unstable
+    List<MoccaCalendarEvent> getICalEventsFromFile(byte[] iCalFile, boolean collapse) throws Exception;
 }

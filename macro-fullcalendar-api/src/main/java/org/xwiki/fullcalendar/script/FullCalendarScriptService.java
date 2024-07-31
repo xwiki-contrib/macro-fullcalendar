@@ -70,4 +70,19 @@ public class FullCalendarScriptService implements ScriptService
     {
         return fullCalendarManager.getICalEvents(new URL(iCalStringURL), startDate, endDate);
     }
+    /**
+     * Get the events from an iCal in a specified date interval. This method expands the recurring events.
+     *
+     * @param iCalStringURL the String representation of an iCal URL.
+     * @param startDate the start of the interval of the returned calendar events.
+     * @param endDate the end of the interval.
+     * @param collapse expands the recurring events if {@code true}, or collapses them into the parent otherwise.
+     * @return a JSON that contains a list of FullCalendar Event Objects.
+     * @throws Exception if the retrieval of the iCal fails or if it contains malformed dates.
+     * @since 2.4.0
+     */
+    public String getICalEvents(String iCalStringURL, Date startDate, Date endDate, boolean collapse) throws Exception
+    {
+        return fullCalendarManager.getICalEvents(new URL(iCalStringURL), startDate, endDate, collapse);
+    }
 }
