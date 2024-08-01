@@ -63,23 +63,26 @@ public interface FullCalendarManager
      * @param iCalURL the String representation of an iCal URL.
      * @param intervalStart the start of the interval of the returned calendar events.
      * @param intervalEnd the end of the interval.
-     * @param collapse expands the recurring events if {@code true}, or collapses them into the parent otherwise.
+     * @param collapse expands the recurring events if {@code false}, or collapses them into the parent otherwise.
      * @return a JSON that contains a list of FullCalendar Event Objects.
      * @throws Exception if the retrieval of the iCal fails or if it contains malformed dates.
      * @since 2.4.0
      */
     @Unstable
-    String getICalEvents(URL iCalURL, Date intervalStart, Date intervalEnd, boolean collapse)
-        throws Exception;
+    String getICalEvents(URL iCalURL, Date intervalStart, Date intervalEnd, boolean collapse) throws Exception;
 
     /**
      * Get the events from an iCal file.
+     *
      * @param iCalFile content of an iCal file.
-     * @param collapse expands the recurring events if {@code true}, or collapses them into the parent otherwise.
+     * @param intervalStart the start of the interval of the returned calendar events.
+     * @param intervalEnd the end of the interval.
+     * @param collapse expands the recurring events if {@code false}, or collapses them into the parent otherwise.
      * @return the {@link List} of events from the iCal file.
      * @throws Exception if the file format is incorrect, or if it contains malformed dates.
      * @since 2.4.0
      */
     @Unstable
-    List<MoccaCalendarEvent> getICalEventsFromFile(byte[] iCalFile, boolean collapse) throws Exception;
+    List<MoccaCalendarEvent> getICalEventsFromFile(byte[] iCalFile, Date intervalStart, Date intervalEnd,
+        boolean collapse) throws Exception;
 }

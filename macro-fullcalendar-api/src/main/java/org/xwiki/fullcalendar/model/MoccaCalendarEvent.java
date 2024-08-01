@@ -91,7 +91,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get group id.
+     * Common id for all events generated from the same recurrence rule.
      *
      * @return the group id.
      */
@@ -101,7 +101,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Set group id.
+     * See {@link #getGroupId()}.
      *
      * @param groupId the group id.
      */
@@ -111,9 +111,9 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the modified recurrent instances.
+     * Get the modified instances to the recurrent event.
      *
-     * @return the modified recurrent instances.
+     * @return the modified instances from the recurrent event.
      */
     public List<RecurrentEventModification> getModificationList()
     {
@@ -121,7 +121,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Add a new modified recurrent instance.
+     * Add a modified recurrence instance.
      *
      * @param modificationResult modified recurrent instance.
      */
@@ -131,7 +131,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the event location.
+     * See {@link #setLocation}.
      *
      * @return the event location.
      */
@@ -151,7 +151,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the event status.
+     * See {@link #setStatus}.
      *
      * @return the event status.
      */
@@ -171,7 +171,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the event ID.
+     * see {@link #setId}.
      *
      * @return the event ID.
      */
@@ -191,7 +191,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the end date of the recurrence.
+     * See {@link #setRecEndDate}.
      *
      * @return the {@link Date} until the recurrence takes place.
      */
@@ -211,7 +211,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the end date of the processed event.
+     * See {@link #setEnd}.
      *
      * @return the end {@link Date} of the event.
      */
@@ -231,7 +231,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the start date of the processed event.
+     * See {@link #setStart}.
      *
      * @return the start {@link Date} of the event.
      */
@@ -251,7 +251,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the all day flag.
+     * See {@link #setAllDay}.
      *
      * @return {@code 1} if the event takes all day, or {@code 0} otherwise.
      */
@@ -271,7 +271,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the recurrence flag.
+     * See {@link #setRecurrent}.
      *
      * @return {@code 1} if the event is recurrent, or {@code 0} otherwise.
      */
@@ -291,7 +291,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the event description.
+     * See {@link #setDescription}.
      *
      * @return the event description.
      */
@@ -311,7 +311,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the recurrence frequency of the event.
+     * See {@link #setRecurrenceFreq}.
      *
      * @return the recurrence frequency of the event, if there is any.
      */
@@ -331,7 +331,7 @@ public class MoccaCalendarEvent
     }
 
     /**
-     * Get the title of the event.
+     * See {@link #setTitle}.
      *
      * @return the title of the event.
      */
@@ -352,9 +352,11 @@ public class MoccaCalendarEvent
 
     /**
      * Get the time difference between the event start date and the event end date.
+     *
      * @return the time difference between the event start date and the event end date.
      */
-    public long getDatesDifference() {
+    public long getDatesDifference()
+    {
         return start.getTime() - end.getTime();
     }
 }

@@ -20,15 +20,16 @@
 package org.xwiki.fullcalendar.internal;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
@@ -41,6 +42,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.DateList;
 import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.Recur;
 import net.fortuna.ical4j.model.TimeZone;
 import net.fortuna.ical4j.model.WeekDay;
@@ -69,8 +71,24 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 
     private static final String GROUP_ID_FORMAT = "%s_group";
 
-    @Inject
-    private Provider<CalendarProcessor> calendarProcessorProvider;
+    private static final Collection<WeekDay> WEEK_DAYS = new HashSet<>();
+
+    private static final Map<String, Long> TIME_PERIODS = new HashMap<>();
+
+    private static final long YEARLY_DURATION = TimeUnit.DAYS.toMillis(365);
+
+    static {
+        WEEK_DAYS.add(WeekDay.MO);
+        WEEK_DAYS.add(WeekDay.TU);
+        WEEK_DAYS.add(WeekDay.WE);
+        WEEK_DAYS.add(WeekDay.TH);
+        WEEK_DAYS.add(WeekDay.FR);
+
+        TIME_PERIODS.put("DAILY", TimeUnit.DAYS.toMillis(1));
+        TIME_PERIODS.put("WEEKLY", TimeUnit.DAYS.toMillis(7));
+        TIME_PERIODS.put("MONTHLY", TimeUnit.DAYS.toMillis(30));
+        TIME_PERIODS.put("YEARLY", YEARLY_DURATION);
+    }
 
     @Override
     public String iCalToJSON(String iCalStringURL) throws Exception
@@ -84,13 +102,13 @@ public class DefaultFullCalendarManager implements FullCalendarManager
     {
         Date icalIntervalStart = intervalStart == null ? null : new Date(intervalStart);
         Date icalIntervalEnd = intervalEnd == null ? null : new Date(intervalEnd);
-
         ArrayList<MoccaCalendarEvent> jsonArrayList = new ArrayList<>();
-        CalendarProcessor calendarProcessor = calendarProcessorProvider.get();
 
-        calendarProcessor.processCalendarFromURL(iCalURL);
-        addEvents(calendarProcessor.getEvents(), calendarProcessor.getTimeZone(), icalIntervalStart, icalIntervalEnd,
-            jsonArrayList, collapse);
+        CalendarReader calendarReader = new CalendarReader(iCalURL);
+        List<CalendarComponent> sortedEvents = getSortedEvents(calendarReader.getEvents());
+
+        addEvents(sortedEvents, calendarReader.getTimeZone(), icalIntervalStart, icalIntervalEnd, jsonArrayList,
+            collapse);
         return MAPPER.writeValueAsString(jsonArrayList);
     }
 
@@ -101,15 +119,18 @@ public class DefaultFullCalendarManager implements FullCalendarManager
     }
 
     @Override
-    public List<MoccaCalendarEvent> getICalEventsFromFile(byte[] iCalFile, boolean collapse) throws Exception
+    public List<MoccaCalendarEvent> getICalEventsFromFile(byte[] iCalFile, java.util.Date intervalStart,
+        java.util.Date intervalEnd, boolean collapse) throws Exception
     {
+        Date icalIntervalStart = intervalStart == null ? null : new Date(intervalStart);
+        Date icalIntervalEnd = intervalEnd == null ? null : new Date(intervalEnd);
         ArrayList<MoccaCalendarEvent> calendarEventsJSON = new ArrayList<>();
-        CalendarProcessor calendarProcessor = calendarProcessorProvider.get();
 
-        calendarProcessor.processCalendarFromFile(iCalFile);
-        addEvents(calendarProcessor.getEvents(), calendarProcessor.getTimeZone(), null, null, calendarEventsJSON,
+        CalendarReader calendarReader = new CalendarReader(iCalFile);
+        List<CalendarComponent> sortedEvents = getSortedEvents(calendarReader.getEvents());
+
+        addEvents(sortedEvents, calendarReader.getTimeZone(), icalIntervalStart, icalIntervalEnd, calendarEventsJSON,
             collapse);
-
         return calendarEventsJSON;
     }
 
@@ -121,39 +142,77 @@ public class DefaultFullCalendarManager implements FullCalendarManager
             MoccaCalendarEvent jsonMap = new MoccaCalendarEvent();
 
             addBasicEventProperties(jsonMap, event);
-            addEventPeriod(event, jsonMap, timeZone, icalIntervalStart, icalIntervalEnd, collapse);
+            addEventPeriod(event, jsonMap, timeZone);
 
-            long differenceInMillis = jsonMap.getDatesDifference();
-            // If the interval dates are null, we don't check for recurring events. Done in order to maintain backwards
-            // compatibility.
+            // If the interval dates are null and the collapse flag is false, we don't check for recurring events. Done
+            // in order to maintain backwards compatibility.
             if (!collapse && (icalIntervalStart == null || icalIntervalEnd == null)) {
                 jsonArrayList.add(jsonMap);
                 continue;
             }
 
             // Check if there is a RRule.
-            RRule rRule = event.getProperty("rrule");
-            RecurrenceId recurrenceId = event.getProperty("recurrence-id");
+            RRule rRule = event.getProperty(Property.RRULE);
+            RecurrenceId recurrenceId = event.getProperty(Property.RECURRENCE_ID);
             if (rRule != null && rRule.getRecur() != null) {
-                if (collapse) {
-                    Recur recur = rRule.getRecur();
-                    addRecurringEventsCollapsed(jsonMap, timeZone, jsonArrayList, recur);
-                } else {
-                    DateList recurringEventStartDates = rRule.getRecur()
-                        .getDates(event.getStartDate().getDate(), icalIntervalStart, icalIntervalEnd, Value.DATE_TIME);
-                    addRecurringEventsExpanded(event, jsonMap, differenceInMillis, jsonArrayList,
-                        recurringEventStartDates);
-                }
+                handleRecurrentEvent(icalIntervalStart, icalIntervalEnd, jsonArrayList, collapse, rRule, event,
+                    jsonMap);
             } else if (collapse && recurrenceId != null) {
                 addRecurrentModifiedInstance(jsonMap, timeZone, jsonArrayList, recurrenceId);
-            } else {
+            } else if (maybeAddEvent(icalIntervalStart, icalIntervalEnd, jsonMap)) {
                 jsonArrayList.add(jsonMap);
             }
         }
     }
 
-    private void addEventPeriod(VEvent event, MoccaCalendarEvent jsonMap, TimeZone timeZone, Date icalIntervalStart,
-        Date icalIntervalEnd, boolean collapse) throws Exception
+    private boolean maybeAddEvent(Date icalIntervalStart, Date icalIntervalEnd, MoccaCalendarEvent jsonMap)
+    {
+        return icalIntervalStart == null || icalIntervalEnd == null || areIntervalsIntersected(
+            new Date(jsonMap.getStart()), new Date(jsonMap.getEnd()), icalIntervalStart, icalIntervalEnd);
+    }
+
+    private void handleRecurrentEvent(Date icalIntervalStart, Date icalIntervalEnd,
+        ArrayList<MoccaCalendarEvent> jsonArrayList, boolean collapse, RRule rRule, VEvent event,
+        MoccaCalendarEvent jsonMap)
+    {
+        if (collapse) {
+            boolean areIntervalDatesEmpty = icalIntervalStart == null || icalIntervalEnd == null;
+            Recur recur = rRule.getRecur();
+            if (!areIntervalDatesEmpty && recur.getDates(event.getStartDate().getDate(), icalIntervalStart,
+                icalIntervalEnd, Value.DATE_TIME).isEmpty())
+            {
+                return;
+            }
+            addRecurringEventsCollapsed(jsonMap, jsonArrayList, recur);
+        } else {
+            long differenceInMillis = jsonMap.getDatesDifference();
+            DateList recurringEventStartDates = rRule.getRecur()
+                .getDates(event.getStartDate().getDate(), icalIntervalStart, icalIntervalEnd, Value.DATE_TIME);
+            addRecurringEventsExpanded(jsonMap, differenceInMillis, jsonArrayList, recurringEventStartDates);
+        }
+    }
+
+    /**
+     * Sort the events to start with the recurrent ones, so that any modified instance of a recurrence is added
+     * correctly.
+     */
+    private List<CalendarComponent> getSortedEvents(List<CalendarComponent> events)
+    {
+        return events.stream().sorted((c1, c2) -> {
+            boolean c1HasRRule = c1.getProperty(Property.RRULE) != null;
+            boolean c2HasRRule = c2.getProperty(Property.RRULE) != null;
+
+            if (c1HasRRule && !c2HasRRule) {
+                return -1;
+            } else if (!c1HasRRule && c2HasRRule) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }).collect(Collectors.toList());
+    }
+
+    private void addEventPeriod(VEvent event, MoccaCalendarEvent jsonMap, TimeZone timeZone) throws Exception
     {
         String startDateValue = event.getStartDate() == null ? "" : event.getStartDate().getValue();
         String endDateValue = event.getEndDate() == null ? "" : event.getEndDate().getValue();
@@ -172,25 +231,16 @@ public class DefaultFullCalendarManager implements FullCalendarManager
             startDateTime = new DateTime(startDateValue + DEFAULT_TIME);
             endDateTime = new DateTime(endDateValue + DEFAULT_TIME);
         }
-        // Do not add the event if it's not in the interval.
 
-        // If the interval dates are null, maintain backwards compatibility.
-        if (icalIntervalStart == null || icalIntervalEnd == null || areIntervalsIntersected(startDateTime, endDateTime,
-            icalIntervalStart, icalIntervalEnd) || collapse)
-        {
-            jsonMap.setStart(startDateTime);
-            jsonMap.setEnd(endDateTime);
-        }
+        jsonMap.setStart(startDateTime);
+        jsonMap.setEnd(endDateTime);
     }
 
-    private void addRecurringEventsExpanded(VEvent event, MoccaCalendarEvent jsonMap, long differenceInMillis,
+    private void addRecurringEventsExpanded(MoccaCalendarEvent jsonMap, long differenceInMillis,
         ArrayList<MoccaCalendarEvent> jsonArrayList, DateList recurringEventStartDates)
     {
         String groupId = String.format(GROUP_ID_FORMAT, jsonMap.getId());
         for (int i = 0; i < recurringEventStartDates.size(); i++) {
-            if (recurringEventStartDates.get(i).equals(event.getStartDate().getDate())) {
-                continue;
-            }
             MoccaCalendarEvent recurringEvent = new MoccaCalendarEvent(jsonMap);
 
             recurringEvent.setStart(recurringEventStartDates.get(i));
@@ -201,24 +251,33 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         }
     }
 
-    private void addRecurringEventsCollapsed(MoccaCalendarEvent jsonMap, TimeZone timeZone,
-        ArrayList<MoccaCalendarEvent> jsonArrayList, Recur recur)
+    private void addRecurringEventsCollapsed(MoccaCalendarEvent jsonMap, ArrayList<MoccaCalendarEvent> jsonArrayList,
+        Recur recur)
     {
         String groupId = String.format(GROUP_ID_FORMAT, jsonMap.getId());
 
-        if (recur.getUntil() != null) {
-            jsonMap.setRecEndDate(recur.getUntil());
-        } else {
-            LocalDate localDateStartDate = jsonMap.getStart().toInstant().atZone(timeZone.toZoneId()).toLocalDate();
-            LocalDate futureLocalDate = localDateStartDate.plusYears(5);
-            jsonMap.setRecEndDate(java.util.Date.from(futureLocalDate.atStartOfDay(timeZone.toZoneId()).toInstant()));
-        }
+        setRecurrenceEndDate(jsonMap, recur);
         jsonMap.setRecurrent(1);
         String frequency = recur.getFrequency().name();
         String eventFrequency = getEventFrequency(recur, frequency);
         jsonMap.setRecurrenceFreq(eventFrequency);
         jsonMap.setGroupId(groupId);
         jsonArrayList.add(jsonMap);
+    }
+
+    private static void setRecurrenceEndDate(MoccaCalendarEvent jsonMap, Recur recur)
+    {
+        int recurCount = recur.getCount();
+        if (recur.getUntil() != null) {
+            jsonMap.setRecEndDate(recur.getUntil());
+        } else if (recurCount != -1) {
+            jsonMap.setRecEndDate(new DateTime(
+                jsonMap.getStart().getTime() + recurCount * TIME_PERIODS.getOrDefault(recur.getFrequency().name(),
+                    YEARLY_DURATION)));
+        } else {
+            // Set end date of recurrence to five years from now.
+            jsonMap.setRecEndDate(new DateTime(jsonMap.getStart().getTime() + 5 * YEARLY_DURATION));
+        }
     }
 
     private String getEventFrequency(Recur recur, String frequency)
@@ -228,6 +287,8 @@ public class DefaultFullCalendarManager implements FullCalendarManager
                 return "WORKDAYS";
             }
             return recur.getInterval() == 2 ? "BIWEEKLY" : frequency;
+        } else if (frequency.equalsIgnoreCase("monthly")) {
+            return recur.getInterval() == 3 ? "QUARTERLY" : frequency;
         }
         return frequency;
     }
@@ -237,13 +298,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         if (byDayValue.isEmpty()) {
             return false;
         }
-        Collection<WeekDay> requiredDays = new HashSet<>();
-        requiredDays.add(WeekDay.MO);
-        requiredDays.add(WeekDay.TU);
-        requiredDays.add(WeekDay.WE);
-        requiredDays.add(WeekDay.TH);
-        requiredDays.add(WeekDay.FR);
-        return byDayValue.containsAll(requiredDays) && byDayValue.size() == requiredDays.size();
+        return byDayValue.containsAll(WEEK_DAYS) && byDayValue.size() == WEEK_DAYS.size();
     }
 
     private void addRecurrentModifiedInstance(MoccaCalendarEvent jsonMap, TimeZone timeZone,
@@ -254,12 +309,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         Optional<MoccaCalendarEvent> optionalModifiedEvent =
             jsonArrayList.stream().filter(e -> e.getId().equals(jsonMap.getId())).findFirst();
 
-        if (optionalModifiedEvent.isPresent()) {
-            MoccaCalendarEvent modifiedInstance = optionalModifiedEvent.get();
-            jsonArrayList.remove(modifiedInstance);
-            modifiedInstance.addModifiedEvent(eventModification);
-            jsonArrayList.add(modifiedInstance);
-        }
+        optionalModifiedEvent.ifPresent(moccaCalendarEvent -> moccaCalendarEvent.addModifiedEvent(eventModification));
     }
 
     private RecurrentEventModification getRecurrentEventModification(MoccaCalendarEvent jsonMap, TimeZone timeZone,
@@ -294,7 +344,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
     private boolean areIntervalsIntersected(Date intervalStart1, Date intervalEnd1, Date intervalStart2,
         Date intervalEnd2)
     {
-        return (intervalEnd1.after(intervalStart2) && intervalEnd1.before(intervalEnd2))
-            || (intervalStart1.after(intervalStart2) && intervalStart1.before(intervalEnd2));
+        return (intervalEnd1.after(intervalStart2) && intervalEnd1.before(intervalEnd2)) || (
+            intervalStart1.after(intervalStart2) && intervalStart1.before(intervalEnd2));
     }
 }

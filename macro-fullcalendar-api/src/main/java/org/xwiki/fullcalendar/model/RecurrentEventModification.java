@@ -50,7 +50,7 @@ public class RecurrentEventModification
     }
 
     /**
-     * Get the original date of the modified instance.
+     * See {@link #setOriginalDate}.
      *
      * @return the original date of the modified instance.
      */
@@ -70,7 +70,7 @@ public class RecurrentEventModification
     }
 
     /**
-     * Get the new end date of the modified instance.
+     * See {@link #setModifiedEndDate}.
      *
      * @return the new end date of the modified instance.
      */
@@ -90,7 +90,7 @@ public class RecurrentEventModification
     }
 
     /**
-     * Get the new start date of the modified instance.
+     * See {@link #setModifiedStartDate}.
      *
      * @return the new start date of the modified instance.
      */
@@ -110,7 +110,7 @@ public class RecurrentEventModification
     }
 
     /**
-     * Get the new description of the modified instance.
+     * See {@link #setModifiedDescription}.
      *
      * @return the new description of the modified instance.
      */
@@ -130,7 +130,7 @@ public class RecurrentEventModification
     }
 
     /**
-     * Get the new title of the modified instance.
+     * See {@link #setModifiedTitle}.
      *
      * @return the new title of the modified instance.
      */
