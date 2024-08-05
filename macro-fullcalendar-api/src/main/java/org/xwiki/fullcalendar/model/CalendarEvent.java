@@ -32,7 +32,7 @@ import org.xwiki.stability.Unstable;
  * @since 2.4.0
  */
 @Unstable
-public class MoccaCalendarEvent
+public class CalendarEvent
 {
     private String id;
 
@@ -63,7 +63,7 @@ public class MoccaCalendarEvent
     /**
      * Default constructor.
      */
-    public MoccaCalendarEvent()
+    public CalendarEvent()
     {
         modificationList = new ArrayList<>();
     }
@@ -71,9 +71,9 @@ public class MoccaCalendarEvent
     /**
      * Copy constructor.
      *
-     * @param calendarEvent {@link MoccaCalendarEvent} to be copied.
+     * @param calendarEvent {@link CalendarEvent} to be copied.
      */
-    public MoccaCalendarEvent(MoccaCalendarEvent calendarEvent)
+    public CalendarEvent(CalendarEvent calendarEvent)
     {
         this.setId(calendarEvent.getId());
         this.setTitle(calendarEvent.getTitle());

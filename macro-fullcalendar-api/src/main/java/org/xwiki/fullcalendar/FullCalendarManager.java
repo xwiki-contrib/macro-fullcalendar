@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.xwiki.component.annotation.Role;
-import org.xwiki.fullcalendar.model.MoccaCalendarEvent;
+import org.xwiki.fullcalendar.model.CalendarEvent;
 import org.xwiki.stability.Unstable;
 
 /**
@@ -83,6 +83,6 @@ public interface FullCalendarManager
      * @since 2.4.0
      */
     @Unstable
-    List<MoccaCalendarEvent> getICalEventsFromFile(byte[] iCalFile, Date intervalStart, Date intervalEnd,
+    List<CalendarEvent> getICalEventsFromFile(byte[] iCalFile, Date intervalStart, Date intervalEnd,
         boolean collapse) throws Exception;
 }
