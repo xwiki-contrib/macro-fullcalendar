@@ -38,8 +38,6 @@
     <xwiki.extension.components>
       org.xwiki.script.service.ScriptService/fullcalendar
     </xwiki.extension.components>
-    <!-- To be removed when upgrading parent. -->
-    <xwiki.revapi.skip>true</xwiki.revapi.skip>
   </properties>
   <dependencies>
     <dependency>
@@ -63,4 +61,41 @@
       <version>3.2.1</version>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.revapi</groupId>
+        <artifactId>revapi-maven-plugin</artifactId>
+        <configuration>
+          <analysisConfiguration><![CDATA[
+            {
+              "revapi": {
+                "java": {
+                  "filter": {
+                    "packages": {
+                      "regex": true,
+                      "include": ["org\\.xwiki\\..*"],
+                      "exclude": ["org\\.xwiki\\..*\\.internal(\\..*)?", "org\\.xwiki\\..*\\.test(\\..*)?"]
+                    }
+                  }
+                },
+                "ignore": [
+                  {
+                     "code": "java.method.addedToInterface",
+                     "new": "method java.lang.String org.xwiki.fullcalendar.FullCalendarManager::getICalEvents(java.net.URL, java.util.Date, java.util.Date, boolean) throws java.lang.Exception",
+                     "justification": "It's very unlikely that an external application is implementing this method. There is no default alternative to this feature."
+                   },
+                   {
+                     "code": "java.method.addedToInterface",
+                     "new": "method java.util.List<org.xwiki.fullcalendar.model.CalendarEvent> org.xwiki.fullcalendar.FullCalendarManager::getICalEventsFromFile(byte[], java.util.Date, java.util.Date, boolean) throws java.lang.Exception",
+                     "justification": "It's very unlikely that an external application is implementing this method. There is no default alternative to this feature."
+                   }
+                ]
+              }
+            }
+          ]]></analysisConfiguration>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
