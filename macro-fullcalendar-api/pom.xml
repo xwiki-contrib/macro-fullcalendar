@@ -38,6 +38,8 @@
     <xwiki.extension.components>
       org.xwiki.script.service.ScriptService/fullcalendar
     </xwiki.extension.components>
+    <!-- To be removed when upgrading parent. -->
+    <xwiki.revapi.skip>true</xwiki.revapi.skip>
   </properties>
   <dependencies>
     <dependency>
