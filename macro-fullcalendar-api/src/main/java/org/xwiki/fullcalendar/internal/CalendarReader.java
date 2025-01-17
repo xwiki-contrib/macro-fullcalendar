@@ -95,6 +95,9 @@ public class CalendarReader
     public TimeZone getTimeZone()
     {
         String timeZoneValue = getTimeZoneValue(calendar);
+        if (timeZoneValue.isEmpty()) {
+            return builder.getRegistry().getTimeZone(TimeZone.getDefault().getID());
+        }
         return builder.getRegistry().getTimeZone(timeZoneValue);
     }
 
