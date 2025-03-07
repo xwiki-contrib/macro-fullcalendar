@@ -25,6 +25,8 @@ import java.util.List;
 
 import org.xwiki.stability.Unstable;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Represents the data of a mocca calendar event.
  *
@@ -38,8 +40,10 @@ public class CalendarEvent
 
     private String title;
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Date start;
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Date end;
 
     private boolean allDay;
@@ -351,12 +355,12 @@ public class CalendarEvent
     }
 
     /**
-     * Get the time difference between the event start date and the event end date.
+     * Get the time difference between the event end date and the event start date.
      *
-     * @return the time difference between the event start date and the event end date.
+     * @return the time difference between the event end date and the event start date.
      */
     public long getDatesDifference()
     {
-        return start.getTime() - end.getTime();
+        return end.getTime() - start.getTime();
     }
 }
