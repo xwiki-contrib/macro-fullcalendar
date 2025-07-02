@@ -40,67 +40,69 @@
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity filter="html" wiki="false"}}
-#if ($xcontext.action == 'get' &amp;&amp; "$!{request.outputSyntax}" == 'plain')
-  $response.setContentType('application/json')
-#end
-##
-#if ("$!{request.sql}" != '')
-  #set ($hql = $request.sql)
-#else
-  #set ($hql =", BaseObject as obj $!{request.fromsql} where doc.fullName=obj.name and obj.className='${request.classname}' $!{request.wheresql}")
-#end
-##
-#set ($jsonResult = [])
-#set ($started = false)
-#set ($extraFields = $request.extraFields.split(','))
-#foreach ($item in $services.query.hql($hql).addFilter('currentlanguage').execute())
-  #set ($itemdoc   = $xwiki.getDocument($item))
-  #set ($startField = $request.startfield)
-  ##
-  #if ("$!startField" != '' &amp;&amp; $itemdoc.getValue($startField))
-    #set ($startdate = $itemdoc.getValue($startField))
-    #set ($start  = $xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm'))
-    #set ($allDay = true)
-    #set ($endField = $request.endfield)
-    #set ($durationField = $request.durationfield)
-    #if ("$!endField" != '')
-      #set ($enddate = $itemdoc.getValue($endField))
-      #set ($end = $xwiki.formatDate($enddate, 'yyyy/MM/dd HH:mm'))
-      #set ($allDay  = false)
-    #elseif ("$!durationField" != '')
-      #set ($duration  = $itemdoc.getValue($durationField))
-      #set ($enddate = $xwiki.jodatime.getDateTime($startdate.getTime()))
-      #set ($enddate = $enddate.plusMinutes($mathtool.toInteger($duration)))
-      #set ($end     = $xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm'))
-      #set ($allDay  = false)
-    #end
-    #set ($currentResult = {
-      'id'     : $escapetool.url($itemdoc.fullName),
-      'title'  : $itemdoc.plainTitle,
-      'url'    : $itemdoc.getExternalURL(),
-      'start'  : $start,
-      'allDay' : $allDay
-    })
-    ## Ease the use of the extrafields only when all of them (3) are specified
-    ## TODO: Find some better rule to handle this and maybe use a more dynamic list.
-    #if ($extraFields.size() == 3)
-      ## Display the description as plain text. It is expected to be the content of a textarea field, so it has
-      ## to be be processed. The $doc.display() method returns the content wrapped in {{html}} macro, which
-      ## doesn't help in a wiki="false" environment.
-      #set ($description = $itemdoc.getValue($extraFields[0].trim()))
-      #set ($xdom = $services.rendering.parse($description, 'xwiki/2.1'))
-      #set ($description = $services.rendering.render($xdom, 'plain/1.0'))
-      #set ($currentResult.description = $description)
-
-      #set ($currentResult.location = $itemdoc.display($extraFields[1].trim()))
-      #set ($currentResult.status = $itemdoc.display($extraFields[2].trim()))
-    #end
-    #if ($end)
-      #set ($discard = $currentResult.put('end', $end))
-    #end
-    #set ($discard = $jsonResult.add($currentResult))
+#if ($xcontext.action == 'get' &amp;&amp; $services.csrf.isTokenValid($request.form_token))
+  #if ("$!{request.outputSyntax}" == 'plain')
+    $response.setContentType('application/json')
   #end
+  ##
+  #if ("$!{request.sql}" != '')
+    #set ($hql = $request.sql)
+  #else
+    #set ($hql =", BaseObject as obj $!{request.fromsql} where doc.fullName=obj.name and obj.className='${request.classname}' $!{request.wheresql}")
+  #end
+  ##
+  #set ($jsonResult = [])
+  #set ($started = false)
+  #set ($extraFields = $request.extraFields.split(','))
+  #foreach ($item in $services.query.hql($hql).addFilter('currentlanguage').execute())
+    #set ($itemdoc   = $xwiki.getDocument($item))
+    #set ($startField = $request.startfield)
+    ##
+    #if ("$!startField" != '' &amp;&amp; $itemdoc.getValue($startField))
+      #set ($startdate = $itemdoc.getValue($startField))
+      #set ($start  = $xwiki.formatDate($startdate, 'yyyy/MM/dd HH:mm'))
+      #set ($allDay = true)
+      #set ($endField = $request.endfield)
+      #set ($durationField = $request.durationfield)
+      #if ("$!endField" != '')
+        #set ($enddate = $itemdoc.getValue($endField))
+        #set ($end = $xwiki.formatDate($enddate, 'yyyy/MM/dd HH:mm'))
+        #set ($allDay  = false)
+      #elseif ("$!durationField" != '')
+        #set ($duration  = $itemdoc.getValue($durationField))
+        #set ($enddate = $xwiki.jodatime.getDateTime($startdate.getTime()))
+        #set ($enddate = $enddate.plusMinutes($mathtool.toInteger($duration)))
+        #set ($end     = $xwiki.formatDate($enddate.toDate(), 'yyyy/MM/dd HH:mm'))
+        #set ($allDay  = false)
+      #end
+      #set ($currentResult = {
+        'id'     : $escapetool.url($itemdoc.fullName),
+        'title'  : $itemdoc.plainTitle,
+        'url'    : $itemdoc.getExternalURL(),
+        'start'  : $start,
+        'allDay' : $allDay
+      })
+      ## Ease the use of the extrafields only when all of them (3) are specified
+      ## TODO: Find some better rule to handle this and maybe use a more dynamic list.
+      #if ($extraFields.size() == 3)
+        ## Display the description as plain text. It is expected to be the content of a textarea field, so it has
+        ## to be be processed. The $doc.display() method returns the content wrapped in {{html}} macro, which
+        ## doesn't help in a wiki="false" environment.
+        #set ($description = $itemdoc.getValue($extraFields[0].trim()))
+        #set ($xdom = $services.rendering.parse($description, 'xwiki/2.1'))
+        #set ($description = $services.rendering.render($xdom, 'plain/1.0'))
+        #set ($currentResult.description = $description)
+
+        #set ($currentResult.location = $itemdoc.display($extraFields[1].trim()))
+        #set ($currentResult.status = $itemdoc.display($extraFields[2].trim()))
+      #end
+      #if ($end)
+        #set ($discard = $currentResult.put('end', $end))
+      #end
+      #set ($discard = $jsonResult.add($currentResult))
+    #end
+  #end
+  $jsontool.serialize($jsonResult)
 #end
-$jsontool.serialize($jsonResult)
 {{/velocity}}</content>
 </xwikidoc>

@@ -368,7 +368,7 @@ require(['fullcalendar-setup'], function() {
         googleCalendarApiKey : "$gApiKey",
         eventSources: [
           #if($json != $jsonService || "$!xcontext.macro.params.classname" != '')
-            "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;extraFields=$!{extraFields}"
+            "${json}#if($stringtool.contains($json, "?"))&amp;#{else}?#{end}xpage=plain&amp;outputSyntax=plain&amp;classname=$!{xcontext.macro.params.classname}&amp;startfield=$!{xcontext.macro.params.startfield}&amp;endfield=$!{xcontext.macro.params.endfield}&amp;durationfield=$!{xcontext.macro.params.durationfield}&amp;extraFields=$!{extraFields}&amp;form_token=$!{services.csrf.token}"
           #end
           #if($!gCal != '')
             ,
