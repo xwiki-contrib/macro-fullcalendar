@@ -48,7 +48,7 @@
   #set ($jsonResult = [])
   #set ($started = false)
   #set ($extraFields = $request.extraFields.split(','))
-  ## Drop programming rights before executing the query execution to ensure it is properly validated.
+  ## Drop programming rights before the query execution to ensure it is properly validated.
   #set ($discard = $xcontext.dropPermissions())
   #foreach ($item in $services.query.hql($hqlStatement).bindValue("classname", "$!{request.classname}").addFilter('currentlanguage').execute())
     #set ($itemdoc   = $xwiki.getDocument($item))
