@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -39,7 +38,34 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity filter="html" wiki="false"}}
+  <content>{{velocity output='false'}}
+#macro (getField $classField $useDisplay)
+  #set ($result = $escapetool.xml($services.localization.render('xwiki.calendar.jsonservice.invalid')))
+  #set ($propertyClass = $itemdoc.getFirstObject($classField).getProperty($classField).getPropertyClass())
+  #if ($propertyClass)
+    #if (($propertyClass.getClassType() != 'Email' || !$services.mail.general.shouldObfuscate()) &amp;&amp;
+        $propertyClass.getClassType() != "Password")
+      #if ($useDisplay)
+        #set ($result = $itemdoc.display($classField))
+      #else
+        #set ($result = $itemdoc.getValue($classField))
+        #set ($xdom = $services.rendering.parse($result, 'xwiki/2.1'))
+        #set ($result = $services.rendering.render($xdom, 'plain/1.0'))
+      #end
+    #else
+      #set ($userRef = $xcontext.getUserReference())
+      #if ($isGuest)
+        #set ($userRef = 'guest user')
+      #end
+      #set ($discard = $services.logging.getLogger('Calendar.JSONService').warn("Forbidden access attempt:
+        User: ${userRef}
+        Class: ${request.classname}
+        Field: ${classField}"))
+    #end
+  #end
+#end
+{{/velocity}}
+{{velocity filter="html" wiki="false"}}
 #if ($xcontext.action == 'get' &amp;&amp; $services.csrf.isTokenValid($request.form_token))
   #if ("$!{request.outputSyntax}" == 'plain')
     $response.setContentType('application/json')
@@ -84,13 +110,12 @@
         ## Display the description as plain text. It is expected to be the content of a textarea field, so it has
         ## to be be processed. The $doc.display() method returns the content wrapped in {{html}} macro, which
         ## doesn't help in a wiki="false" environment.
-        #set ($description = $itemdoc.getValue($extraFields[0].trim()))
-        #set ($xdom = $services.rendering.parse($description, 'xwiki/2.1'))
-        #set ($description = $services.rendering.render($xdom, 'plain/1.0'))
-        #set ($currentResult.description = $description)
-
-        #set ($currentResult.location = $itemdoc.display($extraFields[1].trim()))
-        #set ($currentResult.status = $itemdoc.display($extraFields[2].trim()))
+        #getField($extraFields[0].trim() false)
+        #set ($currentResult.description = $result)
+        #getField($extraFields[1].trim() true)
+        #set ($currentResult.location = $result)
+        #getField($extraFields[2].trim() true)
+        #set ($currentResult.status = $result)
       #end
       #if ($end)
         #set ($discard = $currentResult.put('end', $end))

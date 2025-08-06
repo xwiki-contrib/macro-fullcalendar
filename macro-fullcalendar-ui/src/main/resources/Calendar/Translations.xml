@@ -71,6 +71,8 @@ xwiki.calendar.notification.error=Failed to save the document. Reason: update fa
 xwiki.calendar.notification.loading=Loading calendar...
 xwiki.calendar.notification.loaded=Calendar loaded
 
+xwiki.calendar.jsonservice.invalid=Field not allowed or invalid.
+
 rendering.macro.calendar.name=Calendar
 rendering.macro.calendar.description=Displays a Calendar
 rendering.macro.calendar.parameter.gApiKey.name=gApiKey
