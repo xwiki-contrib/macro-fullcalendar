@@ -56,6 +56,7 @@ public class CalendarEvent
 
     private int recurrent;
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Date recEndDate;
 
     private String recurrenceFreq;

@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.fullcalendar.internal;
+package org.xwiki.fullcalendar.internal.util;
 
 import java.io.InputStream;
 import java.io.StringReader;
@@ -25,6 +25,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -59,7 +60,7 @@ public class CalendarReader
      * @param iCalURL the String representation of an iCal URL.
      * @throws Exception if the retrieval of the iCal fails or if it contains malformed dates.
      */
-    CalendarReader(URL iCalURL) throws Exception
+    public CalendarReader(URL iCalURL) throws Exception
     {
         builder = new CalendarBuilder();
         this.processCalendarFromURL(iCalURL);
@@ -71,7 +72,7 @@ public class CalendarReader
      * @param iCalFile content of an iCal file.
      * @throws Exception if the file format is incorrect, or if it contains malformed dates.
      */
-    CalendarReader(byte[] iCalFile) throws Exception
+    public CalendarReader(byte[] iCalFile) throws Exception
     {
         builder = new CalendarBuilder();
         this.processCalendarFromFile(iCalFile);
@@ -96,7 +97,7 @@ public class CalendarReader
     {
         String timeZoneValue = getTimeZoneValue(calendar);
         if (timeZoneValue.isEmpty()) {
-            return builder.getRegistry().getTimeZone(TimeZone.getDefault().getID());
+            return builder.getRegistry().getTimeZone(java.util.TimeZone.getDefault().getID());
         }
         return builder.getRegistry().getTimeZone(timeZoneValue);
     }
@@ -135,16 +136,17 @@ public class CalendarReader
         String timeZoneValue = getCalendarValue(calendar, "X-WR-TIMEZONE");
         if (timeZoneValue.isEmpty()) {
             // Some calendars rely on TZID property from the VTIMEZONE component for defining the timeZone.
-            VTimeZone vTimeZone = (VTimeZone) calendar.getComponent(net.fortuna.ical4j.model.Component.VTIMEZONE);
-            if (vTimeZone != null) {
+            Optional<VTimeZone> vTimeZoneOptional = calendar.getComponent(net.fortuna.ical4j.model.Component.VTIMEZONE);
+            if (vTimeZoneOptional.isPresent()) {
+                VTimeZone vTimeZone = vTimeZoneOptional.get();
                 timeZoneValue = vTimeZone.getTimeZoneId() == null ? "" : vTimeZone.getTimeZoneId().getValue();
             }
         }
         return timeZoneValue;
     }
 
-    private String getCalendarValue(Calendar calendar, String propertyName)
+    private String getCalendarValue(Calendar calendar, String propName)
     {
-        return calendar.getProperty(propertyName) == null ? "" : calendar.getProperty(propertyName).getValue();
+        return calendar.getProperty(propName).isPresent() ? calendar.getProperty(propName).get().getValue() : "";
     }
 }
