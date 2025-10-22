@@ -22,6 +22,7 @@ package org.xwiki.fullcalendar.internal.util;
 import java.time.ZoneId;
 import java.util.Date;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
@@ -36,7 +37,7 @@ import net.fortuna.ical4j.model.property.DtStart;
  * Helper class for processing a {@link VEvent} to a {@link CalendarEvent}.
  *
  * @version $Id$
- * @since 2.4.7
+ * @since 2.5.0
  */
 @Unstable
 @Component(roles = EventProcessor.class)
@@ -44,6 +45,9 @@ import net.fortuna.ical4j.model.property.DtStart;
 public class EventProcessor
 {
     private static final String T_VALUE = "T";
+
+    @Inject
+    private DateProcessor dateProcessor;
 
     /**
      * Get the start and end dates from a {@link VEvent} and set them to a {@link CalendarEvent}.
@@ -55,7 +59,6 @@ public class EventProcessor
      */
     public boolean addEventPeriod(VEvent event, CalendarEvent jsonMap, ZoneId zoneId)
     {
-        DateProcessor util = new DateProcessor(zoneId);
         DtStart<?> startDate = event.getDateTimeStart();
         DtEnd<?> endDate = event.getDateTimeEnd();
         if (startDate == null) {
@@ -69,11 +72,11 @@ public class EventProcessor
         jsonMap.setRecurrent(0);
         // ZoneId to interpret LocalDate / LocalDateTime (fallback to system default)
         Object startObj = startDate.getDate();
-        Date startUtil = util.toUtilDate(startObj);
+        Date startUtil = dateProcessor.toUtilDate(startObj, zoneId);
         jsonMap.setStart(startUtil);
         if (endDate != null) {
             Object endObj = endDate.getDate();
-            Date endUtil = util.toUtilDate(endObj);
+            Date endUtil = dateProcessor.toUtilDate(endObj, zoneId);
             jsonMap.setEnd(endUtil);
         } else {
             jsonMap.setEnd(Date.from(startUtil.toInstant().atZone(zoneId).plusDays(1).toInstant()));

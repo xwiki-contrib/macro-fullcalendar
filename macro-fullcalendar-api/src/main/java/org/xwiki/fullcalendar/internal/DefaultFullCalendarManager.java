@@ -32,8 +32,8 @@ import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
 import org.xwiki.fullcalendar.FullCalendarManager;
-import org.xwiki.fullcalendar.internal.util.DateProcessor;
 import org.xwiki.fullcalendar.internal.util.CalendarReader;
+import org.xwiki.fullcalendar.internal.util.DateProcessor;
 import org.xwiki.fullcalendar.internal.util.EventProcessor;
 import org.xwiki.fullcalendar.internal.util.RecurrenceProcessor;
 import org.xwiki.fullcalendar.model.CalendarEvent;
@@ -62,7 +62,8 @@ public class DefaultFullCalendarManager implements FullCalendarManager
     @Inject
     private EventProcessor eventProcessor;
 
-    private DateProcessor util;
+    @Inject
+    private DateProcessor dateProcessor;
 
     @Override
     public String iCalToJSON(String iCalStringURL) throws Exception
@@ -100,9 +101,9 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         CalendarReader calendarReader) throws Exception
     {
         ZoneId zoneId = calendarReader.getTimeZone().toZoneId();
-        util = new DateProcessor(zoneId);
-        LocalDateTime icalIntervalStart = intervalStart == null ? null : util.toLocalDateTime(intervalStart);
-        LocalDateTime icalIntervalEnd = intervalEnd == null ? null : util.toLocalDateTime(intervalEnd);
+        LocalDateTime icalIntervalStart =
+            intervalStart == null ? null : dateProcessor.toLocalDateTime(intervalStart, zoneId);
+        LocalDateTime icalIntervalEnd = intervalEnd == null ? null : dateProcessor.toLocalDateTime(intervalEnd, zoneId);
         ArrayList<CalendarEvent> calendarEventsJSON = new ArrayList<>();
         List<CalendarComponent> sortedEvents = getSortedEvents(calendarReader.getEvents());
         addEvents(sortedEvents, zoneId, icalIntervalStart, icalIntervalEnd, calendarEventsJSON, collapse);

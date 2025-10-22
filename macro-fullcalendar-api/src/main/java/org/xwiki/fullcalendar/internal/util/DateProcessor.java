@@ -27,29 +27,29 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.xwiki.component.annotation.Component;
 import org.xwiki.stability.Unstable;
 
 /**
  * Helper class for processing date operations and conversions.
  *
  * @version $Id$
- * @since 2.4.7
+ * @since 2.5.0
  */
 @Unstable
+@Component(roles = DateProcessor.class)
+@Singleton
 public class DateProcessor
 {
-    private ZoneId zoneId;
+    private static final String LOG_FORMAT = "Date object of type [{}] is not implemented for conversion to type [{}].";
 
-    /**
-     * test.
-     *
-     * @param zoneId test.
-     */
-    public DateProcessor(ZoneId zoneId)
-    {
-        this.zoneId = zoneId;
-    }
+    @Inject
+    private Logger logger;
 
     /**
      * Test if two intervals are intersecting.
@@ -71,12 +71,15 @@ public class DateProcessor
      * to {@link Date}.
      *
      * @param dateObj the date object of the above-mentioned types
+     * @param zoneId {@link ZoneId}
      * @return a {@link Date} object, or null if the given object type is not supported.
      */
-    public Date toUtilDate(Object dateObj)
+    public Date toUtilDate(Object dateObj, ZoneId zoneId)
     {
         Date date = null;
-        if (dateObj instanceof LocalDate) {
+        if (dateObj instanceof Date) {
+            return (Date) dateObj;
+        } else if (dateObj instanceof LocalDate) {
             LocalDate ld = (LocalDate) dateObj;
             Instant instant = ld.atStartOfDay(zoneId).toInstant();
             date = Date.from(instant);
@@ -92,6 +95,8 @@ public class DateProcessor
             ZonedDateTime zdt = (ZonedDateTime) dateObj;
             Instant instant = zdt.toLocalDateTime().atZone(zdt.getZone()).toInstant();
             date = Date.from(instant);
+        } else if (dateObj != null) {
+            logger.warn(LOG_FORMAT, dateObj.getClass(), Date.class);
         }
         return date;
     }
@@ -101,12 +106,15 @@ public class DateProcessor
      * {@link LocalDateTime}.
      *
      * @param dateObj the date object of the above-mentioned types
+     * @param zoneId {@link ZoneId}
      * @return a {@link LocalDateTime} object, or null if the given object type is not supported.
      */
-    public LocalDateTime toLocalDateTime(Object dateObj)
+    public LocalDateTime toLocalDateTime(Object dateObj, ZoneId zoneId)
     {
         LocalDateTime date = null;
-        if (dateObj instanceof LocalDate) {
+        if (dateObj instanceof LocalDateTime) {
+            return (LocalDateTime) dateObj;
+        } else if (dateObj instanceof LocalDate) {
             date = ((LocalDate) dateObj).atStartOfDay();
         } else if (dateObj instanceof OffsetDateTime) {
             date = ((OffsetDateTime) dateObj).toLocalDateTime();
@@ -115,6 +123,8 @@ public class DateProcessor
             date = instant.atZone(zoneId).toLocalDateTime();
         } else if (dateObj instanceof ZonedDateTime) {
             date = ((ZonedDateTime) dateObj).toLocalDateTime();
+        } else if (dateObj != null) {
+            logger.warn(LOG_FORMAT, dateObj.getClass(), LocalDateTime.class);
         }
         return date;
     }

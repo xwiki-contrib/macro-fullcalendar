@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -52,7 +53,7 @@ import net.fortuna.ical4j.model.property.RecurrenceId;
  * Helper class for processing the recurrence of a {@link VEvent}.
  *
  * @version $Id$
- * @since 2.4.7
+ * @since 2.5.0
  */
 @Unstable
 @Component(roles = RecurrenceProcessor.class)
@@ -80,7 +81,10 @@ public class RecurrenceProcessor
         TIME_PERIODS.put("YEARLY", YEARLY_DURATION);
     }
 
-    private DateProcessor util;
+    @Inject
+    private DateProcessor dateProcessor;
+
+    private ZoneId zoneId;
 
     /**
      * Check the recurrence rule of a {@link VEvent}.
@@ -96,8 +100,8 @@ public class RecurrenceProcessor
     public void checkRRule(ZoneId zoneId, LocalDateTime icalIntervalStart, LocalDateTime icalIntervalEnd,
         List<CalendarEvent> jsonArrayList, boolean collapse, VEvent event, CalendarEvent jsonMap)
     {
-        util = new DateProcessor(zoneId);
         // Check if there is a RRule.
+        this.zoneId = zoneId;
         Optional<Property> rRuleOptional = event.getProperty(Property.RRULE);
         Optional<Property> recurrenceIdOptional = event.getProperty(Property.RECURRENCE_ID);
         if (rRuleOptional.isPresent()) {
@@ -119,7 +123,7 @@ public class RecurrenceProcessor
     {
         LocalDateTime eventStartTime = jsonMap.getStart().toInstant().atZone(zoneId).toLocalDateTime();
         LocalDateTime eventEndTime = jsonMap.getEnd().toInstant().atZone(zoneId).toLocalDateTime();
-        return icalIntervalStart == null || icalIntervalEnd == null || util.areIntervalsIntersected(
+        return icalIntervalStart == null || icalIntervalEnd == null || dateProcessor.areIntervalsIntersected(
             Pair.of(eventStartTime, eventEndTime), Pair.of(icalIntervalStart, icalIntervalEnd));
     }
 
@@ -131,8 +135,8 @@ public class RecurrenceProcessor
             Recur<Temporal> recur = rRule.getRecur();
             DtStart<?> dtStart = event.getDateTimeStart();
             Object startObj = dtStart.getDate();
-            if (!areIntervalDatesEmpty && recur.getDates(util.toLocalDateTime(startObj), icalIntervalStart,
-                icalIntervalEnd).isEmpty())
+            if (!areIntervalDatesEmpty && recur.getDates(dateProcessor.toLocalDateTime(startObj, zoneId),
+                icalIntervalStart, icalIntervalEnd).isEmpty())
             {
                 return;
             }
@@ -154,9 +158,10 @@ public class RecurrenceProcessor
         for (int i = 0; i < recurringEventStartDates.size(); i++) {
             CalendarEvent recurringEvent = new CalendarEvent(jsonMap);
 
-            recurringEvent.setStart(util.toUtilDate(recurringEventStartDates.get(i)));
+            recurringEvent.setStart(dateProcessor.toUtilDate(recurringEventStartDates.get(i), zoneId));
             recurringEvent.setEnd(
-                util.toUtilDate(recurringEventStartDates.get(i).plus(Duration.ofMillis(differenceInMillis))));
+                dateProcessor.toUtilDate(recurringEventStartDates.get(i).plus(Duration.ofMillis(differenceInMillis)),
+                    zoneId));
             recurringEvent.setId(String.format("%s_%d", jsonMap.getId(), i));
             recurringEvent.setGroupId(groupId);
             jsonArrayList.add(recurringEvent);
@@ -181,7 +186,7 @@ public class RecurrenceProcessor
     {
         int recurCount = recur.getCount();
         if (recur.getUntil() != null) {
-            jsonMap.setRecEndDate(util.toUtilDate(recur.getUntil()));
+            jsonMap.setRecEndDate(dateProcessor.toUtilDate(recur.getUntil(), zoneId));
         } else if (recurCount != -1) {
             jsonMap.setRecEndDate(new DateTime(
                 jsonMap.getStart().getTime() + recurCount * TIME_PERIODS.getOrDefault(recur.getFrequency().name(),
@@ -228,7 +233,7 @@ public class RecurrenceProcessor
         RecurrenceId<Temporal> recurrenceId)
     {
         RecurrentEventModification eventModification = new RecurrentEventModification();
-        eventModification.setOriginalDate(util.toUtilDate(recurrenceId.getValue()));
+        eventModification.setOriginalDate(dateProcessor.toUtilDate(recurrenceId.getValue(), zoneId));
         eventModification.setModifiedTitle(jsonMap.getTitle());
         eventModification.setModifiedDescription(jsonMap.getDescription());
         eventModification.setModifiedStartDate(jsonMap.getStart());
