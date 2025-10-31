@@ -1,2 +1,5 @@
 org.xwiki.fullcalendar.internal.DefaultFullCalendarManager
 org.xwiki.fullcalendar.script.FullCalendarScriptService
+org.xwiki.fullcalendar.internal.util.DateProcessor
+org.xwiki.fullcalendar.internal.util.EventProcessor
+org.xwiki.fullcalendar.internal.util.RecurrenceProcessor
