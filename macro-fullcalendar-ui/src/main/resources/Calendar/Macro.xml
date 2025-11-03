@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -20,19 +20,16 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.2" reference="Calendar.Macro" locale="">
+<xwikidoc version="1.3" reference="Calendar.Macro" locale="">
   <web>Calendar</web>
   <name>Macro</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1392113959000</creationDate>
   <parent>Calendar.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1573831472000</date>
-  <contentUpdateDate>1573831472000</contentUpdateDate>
   <version>1.1</version>
   <title>Calendar Macro</title>
   <comment/>
@@ -80,10 +77,51 @@ or
       <defaultWeb/>
       <nameField/>
       <validationScript/>
+      <async_cached>
+        <defaultValue>0</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>async_cached</name>
+        <number>12</number>
+        <prettyName>Cached</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </async_cached>
+      <async_context>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>1</multiSelect>
+        <name>async_context</name>
+        <number>13</number>
+        <prettyName>Context elements</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <values>doc.reference=Document|icon.theme=Icon theme|locale=Language|rendering.defaultsyntax=Default syntax|rendering.restricted=Restricted|rendering.targetsyntax=Target syntax|request.base=Request base URL|request.parameters=Request parameters|request.url=Request URL|request.wiki=Request wiki|user=User|wiki=Wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </async_context>
+      <async_enabled>
+        <defaultValue>0</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>async_enabled</name>
+        <number>11</number>
+        <prettyName>Asynchronous rendering</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </async_enabled>
       <code>
         <disabled>0</disabled>
+        <editor>Text</editor>
         <name>code</name>
-        <number>9</number>
+        <number>10</number>
         <prettyName>Macro code</prettyName>
         <rows>20</rows>
         <size>40</size>
@@ -91,23 +129,47 @@ or
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </code>
       <contentDescription>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>contentDescription</name>
-        <number>8</number>
+        <number>9</number>
         <prettyName>Content description (Not applicable for "No content" type)</prettyName>
         <rows>5</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </contentDescription>
+      <contentJavaType>
+        <cache>0</cache>
+        <defaultValue>Unknown</defaultValue>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <freeText>allowed</freeText>
+        <largeStorage>1</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>contentJavaType</name>
+        <number>8</number>
+        <picker>1</picker>
+        <prettyName>Macro content type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>|</separator>
+        <separators>|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>Unknown|Wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentJavaType>
       <contentType>
         <cache>0</cache>
         <disabled>0</disabled>
         <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
         <multiSelect>0</multiSelect>
         <name>contentType</name>
         <number>7</number>
-        <prettyName>Macro content type</prettyName>
+        <prettyName>Macro content availability</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator>|</separator>
         <separators>|</separators>
@@ -126,7 +188,9 @@ or
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </defaultCategory>
       <description>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>description</name>
         <number>3</number>
         <prettyName>Macro description</prettyName>
@@ -167,6 +231,8 @@ or
         <cache>0</cache>
         <disabled>0</disabled>
         <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
         <multiSelect>0</multiSelect>
         <name>visibility</name>
         <number>6</number>
@@ -180,6 +246,15 @@ or
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </visibility>
     </class>
+    <property>
+      <async_cached/>
+    </property>
+    <property>
+      <async_context/>
+    </property>
+    <property>
+      <async_enabled/>
+    </property>
     <property>
       <code>{{velocity}}
 #set($discard = $xwiki.ssx.use("Calendar.FullCalendar"))
@@ -453,6 +528,9 @@ require(['fullcalendar-setup'], function() {
       <contentDescription/>
     </property>
     <property>
+      <contentJavaType/>
+    </property>
+    <property>
       <contentType>No content</contentType>
     </property>
     <property>
@@ -526,6 +604,15 @@ require(['fullcalendar-setup'], function() {
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue>AIzaSyDedBXsLGUPKGT2SKh1aZXXJZKdpEc8bQU</defaultValue>
@@ -538,6 +625,9 @@ require(['fullcalendar-setup'], function() {
     </property>
     <property>
       <name>gApiKey</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -592,6 +682,15 @@ require(['fullcalendar-setup'], function() {
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -604,6 +703,9 @@ require(['fullcalendar-setup'], function() {
     </property>
     <property>
       <name>gCal</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -658,6 +760,15 @@ require(['fullcalendar-setup'], function() {
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -688,6 +799,9 @@ This is only needed if the JSON generated by the Calendar.JSONService does not f
     </property>
     <property>
       <name>json</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -742,6 +856,15 @@ This is only needed if the JSON generated by the Calendar.JSONService does not f
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -766,6 +889,9 @@ The editable parameter needs to be set to true for this field to be used.</descr
     </property>
     <property>
       <name>updateurl</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -820,6 +946,15 @@ The editable parameter needs to be set to true for this field to be used.</descr
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -832,6 +967,9 @@ The editable parameter needs to be set to true for this field to be used.</descr
     </property>
     <property>
       <name>classname</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -886,6 +1024,15 @@ The editable parameter needs to be set to true for this field to be used.</descr
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue>datetime</defaultValue>
@@ -898,6 +1045,9 @@ The editable parameter needs to be set to true for this field to be used.</descr
     </property>
     <property>
       <name>startfield</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -952,6 +1102,15 @@ The editable parameter needs to be set to true for this field to be used.</descr
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -964,6 +1123,9 @@ The editable parameter needs to be set to true for this field to be used.</descr
     </property>
     <property>
       <name>durationfield</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1018,6 +1180,15 @@ The editable parameter needs to be set to true for this field to be used.</descr
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue>true</defaultValue>
@@ -1030,6 +1201,9 @@ The editable parameter needs to be set to true for this field to be used.</descr
     </property>
     <property>
       <name>editable</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1084,6 +1258,15 @@ The editable parameter needs to be set to true for this field to be used.</descr
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue>month</defaultValue>
@@ -1102,6 +1285,9 @@ basicDay</description>
     </property>
     <property>
       <name>defaultView</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1156,6 +1342,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -1169,6 +1364,9 @@ basicDay</description>
     </property>
     <property>
       <name>year</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1223,6 +1421,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -1236,6 +1443,9 @@ basicDay</description>
     </property>
     <property>
       <name>month</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1290,6 +1500,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -1303,6 +1522,9 @@ basicDay</description>
     </property>
     <property>
       <name>date</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1357,6 +1579,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue>1</defaultValue>
@@ -1369,6 +1600,9 @@ basicDay</description>
     </property>
     <property>
       <name>firstDay</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1423,6 +1657,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -1436,6 +1679,9 @@ basicDay</description>
     </property>
     <property>
       <name>firstHour</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1490,6 +1736,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue>8:00</defaultValue>
@@ -1503,6 +1758,9 @@ basicDay</description>
     </property>
     <property>
       <name>minTime</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1557,6 +1815,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue>23:00</defaultValue>
@@ -1570,6 +1837,9 @@ basicDay</description>
     </property>
     <property>
       <name>maxTime</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1624,6 +1894,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -1636,6 +1915,9 @@ basicDay</description>
     </property>
     <property>
       <name>endfield</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1690,6 +1972,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -1702,6 +1993,9 @@ basicDay</description>
     </property>
     <property>
       <name>iCal</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
   <object>
@@ -1756,6 +2050,15 @@ basicDay</description>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
     </class>
     <property>
       <defaultValue/>
@@ -1768,6 +2071,9 @@ basicDay</description>
     </property>
     <property>
       <name>extraFields</name>
+    </property>
+    <property>
+      <type/>
     </property>
   </object>
 </xwikidoc>
