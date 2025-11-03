@@ -92,8 +92,7 @@ public class EventProcessor
      */
     public void addBasicEventProperties(CalendarEvent jsonMap, VEvent event)
     {
-
-        jsonMap.setId(event.getUid().isEmpty() ? "" : event.getUid().get().getValue());
+        jsonMap.setId(event.getUid().isPresent() ? event.getUid().get().getValue() : "");
         jsonMap.setTitle(event.getSummary() == null ? "" : event.getSummary().getValue());
 
         // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
