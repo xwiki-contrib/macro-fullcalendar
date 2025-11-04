@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Calendar.UpdateService" locale="">
+<xwikidoc version="1.5" reference="Calendar.UpdateService" locale="">
   <web>Calendar</web>
   <name>UpdateService</name>
   <language/>
