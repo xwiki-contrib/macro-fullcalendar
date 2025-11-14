@@ -24,6 +24,7 @@ import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,7 +93,10 @@ public class CalendarReader
      * Get the calendar {@link TimeZone}.
      *
      * @return the {@link TimeZone} of the calendar.
+     *
+     * @deprecated Use {@link #getTimeZoneId()} instead
      */
+    @Deprecated
     public TimeZone getTimeZone()
     {
         String timeZoneValue = getTimeZoneValue(calendar);
@@ -100,6 +104,20 @@ public class CalendarReader
             return builder.getRegistry().getTimeZone(java.util.TimeZone.getDefault().getID());
         }
         return builder.getRegistry().getTimeZone(timeZoneValue);
+    }
+
+    /**
+     * Get the calendar {@link ZoneId}.
+     *
+     * @return the {@link ZoneId} of the calendar.
+     */
+    public ZoneId getTimeZoneId()
+    {
+        String timeZoneValue = getTimeZoneValue(calendar);
+        if (timeZoneValue.isEmpty()) {
+            return builder.getRegistry().getZoneId(java.util.TimeZone.getDefault().getID());
+        }
+        return builder.getRegistry().getZoneId(timeZoneValue);
     }
 
     private void processCalendarFromURL(URL iCalURL) throws Exception
