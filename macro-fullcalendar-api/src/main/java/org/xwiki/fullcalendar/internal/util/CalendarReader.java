@@ -103,7 +103,7 @@ public class CalendarReader
     public TimeZone getTimeZone()
     {
         String timeZoneValue = getTimeZoneValue(calendar);
-        return this.getTimeZone(timeZoneValue);
+        return builder.getRegistry().getTimeZone(timeZoneValue);
     }
 
     /**
@@ -117,23 +117,13 @@ public class CalendarReader
         String timeZoneValue = getTimeZoneValue(calendar);
         ZoneId zoneId;
         try {
-            zoneId = getZoneId(timeZoneValue);
+            zoneId = builder.getRegistry().getZoneId(timeZoneValue);
         } catch (DateTimeException e) {
             LOGGER.debug("Failed to get the time zone for [{}] from the ZoneId registry. Cause: [{}]", timeZoneValue,
                 ExceptionUtils.getRootCauseMessage(e));
-            zoneId = getTimeZone(timeZoneValue).toZoneId();
+            zoneId = builder.getRegistry().getTimeZone(timeZoneValue).toZoneId();
         }
         return zoneId;
-    }
-
-    private ZoneId getZoneId(String timeZoneValue)
-    {
-        return builder.getRegistry().getZoneId(timeZoneValue);
-    }
-
-    private TimeZone getTimeZone(String timeZoneValue)
-    {
-        return builder.getRegistry().getTimeZone(timeZoneValue);
     }
 
     private void processCalendarFromURL(URL iCalURL) throws Exception
