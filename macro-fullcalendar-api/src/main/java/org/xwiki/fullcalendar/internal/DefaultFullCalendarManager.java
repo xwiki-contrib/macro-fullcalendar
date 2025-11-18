@@ -100,7 +100,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
     private ArrayList<CalendarEvent> getCalendarEvents(Date intervalStart, Date intervalEnd, boolean collapse,
         CalendarReader calendarReader) throws Exception
     {
-        ZoneId zoneId = calendarReader.getTimeZoneId();
+        ZoneId zoneId = calendarReader.getZoneId();
         LocalDateTime icalIntervalStart =
             intervalStart == null ? null : dateProcessor.toLocalDateTime(intervalStart, zoneId);
         LocalDateTime icalIntervalEnd = intervalEnd == null ? null : dateProcessor.toLocalDateTime(intervalEnd, zoneId);

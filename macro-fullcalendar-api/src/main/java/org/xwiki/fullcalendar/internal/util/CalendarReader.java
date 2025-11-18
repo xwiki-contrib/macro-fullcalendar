@@ -24,6 +24,7 @@ import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.time.DateTimeException;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
@@ -94,16 +95,14 @@ public class CalendarReader
      *
      * @return the {@link TimeZone} of the calendar.
      *
-     * @deprecated Use {@link #getTimeZoneId()} instead
+     * @deprecated Use {@link #getZoneId()} instead, because it has checks for more aliases. Otherwise, this function
+     * might throw {@link DateTimeException} for some valid aliases, like `W. European Standard Time`.
      */
-    @Deprecated
+    @Deprecated(since = "2.5.1")
     public TimeZone getTimeZone()
     {
         String timeZoneValue = getTimeZoneValue(calendar);
-        if (timeZoneValue.isEmpty()) {
-            return builder.getRegistry().getTimeZone(java.util.TimeZone.getDefault().getID());
-        }
-        return builder.getRegistry().getTimeZone(timeZoneValue);
+        return this.getTimeZone(timeZoneValue);
     }
 
     /**
@@ -111,13 +110,32 @@ public class CalendarReader
      *
      * @return the {@link ZoneId} of the calendar.
      */
-    public ZoneId getTimeZoneId()
+    public ZoneId getZoneId()
     {
         String timeZoneValue = getTimeZoneValue(calendar);
+        ZoneId zoneId;
+        try {
+            zoneId = getZoneId(timeZoneValue);
+        } catch (DateTimeException e) {
+            zoneId = getTimeZone(timeZoneValue).toZoneId();
+        }
+        return zoneId;
+    }
+
+    private ZoneId getZoneId(String timeZoneValue)
+    {
         if (timeZoneValue.isEmpty()) {
             return builder.getRegistry().getZoneId(java.util.TimeZone.getDefault().getID());
         }
         return builder.getRegistry().getZoneId(timeZoneValue);
+    }
+
+    private TimeZone getTimeZone(String timeZoneValue)
+    {
+        if (timeZoneValue.isEmpty()) {
+            return builder.getRegistry().getTimeZone(java.util.TimeZone.getDefault().getID());
+        }
+        return builder.getRegistry().getTimeZone(timeZoneValue);
     }
 
     private void processCalendarFromURL(URL iCalURL) throws Exception
