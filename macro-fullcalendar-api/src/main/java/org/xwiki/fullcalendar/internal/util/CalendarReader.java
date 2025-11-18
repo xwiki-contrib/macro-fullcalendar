@@ -95,9 +95,8 @@ public class CalendarReader
      * Get the calendar {@link TimeZone}.
      *
      * @return the {@link TimeZone} of the calendar.
-     *
      * @deprecated Use {@link #getZoneId()} instead, because it has checks for more aliases. Otherwise, this function
-     * might throw {@link DateTimeException} for some valid aliases, like `W. European Standard Time`.
+     *     might throw {@link DateTimeException} for some valid aliases, like `W. European Standard Time`.
      */
     @Deprecated(since = "2.5.1")
     public TimeZone getTimeZone()
