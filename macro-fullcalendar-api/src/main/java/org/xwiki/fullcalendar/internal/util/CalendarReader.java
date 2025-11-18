@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xwiki.stability.Unstable;
@@ -109,6 +110,7 @@ public class CalendarReader
      * Get the calendar {@link ZoneId}.
      *
      * @return the {@link ZoneId} of the calendar.
+     * @since 2.5.1
      */
     public ZoneId getZoneId()
     {
@@ -117,6 +119,8 @@ public class CalendarReader
         try {
             zoneId = getZoneId(timeZoneValue);
         } catch (DateTimeException e) {
+            LOGGER.debug("Failed to get the time zone for [{}] from the ZoneId registry. Cause: [{}]", timeZoneValue,
+                ExceptionUtils.getRootCauseMessage(e));
             zoneId = getTimeZone(timeZoneValue).toZoneId();
         }
         return zoneId;
