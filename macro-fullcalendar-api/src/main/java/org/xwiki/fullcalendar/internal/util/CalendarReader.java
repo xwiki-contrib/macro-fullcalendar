@@ -124,17 +124,11 @@ public class CalendarReader
 
     private ZoneId getZoneId(String timeZoneValue)
     {
-        if (timeZoneValue.isEmpty()) {
-            return builder.getRegistry().getZoneId(java.util.TimeZone.getDefault().getID());
-        }
         return builder.getRegistry().getZoneId(timeZoneValue);
     }
 
     private TimeZone getTimeZone(String timeZoneValue)
     {
-        if (timeZoneValue.isEmpty()) {
-            return builder.getRegistry().getTimeZone(java.util.TimeZone.getDefault().getID());
-        }
         return builder.getRegistry().getTimeZone(timeZoneValue);
     }
 
@@ -177,6 +171,9 @@ public class CalendarReader
                 VTimeZone vTimeZone = vTimeZoneOptional.get();
                 timeZoneValue = vTimeZone.getTimeZoneId() == null ? "" : vTimeZone.getTimeZoneId().getValue();
             }
+        }
+        if (timeZoneValue.isEmpty()) {
+            timeZoneValue = java.util.TimeZone.getDefault().getID();
         }
         return timeZoneValue;
     }
