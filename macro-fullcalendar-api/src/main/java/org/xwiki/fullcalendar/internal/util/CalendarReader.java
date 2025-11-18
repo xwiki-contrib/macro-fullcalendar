@@ -24,10 +24,13 @@ import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.time.DateTimeException;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xwiki.stability.Unstable;
@@ -92,14 +95,34 @@ public class CalendarReader
      * Get the calendar {@link TimeZone}.
      *
      * @return the {@link TimeZone} of the calendar.
+     * @deprecated Use {@link #getZoneId()} instead, because it has checks for more aliases. Otherwise, this function
+     *     might throw {@link DateTimeException} for some valid aliases, like `W. European Standard Time`.
      */
+    @Deprecated(since = "2.5.1")
     public TimeZone getTimeZone()
     {
         String timeZoneValue = getTimeZoneValue(calendar);
-        if (timeZoneValue.isEmpty()) {
-            return builder.getRegistry().getTimeZone(java.util.TimeZone.getDefault().getID());
-        }
         return builder.getRegistry().getTimeZone(timeZoneValue);
+    }
+
+    /**
+     * Get the calendar {@link ZoneId}.
+     *
+     * @return the {@link ZoneId} of the calendar.
+     * @since 2.5.1
+     */
+    public ZoneId getZoneId()
+    {
+        String timeZoneValue = getTimeZoneValue(calendar);
+        try {
+            return builder.getRegistry().getZoneId(timeZoneValue);
+        } catch (DateTimeException e) {
+            LOGGER.debug("Failed to get the time zone for [{}] from the ZoneId registry. Cause: [{}]", timeZoneValue,
+                ExceptionUtils.getRootCauseMessage(e));
+            // We need this fallback because the registries for ZoneId and TimeZone are different, and some ids might be
+            // found in one registry and not the other.
+            return builder.getRegistry().getTimeZone(timeZoneValue).toZoneId();
+        }
     }
 
     private void processCalendarFromURL(URL iCalURL) throws Exception
@@ -141,6 +164,10 @@ public class CalendarReader
                 VTimeZone vTimeZone = vTimeZoneOptional.get();
                 timeZoneValue = vTimeZone.getTimeZoneId() == null ? "" : vTimeZone.getTimeZoneId().getValue();
             }
+        }
+        if (timeZoneValue.isEmpty()) {
+            // In case no time zone was found in the calendar, set the system time zone as a fallback.
+            timeZoneValue = java.util.TimeZone.getDefault().getID();
         }
         return timeZoneValue;
     }
