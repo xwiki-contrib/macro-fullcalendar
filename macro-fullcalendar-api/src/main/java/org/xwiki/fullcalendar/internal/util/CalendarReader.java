@@ -114,15 +114,15 @@ public class CalendarReader
     public ZoneId getZoneId()
     {
         String timeZoneValue = getTimeZoneValue(calendar);
-        ZoneId zoneId;
         try {
-            zoneId = builder.getRegistry().getZoneId(timeZoneValue);
+            return builder.getRegistry().getZoneId(timeZoneValue);
         } catch (DateTimeException e) {
             LOGGER.debug("Failed to get the time zone for [{}] from the ZoneId registry. Cause: [{}]", timeZoneValue,
                 ExceptionUtils.getRootCauseMessage(e));
-            zoneId = builder.getRegistry().getTimeZone(timeZoneValue).toZoneId();
+            // We need this fallback because the registries for ZoneId and TimeZone are different, and some ids might be
+            // found in one registry and not the other.
+            return builder.getRegistry().getTimeZone(timeZoneValue).toZoneId();
         }
-        return zoneId;
     }
 
     private void processCalendarFromURL(URL iCalURL) throws Exception
@@ -166,6 +166,7 @@ public class CalendarReader
             }
         }
         if (timeZoneValue.isEmpty()) {
+            // In case no time zone was found in the calendar, set the system time zone as a fallback.
             timeZoneValue = java.util.TimeZone.getDefault().getID();
         }
         return timeZoneValue;
