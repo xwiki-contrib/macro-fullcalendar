@@ -192,8 +192,7 @@ public class RecurrenceProcessor
                 jsonMap.getStart().getTime() + recurCount * TIME_PERIODS.getOrDefault(recur.getFrequency().name(),
                     YEARLY_DURATION)));
         } else {
-            // Set end date of recurrence to five years from now.
-            jsonMap.setRecEndDate(new DateTime(jsonMap.getStart().getTime() + 5 * YEARLY_DURATION));
+            jsonMap.setRecEndDate(null);
         }
     }
 
