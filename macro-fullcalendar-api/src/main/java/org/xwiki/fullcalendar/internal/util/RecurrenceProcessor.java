@@ -22,6 +22,7 @@ package org.xwiki.fullcalendar.internal.util;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.Collection;
 import java.util.HashMap;
@@ -159,9 +160,14 @@ public class RecurrenceProcessor
             CalendarEvent recurringEvent = new CalendarEvent(jsonMap);
 
             recurringEvent.setStart(dateProcessor.toUtilDate(recurringEventStartDates.get(i), zoneId));
-            recurringEvent.setEnd(
-                dateProcessor.toUtilDate(recurringEventStartDates.get(i).plus(Duration.ofMillis(differenceInMillis)),
-                    zoneId));
+            Temporal endDate = recurringEventStartDates.get(i);
+            if (jsonMap.isAllDay()) {
+                // If the event is all day, the start date might not have a `seconds` field,
+                endDate = endDate.plus(Duration.ofMillis(differenceInMillis).toDays(), ChronoUnit.DAYS);
+            } else {
+                endDate = endDate.plus(Duration.ofMillis(differenceInMillis));
+            }
+            recurringEvent.setEnd(dateProcessor.toUtilDate(endDate, zoneId));
             recurringEvent.setId(String.format("%s_%d", jsonMap.getId(), i));
             recurringEvent.setGroupId(groupId);
             jsonArrayList.add(recurringEvent);
