@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.fullcalendar.FullCalendarManager;
@@ -135,8 +134,7 @@ public class DefaultFullCalendarManager implements FullCalendarManager
                 recurrenceProcessor.checkRRule(zoneId, icalIntervalStart, icalIntervalEnd, jsonArrayList, collapse,
                     event, jsonMap);
             } catch (Exception e) {
-                logger.warn("Error while processing a calendar event. Cause: [{}]",
-                    ExceptionUtils.getRootCauseMessage(e));
+                logger.error("Error while processing a calendar event. Cause:", e);
             }
         }
     }
