@@ -22,6 +22,7 @@ package org.xwiki.fullcalendar.internal.util;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.Collection;
 import java.util.HashMap;
@@ -159,13 +160,25 @@ public class RecurrenceProcessor
             CalendarEvent recurringEvent = new CalendarEvent(jsonMap);
 
             recurringEvent.setStart(dateProcessor.toUtilDate(recurringEventStartDates.get(i), zoneId));
-            recurringEvent.setEnd(
-                dateProcessor.toUtilDate(recurringEventStartDates.get(i).plus(Duration.ofMillis(differenceInMillis)),
-                    zoneId));
+            recurringEvent.setEnd(dateProcessor.toUtilDate(
+                computeEventEndDate(jsonMap, recurringEventStartDates.get(i), differenceInMillis), zoneId));
             recurringEvent.setId(String.format("%s_%d", jsonMap.getId(), i));
             recurringEvent.setGroupId(groupId);
             jsonArrayList.add(recurringEvent);
         }
+    }
+
+    private Temporal computeEventEndDate(CalendarEvent jsonMap, Temporal startDate, long differenceInMillis)
+    {
+        Temporal endDate = startDate;
+        if (jsonMap.isAllDay()) {
+            // If the event is all day, the start date might not have a `seconds` field, so compute the end date by
+            // adding the time difference in DAYS, not in seconds.
+            endDate = endDate.plus(Duration.ofMillis(differenceInMillis).toDays(), ChronoUnit.DAYS);
+        } else {
+            endDate = endDate.plus(Duration.ofMillis(differenceInMillis));
+        }
+        return endDate;
     }
 
     private void addRecurringEventsCollapsed(CalendarEvent jsonMap, List<CalendarEvent> jsonArrayList,

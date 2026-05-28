@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.fullcalendar.FullCalendarManager;
 import org.xwiki.fullcalendar.internal.util.CalendarReader;
@@ -64,6 +65,9 @@ public class DefaultFullCalendarManager implements FullCalendarManager
 
     @Inject
     private DateProcessor dateProcessor;
+
+    @Inject
+    private Logger logger;
 
     @Override
     public String iCalToJSON(String iCalStringURL) throws Exception
@@ -114,20 +118,24 @@ public class DefaultFullCalendarManager implements FullCalendarManager
         LocalDateTime icalIntervalEnd, ArrayList<CalendarEvent> jsonArrayList, boolean collapse)
     {
         for (CalendarComponent eventComponent : events) {
-            VEvent event = (VEvent) eventComponent;
-            CalendarEvent jsonMap = new CalendarEvent();
-            if (!eventProcessor.addEventPeriod(event, jsonMap, zoneId)) {
-                continue;
+            try {
+                VEvent event = (VEvent) eventComponent;
+                CalendarEvent jsonMap = new CalendarEvent();
+                if (!eventProcessor.addEventPeriod(event, jsonMap, zoneId)) {
+                    continue;
+                }
+                eventProcessor.addBasicEventProperties(jsonMap, event);
+                // If the interval dates are null and the collapse flag is false, we don't check for recurring events.
+                // Done to maintain backwards compatibility.
+                if (!collapse && (icalIntervalStart == null || icalIntervalEnd == null)) {
+                    jsonArrayList.add(jsonMap);
+                    continue;
+                }
+                recurrenceProcessor.checkRRule(zoneId, icalIntervalStart, icalIntervalEnd, jsonArrayList, collapse,
+                    event, jsonMap);
+            } catch (Exception e) {
+                logger.error("Error while processing a calendar event. Cause:", e);
             }
-            eventProcessor.addBasicEventProperties(jsonMap, event);
-            // If the interval dates are null and the collapse flag is false, we don't check for recurring events. Done
-            // in order to maintain backwards compatibility.
-            if (!collapse && (icalIntervalStart == null || icalIntervalEnd == null)) {
-                jsonArrayList.add(jsonMap);
-                continue;
-            }
-            recurrenceProcessor.checkRRule(zoneId, icalIntervalStart, icalIntervalEnd, jsonArrayList, collapse, event,
-                jsonMap);
         }
     }
 
