@@ -22,6 +22,7 @@ package org.xwiki.fullcalendar.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.xwiki.stability.Unstable;
 
@@ -64,6 +65,10 @@ public class CalendarEvent
     private List<RecurrentEventModification> modificationList;
 
     private String groupId;
+
+    private String url;
+
+    private Map<String, Object> meta;
 
     /**
      * Default constructor.
@@ -363,5 +368,42 @@ public class CalendarEvent
     public long getDatesDifference()
     {
         return end.getTime() - start.getTime();
+    }
+
+    /**
+     * @return a map with any additional properties that this event might store. Can be used by event providers to store
+     *     additional information that they might need.
+     * @since 2.5.5
+     */
+    public Map<String, Object> getMeta()
+    {
+        return meta;
+    }
+
+    /**
+     * @param meta see {@link #getMeta()}.
+     * @since 2.5.5
+     */
+    public void setMeta(Map<String, Object> meta)
+    {
+        this.meta = meta;
+    }
+
+    /**
+     * @return the URL of the event. Used by FullCalendar to redirect you to some location when clicking the event.
+     * @since 2.5.4
+     */
+    public String getUrl()
+    {
+        return url;
+    }
+
+    /**
+     * @param url see {@link #getUrl()}.
+     * @since 2.5.4
+     */
+    public void setUrl(String url)
+    {
+        this.url = url;
     }
 }

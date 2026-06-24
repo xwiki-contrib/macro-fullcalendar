@@ -45,7 +45,7 @@ or
 
  {{calendar classname="Blog.BlogPostClass" startfield="publishDate" editable="false"  year="2009" month="5" date="1"  /}}
 
-or 
+or
 
  {{velocity}}
   {{calendar json="${xwiki.getDocument("Calendar.ExampleJSON").getURL("get")}" editable="false"  year="2012" month="5" date="18" /}}
@@ -286,7 +286,11 @@ or
 #else
  #set($calcounter = 1)
 #end
-(% id="calendar${calcounter}" %)
+#set($containerId = "calendar${calcounter}")
+#if ($xcontext.macro.params.id)
+  #set ($containerId = $xcontext.macro.params.id)
+#end
+(% id="$services.rendering.escape($containerId, 'xwiki/2.1')" class="xwiki-fullcalendar" %)
 (((
 )))
 
@@ -434,7 +438,7 @@ require(['fullcalendar-setup'], function() {
     function init() {
       // The page is now ready, initialize the calendar...
       var progressNotification;
-      $('#calendar${calcounter}').fullCalendar({
+      $('#${containerId}').fullCalendar({
         views: {
           month : {
             columnFormat: "$!services.localization.render('xwiki.calendar.columnFormat.month')",
@@ -510,6 +514,7 @@ require(['fullcalendar-setup'], function() {
             tooltip = tooltip + "$services.localization.render('xwiki.calendar.event.description') " + event.description;
           }
           element.attr('title', tooltip);
+          document.fire("xwiki:fullcalendar:${containerId}:eventrendering", { eventObj: event, eventElement: element });
         },
         loading: function( isLoading) {
           if (isLoading) {
@@ -2118,6 +2123,85 @@ basicDay</description>
     </property>
     <property>
       <name>extraFields</name>
+    </property>
+    <property>
+      <type/>
+    </property>
+  </object>
+  <object>
+    <name>Calendar.Macro</name>
+    <number>19</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>ee124011-fd8d-4deb-aca9-09afeeb7efc3</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <restricted>0</restricted>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
+    </class>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description>The id (html attribute) that will be set to the wrapper of the calendar.</description>
+    </property>
+    <property>
+      <mandatory>0</mandatory>
+    </property>
+    <property>
+      <name>id</name>
     </property>
     <property>
       <type/>
