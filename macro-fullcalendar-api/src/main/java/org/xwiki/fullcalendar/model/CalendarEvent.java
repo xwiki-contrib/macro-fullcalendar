@@ -49,6 +49,8 @@ public class CalendarEvent
 
     private boolean allDay;
 
+    private String color;
+
     private String description;
 
     private String location;
@@ -405,5 +407,23 @@ public class CalendarEvent
     public void setUrl(String url)
     {
         this.url = url;
+    }
+
+    /**
+     * @return the color that this event will have. Used by the full calendar macro.
+     * @since 2.5.4
+     */
+    public String getColor()
+    {
+        return color;
+    }
+
+    /**
+     * @param color see {@link #getColor()}.
+     * @since 2.5.4
+     */
+    public void setColor(String color)
+    {
+        this.color = color;
     }
 }
