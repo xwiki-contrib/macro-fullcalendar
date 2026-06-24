@@ -532,14 +532,13 @@ require(['fullcalendar-setup'], function() {
       });
     }
 
-    // Load the calendar in edit mode.
-	$(window).on('xwiki:dom:updated', function() {
-	  init();
-    });
-	// Load the calendar in view mode.
-	$(document).ready(function() {
-	  init();
-	});
+    function scheduleInit() {
+      clearTimeout(window['_calMacroTimer${calcounter}']);
+      window['_calMacroTimer${calcounter}'] = setTimeout(init, 200);
+    }
+
+    $(window).off('.calMacro${calcounter}').on('xwiki:dom:updated.calMacro${calcounter}', scheduleInit);
+    scheduleInit();
   });
 });
 &lt;/script&gt;
