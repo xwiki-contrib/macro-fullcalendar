@@ -21,6 +21,9 @@ package org.xwiki.fullcalendar.internal.util;
 
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,6 +32,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.fullcalendar.model.CalendarEvent;
 import org.xwiki.stability.Unstable;
 
+import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.DtEnd;
 import net.fortuna.ical4j.model.property.DtStart;
@@ -94,10 +98,20 @@ public class EventProcessor
     {
         jsonMap.setId(event.getUid().isPresent() ? event.getUid().get().getValue() : "");
         jsonMap.setTitle(event.getSummary() == null ? "" : event.getSummary().getValue());
+        Map<String, Object> properties = new HashMap<>();
 
         // Non-standard fields in each Event Object. FullCalendar will not modify or delete these fields.
         jsonMap.setDescription(event.getDescription() == null ? "" : event.getDescription().getValue());
         jsonMap.setLocation(event.getLocation() == null ? "" : event.getLocation().getValue());
         jsonMap.setStatus(event.getStatus() == null ? "" : event.getStatus().getValue());
+        Optional<Property> colorOptional = event.getProperty("COLOR");
+        colorOptional.ifPresent(property -> jsonMap.setColor(property.getValue()));
+        for (Property property : event.getPropertyList().getAll()) {
+            // Keep custom properties as metadata so they are not lost during serialization.
+            if (property.getName().startsWith("X-")) {
+                properties.put(property.getName(), property.getValue());
+            }
+        }
+        jsonMap.setMeta(properties);
     }
 }
